@@ -4,10 +4,12 @@ import java.awt.*;
 import java.util.*;
 import java.util.Timer; 
 import java.util.TimerTask; 
+import java.awt.image.BufferedImage;
 public class GameInput extends JFrame implements KeyListener{
 	//容器裝敵人
     public ArrayList<Enery> eneryList = new ArrayList<Enery>();
 
+	public Image bg=new ImageIcon("background.png").getImage(); ;
 	final int SCREEN_WIDTH = 400;
 	final int SCREEN_HEIGHT = 400;
 	final int RECT_WIDTH = 20;
@@ -15,7 +17,7 @@ public class GameInput extends JFrame implements KeyListener{
 	final int SPRITES_NUM = 2;
 	    private Timer timer; 
 	 // 定時器 
-    private int intervel = 1000 / 100; 
+    private int intervel = 10000 / 1000; 
      //畫人物
      Image img = new ImageIcon("mari1.png").getImage();
 	int xSpeed = 20;
@@ -62,23 +64,27 @@ public class GameInput extends JFrame implements KeyListener{
     } 
  
     public void paint(Graphics g) { 
-        super.paint(g);
+        //super.paint(g);
+		BufferedImage bi =(BufferedImage)this.createImage(this.getSize().width,this.getSize().height);
+        Graphics big =bi.getGraphics();
+        big.drawImage(new ImageIcon("background.png").getImage(), 0, 0, null);
 
-        g.setColor(Color.RED);
-        g.fillOval(spritePosX[1], spritePosY[1], RECT_WIDTH, RECT_HEIGHT);
-		
-        g.drawImage(img, spritePosX[0], spritePosY[0], 30, 30,null);
-		 g.drawImage(new ImageIcon("10-12.png").getImage(), spritePosX[0], spritePosY[0]-20, 30, 30,null);
+        big.setColor(Color.RED);
+        big.fillOval(spritePosX[1], spritePosY[1], RECT_WIDTH, RECT_HEIGHT);
+		big.drawImage(new ImageIcon("covid.png").getImage(), 100, 100, 30, 30,null);
+        big.drawImage(img, spritePosX[0], spritePosY[0], 30, 30,null);
+		big.drawImage(new ImageIcon("10-12.png").getImage(), spritePosX[0], spritePosY[0]-20, 30, 30,null);
 		for(int i=0;i<eneryList.size();i++){
 			eneryList.get(i).x += 2;
 			//eneryList.get(0).y -= eneryList.get(0).angleY;
-			g.drawImage(eneryList.get(i).img, eneryList.get(i).x, eneryList.get(i).y, eneryList.get(i).width, eneryList.get(i).height,null);
-			System.out.println(eneryList.get(i).angleX + "  " +eneryList.get(i).angleY);
+			big.drawImage(eneryList.get(i).img, eneryList.get(i).x, eneryList.get(i).y, eneryList.get(i).width, eneryList.get(i).height,null);
+			//System.out.println(eneryList.get(i).angleX + "  " +eneryList.get(i).angleY);
 			if(eneryList.get(i).x>400||eneryList.get(i).y>400){
 				eneryList.remove(i);
 				System.out.println("remove"+ i);
 				}
 		}
+		g.drawImage(bi,0,0,null);
     }
 
 	public static void main(String[] args) {
@@ -95,20 +101,20 @@ public class GameInput extends JFrame implements KeyListener{
 		if( key == KeyEvent.VK_UP ){
 			spritePosY[0] -= ySpeed;
 			if(hit("Up")){
-				System.out.println("hit");
+				System.out.println("踩到病毒");
 			}
 		}
 		if( key == KeyEvent.VK_DOWN ){
 			spritePosY[0] += ySpeed;
 			if(hit("Down")){
-				System.out.println("hit");
+				System.out.println("踩到病毒");
 			}
 		}
 		if( key == KeyEvent.VK_LEFT ){
 			spritePosX[0] -= xSpeed;
             img = new ImageIcon("mari2.png").getImage();
 			if(hit("Left")){
-				System.out.println("hit");
+				System.out.println("踩到病毒");
 			}
         }
 		
@@ -116,7 +122,7 @@ public class GameInput extends JFrame implements KeyListener{
 			spritePosX[0] += xSpeed;
             img = new ImageIcon("mari1.png").getImage();
 			if(hit("Right")){
-				System.out.println("hit");
+				System.out.println("踩到病毒");
 			}
         }
 		// Move the Circle
@@ -163,6 +169,13 @@ public class GameInput extends JFrame implements KeyListener{
         Enery enery=new Enery(spritePosX[0],spritePosY[0],angleX,angleY,20,20,new ImageIcon("bullet.png").getImage());
 		
 		eneryList.add(enery);
+
+		Rectangle myrect = new Rectangle(event.getY(),event.getX(),5,5);
+        Rectangle rect =null;
+		rect = new Rectangle(100,100,30,30);
+		if(myrect.intersects(rect)){
+            System.out.println("點擊病毒");
+        }
     }
      
 
@@ -173,24 +186,24 @@ public class GameInput extends JFrame implements KeyListener{
     public boolean hit(String dir){
             Rectangle myrect = new Rectangle(spritePosX[0],spritePosY[0],30,30);
             Rectangle rect =null;
-            for (int i = 0; i < eneryList.size(); i++) {
-                Enery enery = eneryList.get(i);
+            //for (int i = 0; i < eneryList.size(); i++) {
+             //   Enery enery = eneryList.get(i);
                 if(dir.equals("Left")){
-                    rect = new Rectangle(enery.x+2,enery.y,enery.width,enery.height);
+                    rect = new Rectangle(100+2,100,30,30);
                 }
                 else if(dir.equals("Right")){
-                    rect = new Rectangle(enery.x-2,enery.y,enery.width,enery.height);
+                    rect = new Rectangle(100-2,100,30,30);
                 }
                 else if(dir.equals("Up")){
-                    rect = new Rectangle(enery.x,enery.y+1,enery.width,enery.height);
+                    rect = new Rectangle(100,100+1,30,30);
                 }else if(dir.equals("Down")){
-                    rect = new Rectangle(enery.x,enery.y-2,enery.width,enery.height);
+                    rect = new Rectangle(100,100-2,30,30);
                 }
                 //碰撞檢測
                 if(myrect.intersects(rect)){
                     return true;
                 }
-            }
+            //}
             return false;
     }
 }
