@@ -29,14 +29,24 @@ public class GameFrame extends JFrame implements KeyListener{
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
-                // checkState();        //檢查所有生命和碰撞和enemy位置
                 repaint();
             }
         }, intervel, intervel);
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run(){
+                checkState();        //檢查所有生命和碰撞和enemy位置
+            }
+        }, 100, 100);                   //每0.5秒就重複一次
     }
 
+    public void checkState(){
+        testC.changeImg();
+    }
+    
     public void initial(){
-        testC = new Hero(20, 20);
+        testC = new Hero(5, 5);
+        testC.changeImg();
     }
 
     public void update(Graphics g) { 
@@ -63,51 +73,90 @@ public class GameFrame extends JFrame implements KeyListener{
     }
 
     @Override
-    public void keyReleased(KeyEvent e){}
+    public void keyReleased(KeyEvent e){
+        testC.moveFlag = -1;
+    }
     @Override
     public void keyTyped(KeyEvent e){}
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         
-        if(key == KeyEvent.VK_UP)
+        if(key == KeyEvent.VK_UP) {        
             move(1);
-        if(key == KeyEvent.VK_DOWN)
+            if(testC.lastFlag==0)
+                testC.moveFlag = 1;
+            else
+                testC.moveFlag = 0;
+        }
+        else if(key == KeyEvent.VK_DOWN){        //上下的圖片先暫時跟原本(僅限左右)的相反     
             move(2);
-        if( key == KeyEvent.VK_LEFT )
+            if(testC.lastFlag==0)
+                testC.moveFlag = 1;
+            else
+                testC.moveFlag = 0;
+        }
+        else if( key == KeyEvent.VK_LEFT ){        //上下的圖片先暫時跟原本(僅限左右)的相反  
             move(3);        
-        if( key == KeyEvent.VK_RIGHT )
+            testC.moveFlag = 0;
+            testC.lastFlag = testC.moveFlag;
+        }
+        else if( key == KeyEvent.VK_RIGHT ){
             move(4);
+            testC.moveFlag = 1;
+            testC.lastFlag = testC.moveFlag;
+        }
         // Move the Circle
 
-        if( key == KeyEvent.VK_W )
+        else if( key == KeyEvent.VK_W ){        //上下的圖片先暫時跟原本(僅限左右)的相反  
             move(1);
+            if(testC.lastFlag==0)
+                testC.moveFlag = 1;
+            else
+                testC.moveFlag = 0;
+        }
         
-        if( key == KeyEvent.VK_S )
+        else if( key == KeyEvent.VK_S ){        //上下的圖片先暫時跟原本(僅限左右)的相反      
             move(2);
+            if(testC.lastFlag==0)
+                testC.moveFlag = 1;
+            else
+                testC.moveFlag = 0;
+        }
         
-        if( key == KeyEvent.VK_A )
+        else if( key == KeyEvent.VK_A ){
             move(3);
-
-        if( key == KeyEvent.VK_D)
+            testC.moveFlag = 0;
+            testC.lastFlag = testC.moveFlag;
+        }
+        else if( key == KeyEvent.VK_D){            
             move(4);
+            testC.moveFlag = 1;
+            testC.lastFlag = testC.moveFlag;
+        }
+        else
+            testC.moveFlag = -1;
     }
 
     public void move(int event){        //如果放在hero裡面會無法找到(hero比較晚被編譯到)
+        System.out.println("posX is "+testC.posX+" and posY is "+testC.posY);
         switch(event){
-            case 1:             //上
+        case 1:             //上
+            if(testC.posY>=0)
                 testC.posY -= testC.speedY;
-                break;
-            case 2:             //下
+            break;
+        case 2:             //下
+            if(testC.posY<=550)
                 testC.posY += testC.speedY;
-                break;
-            case 3:             //左
+            break;
+        case 3:             //左
+            if(testC.posX>=0)
                 testC.posX -= testC.speedX;
-                break;
-            case 4:             //右
+            break;
+        case 4:             //右
+            if(testC.posX<=1000)
                 testC.posX += testC.speedX;
-                break;
+            break;
         }
     }
 }
-

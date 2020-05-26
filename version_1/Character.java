@@ -3,12 +3,14 @@ package covid19.game;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Character{
+public abstract class Character{
     public int full, hp, atk;       //full：全滿血量
     public int speedX, speedY;      //移動速度
     public int rectX, rectY;         //初始位置
     public int posX, posY;          //現在位置
     public int width, height;        //圖片大小
+    public int lastFlag, moveFlag, srcFlag;      //lastFlag, moveFlag:-1：沒有移動 0：向左移動 1：向右移動
+                                                 //lastFlag：讓上或下跟原本的動作相反
     public Image img, blood;
 
     public Character(int sX, int sY, int rX, int rY){
@@ -28,4 +30,6 @@ public class Character{
         this.posX = this.rectX;
         this.posY = this.rectY;
     }
+
+    public abstract void changeImg();
 }

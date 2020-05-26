@@ -6,11 +6,15 @@ import java.awt.*;
 import java.util.*;
 
 public class Hero extends Character{
+
+    String[][] Src = {{"hero_1.png", "hero_2.png", "hero_3.png", "hero_4.png"}, {"hero_5.png", "hero_6.png", "hero_7.png", "hero_8.png"}};
     
     public Hero(int sX, int sY, int rX, int rY){
         super(sX, sY, rX, rY);
         this.width = 200;
         this.height = 200;
+        srcFlag = 0;
+        moveFlag = -1;
         img = new ImageIcon("hero_1.png").getImage();
     }
 
@@ -18,7 +22,22 @@ public class Hero extends Character{
         super(sX, sY);
         this.width = 200;
         this.height = 200;
+        srcFlag = 0;
+        moveFlag = -1;
         img = new ImageIcon("hero_1.png").getImage();
+    }
+
+    @Override
+    public void changeImg(){                //跑動畫
+        if(moveFlag>=0){           
+            // System.out.println("in 33 line in Hero"); 
+            String src = Src[moveFlag][srcFlag];
+            img = new ImageIcon(src).getImage();
+            if(srcFlag==3)
+                srcFlag = 0;
+            else
+                srcFlag++;
+        }
     }
 
     public boolean hit(String dir){
