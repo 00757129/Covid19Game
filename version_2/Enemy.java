@@ -11,5 +11,10 @@ public class Enemy extends Virus{
         super(initX,initY);
         this.width = 30;
         this.height = 30;
+        this.moveX = 0;
+        this.moveY = 0;
+        img = new ImageIcon("covid.png").getImage();
     }
+
+    
 }
