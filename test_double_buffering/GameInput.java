@@ -163,6 +163,7 @@ public class GameInput extends JFrame implements KeyListener{
 	public class MouseAdapterDemo extends MouseAdapter {
 			
 		public void mousePressed(MouseEvent event) {
+            System.out.println("X is "+event.getX()+" and Y is "+event.getY());
 		double vector =(event.getY()-spritePosY[0]) /(event.getX()-spritePosX[0]);
         int angleX=(int)vector*2;
 		int angleY=(int)(1/vector)*2;
