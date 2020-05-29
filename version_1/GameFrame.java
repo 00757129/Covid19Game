@@ -13,6 +13,7 @@ public class GameFrame extends JFrame implements KeyListener{
     public Timer timer;                 
     public int level;
     public int intervel = 10000 / 1000; //每intervel個微秒就repaint
+    public ArrayList<Weapon> WeaponList = new ArrayList<Weapon>();  //weapon用容器裝
     public Character testC;      //一定要先宣告一下，不然KeyListener不給過，但是可以在initial再寫
 
     public GameFrame(){
@@ -20,6 +21,7 @@ public class GameFrame extends JFrame implements KeyListener{
         setLayout(new FlowLayout());
         setLocationRelativeTo(null);
         addKeyListener(this);
+        addMouseListener(new MouseAdapterDemo());
         initial();
         working();
     }
@@ -46,7 +48,6 @@ public class GameFrame extends JFrame implements KeyListener{
     
     public void initial(){
         testC = new Hero(5, 5);
-        testC.changeImg();
     }
 
     public void update(Graphics g) { 
@@ -60,10 +61,19 @@ public class GameFrame extends JFrame implements KeyListener{
         big.drawImage(new ImageIcon("routemap2020.png").getImage(), 0, 0, null);
 		big.drawImage(testC.img, testC.posX, testC.posY, testC.width, testC.height,null);
 
-		// if(testC.posX>400||testC.posY>400){
-		// 	eneryList.remove(i);
-		// 	System.out.println("remove"+ i);
-		// }
+		for(int i = 0; i<WeaponList.size(); i++){
+            if(WeaponList.get(i).overScreen()){         //超出螢幕就移出陣列且不印出來
+            	WeaponList.remove(i);
+            	System.out.println("remove"+ i);
+            }
+            else{
+                WeaponList.get(i).posX += WeaponList.get(i).speedX;
+                WeaponList.get(i).posY += WeaponList.get(i).speedY;
+                // System.out.println("posX is "+ WeaponList.get(i).posX+" and posY is "+ WeaponList.get(i).posY); 
+		        big.drawImage(WeaponList.get(i).img, WeaponList.get(i).posX, WeaponList.get(i).posY, WeaponList.get(i).width, WeaponList.get(i).height,null);
+            }
+
+        }
 
         g.drawImage(bi, 0, 0, null);
     }
@@ -139,14 +149,14 @@ public class GameFrame extends JFrame implements KeyListener{
     }
 
     public void move(int event){        //如果放在hero裡面會無法找到(hero比較晚被編譯到)
-        System.out.println("posX is "+testC.posX+" and posY is "+testC.posY);
+        // System.out.println("posX is "+testC.posX+" and posY is "+testC.posY);
         switch(event){
         case 1:             //上
             if(testC.posY>=0)
                 testC.posY -= testC.speedY;
             break;
         case 2:             //下
-            if(testC.posY<=550)
+            if(testC.posY<=550)         //750-testC.height
                 testC.posY += testC.speedY;
             break;
         case 3:             //左
@@ -154,9 +164,20 @@ public class GameFrame extends JFrame implements KeyListener{
                 testC.posX -= testC.speedX;
             break;
         case 4:             //右
-            if(testC.posX<=1000)
+            if(testC.posX<=1000)         //1200-testC.width
                 testC.posX += testC.speedX;
             break;
+        }
+    }
+
+    public class MouseAdapterDemo extends MouseAdapter {
+			
+        public void mousePressed(MouseEvent event) {
+            // System.out.println("X is "+event.getX()+" and Y is "+event.getY());
+
+            // 10 代表斜向速度
+            Weapon tmpWeapon = new Weapon(testC.posX+testC.width/2, testC.posY+testC.height/2, event.getX(), event.getY(), 5);
+            WeaponList.add(tmpWeapon);
         }
     }
 }

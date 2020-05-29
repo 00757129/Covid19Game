@@ -23,12 +23,38 @@ public abstract class Character{
     }
 
     public Character(int sX, int sY){
-         this.speedX = sX;
+        this.speedX = sX;
         this.speedY = sY;
         this.rectX = 1200 / 2;          //先預設正中間
         this.rectY = 750 / 2;
+        this.posX = this.rectX - this.width/2;
+        this.posY = this.rectY - this.height/2;
+    }
+
+    public Character(int heroX, int heroY, int mouseX, int mouseY, int speed){
+        this.changeSpeed(heroX, heroY, mouseX, mouseY, speed);
+        this.rectX = heroX;
+        this.rectY = heroY;
         this.posX = this.rectX;
         this.posY = this.rectY;
+    }
+
+    public void changeSpeed(int heroX, int heroY, int mouseX, int mouseY, int speed){
+        double x = mouseX - heroX;
+        double y = mouseY - heroY;        
+        double rate = Math.pow(speed, 2) / (Math.pow(x, 2)+Math.pow(y, 2));
+        rate = Math.pow(rate, 0.5);
+        x = x*rate;
+        y = y*rate;
+        this.speedX = (int)x;
+        this.speedY = (int)y;
+    }
+
+    public Boolean overScreen(){        //如果超出螢幕就回傳true
+        if(((posX>=0)&&(posX<=1200-this.width))&&((posY>=0)&&(posY<=750-this.height)))
+            return false;
+        else
+            return true;
     }
 
     public abstract void changeImg();
