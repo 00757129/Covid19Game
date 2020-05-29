@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Weapon extends Character{
 
-    String[] Src = {"bullet.png"};
+    String[] Src = {"medicine.png"};
 
     public Weapon(int heroX, int heroY, int mouseX, int mouseY, int speed){
         super(heroX, heroY, mouseX, mouseY, speed);

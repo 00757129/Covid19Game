@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.Timer; 
 import java.util.TimerTask; 
 import java.awt.image.BufferedImage;
+import java.security.*;
 
 public class GameFrame extends JFrame implements KeyListener{
 
@@ -14,6 +15,7 @@ public class GameFrame extends JFrame implements KeyListener{
     public int level;
     public int intervel = 10000 / 1000; //每intervel個微秒就repaint
     public ArrayList<Weapon> WeaponList = new ArrayList<Weapon>();  //weapon用容器裝
+    public ArrayList<Enemy> EnemyList = new ArrayList<Enemy>(); //enemy也用容器裝
     public Character testC;      //一定要先宣告一下，不然KeyListener不給過，但是可以在initial再寫
 
     public GameFrame(){
@@ -32,6 +34,10 @@ public class GameFrame extends JFrame implements KeyListener{
             @Override
             public void run(){
                 repaint();
+                for(int i = 0;i < 4;i++)
+                {
+                    EnemyList.get(i).move(EnemyList.get(i).posX,EnemyList.get(i).posY,testC.posX,testC.posY,2);
+                }
             }
         }, intervel, intervel);
         timer.schedule(new TimerTask(){
@@ -48,6 +54,15 @@ public class GameFrame extends JFrame implements KeyListener{
     
     public void initial(){
         testC = new Hero(5, 5);
+        SecureRandom rand = new SecureRandom();
+        for(int i = 0;i < 4;i++)
+        {
+            int x,y;
+            x = (int)(rand.nextDouble()*1200.0);
+            y = (int)(rand.nextDouble()*750.0);
+            Enemy virus = new Enemy(x,y,testC.posX,testC.posY,2);
+            EnemyList.add(virus);
+        }
     }
 
     public void update(Graphics g) { 
@@ -60,6 +75,14 @@ public class GameFrame extends JFrame implements KeyListener{
         Graphics big =bi.getGraphics();
         big.drawImage(new ImageIcon("routemap2020.png").getImage(), 0, 0, null);
 		big.drawImage(testC.img, testC.posX, testC.posY, testC.width, testC.height,null);
+
+        for(int i = 0;i<EnemyList.size();i++)
+        {
+            //正常移動(還沒有寫被子彈打中的消失部分)
+            EnemyList.get(i).posX += EnemyList.get(i).speedX;
+            EnemyList.get(i).posY += EnemyList.get(i).speedY;
+            big.drawImage(EnemyList.get(i).img, EnemyList.get(i).posX, EnemyList.get(i).posY, EnemyList.get(i).width, EnemyList.get(i).height, null);
+        }
 
 		for(int i = 0; i<WeaponList.size(); i++){
             if(WeaponList.get(i).overScreen()){         //超出螢幕就移出陣列且不印出來
@@ -168,6 +191,7 @@ public class GameFrame extends JFrame implements KeyListener{
                 testC.posX += testC.speedX;
             break;
         }
+
     }
 
     public class MouseAdapterDemo extends MouseAdapter {
