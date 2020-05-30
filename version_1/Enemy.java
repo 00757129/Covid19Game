@@ -13,7 +13,7 @@ public class Enemy extends Character{
         super(enenmyX, enenmyY, heroX, heroY, speed);
         this.width = 30;
         this.height = 30;
-        img = new ImageIcon(Src[0]).getImage();
+        img.add(new ImageIcon(Src[0]).getImage());
     }
 
     public void move(int enenmyX, int enenmyY, int heroX, int heroY, int speed)
@@ -32,5 +32,4 @@ public class Enemy extends Character{
     public void changeImg(){
 
     }
-
 }

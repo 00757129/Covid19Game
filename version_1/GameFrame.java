@@ -16,7 +16,7 @@ public class GameFrame extends JFrame implements KeyListener{
     public int intervel = 10000 / 1000; //每intervel個微秒就repaint
     public ArrayList<Weapon> WeaponList = new ArrayList<Weapon>();  //weapon用容器裝
     public ArrayList<Enemy> EnemyList = new ArrayList<Enemy>(); //enemy也用容器裝
-    public Character testC;      //一定要先宣告一下，不然KeyListener不給過，但是可以在initial再寫
+    public Hero testC;      //一定要先宣告一下，不然KeyListener不給過，但是可以在initial再寫
 
     public GameFrame(){
         super("GameFrame");
@@ -50,6 +50,10 @@ public class GameFrame extends JFrame implements KeyListener{
 
     public void checkState(){
         testC.changeImg();
+        for(int i = 0;i<EnemyList.size();i++)
+        {
+            testC.setHp(EnemyList.get(i));
+        }
     }
     
     public void initial(){
@@ -74,14 +78,15 @@ public class GameFrame extends JFrame implements KeyListener{
         BufferedImage bi =(BufferedImage)this.createImage(this.getSize().width,this.getSize().height);
         Graphics big =bi.getGraphics();
         big.drawImage(new ImageIcon("routemap2020.png").getImage(), 0, 0, null);
-		big.drawImage(testC.img, testC.posX, testC.posY, testC.width, testC.height,null);
+		big.drawImage(testC.img.get(0), testC.posX, testC.posY, testC.width, testC.height,null);
+        big.drawImage(testC.blood.get(0),testC.posX, testC.posY+15,testC.width,50,null);
 
         for(int i = 0;i<EnemyList.size();i++)
         {
             //正常移動(還沒有寫被子彈打中的消失部分)
             EnemyList.get(i).posX += EnemyList.get(i).speedX;
             EnemyList.get(i).posY += EnemyList.get(i).speedY;
-            big.drawImage(EnemyList.get(i).img, EnemyList.get(i).posX, EnemyList.get(i).posY, EnemyList.get(i).width, EnemyList.get(i).height, null);
+            big.drawImage(EnemyList.get(i).img.get(0), EnemyList.get(i).posX, EnemyList.get(i).posY, EnemyList.get(i).width, EnemyList.get(i).height, null);
         }
 
 		for(int i = 0; i<WeaponList.size(); i++){
@@ -93,7 +98,7 @@ public class GameFrame extends JFrame implements KeyListener{
                 WeaponList.get(i).posX += WeaponList.get(i).speedX;
                 WeaponList.get(i).posY += WeaponList.get(i).speedY;
                 // System.out.println("posX is "+ WeaponList.get(i).posX+" and posY is "+ WeaponList.get(i).posY); 
-		        big.drawImage(WeaponList.get(i).img, WeaponList.get(i).posX, WeaponList.get(i).posY, WeaponList.get(i).width, WeaponList.get(i).height,null);
+		        big.drawImage(WeaponList.get(i).img.get(0), WeaponList.get(i).posX, WeaponList.get(i).posY, WeaponList.get(i).width, WeaponList.get(i).height,null);
             }
 
         }
@@ -192,6 +197,10 @@ public class GameFrame extends JFrame implements KeyListener{
             break;
         }
 
+        for(int i = 0; i<EnemyList.size();i++)
+        {
+            testC.setHp(EnemyList.get(i));
+        }
     }
 
     public class MouseAdapterDemo extends MouseAdapter {

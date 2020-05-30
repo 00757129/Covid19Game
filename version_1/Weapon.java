@@ -13,12 +13,11 @@ public class Weapon extends Character{
         super(heroX, heroY, mouseX, mouseY, speed);
         this.width = 50;
         this.height = 50;
-        img = new ImageIcon(Src[0]).getImage();
+        img.add(new ImageIcon(Src[0]).getImage());
     }
 
     @Override
     public void changeImg(){
 
     }
-
 }
