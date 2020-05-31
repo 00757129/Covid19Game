@@ -33,7 +33,7 @@ public class Hero extends Character{
     }
 
     @Override
-    public void changeImg(){                //跑動畫
+    public void changeImg(){                //跑動畫，如果moveFlag為0或1時就更換照片
         if(moveFlag>=0){           
             // System.out.println("in 33 line in Hero"); 
             String src = Src[moveFlag][srcFlag];

@@ -7,47 +7,68 @@ import java.util.*;
 import java.util.Timer; 
 import java.util.TimerTask; 
 import java.awt.image.BufferedImage;
+import java.security.*;
 
 public class GameFrame extends JFrame implements KeyListener{
 
     public Timer timer;                 
     public int level;
-    public int intervel = 10000 / 1000; //每intervel個微秒就repaint
-    public Character testC;      //一定要先宣告一下，不然KeyListener不給過，但是可以在initial再寫
-    public Virus virus;
+    public int intervel = 10000 / 10000; //每intervel個微秒就repaint
+    public ArrayList<Weapon> WeaponList = new ArrayList<Weapon>();  //weapon用容器裝
+    public ArrayList<Enemy> EnemyList = new ArrayList<Enemy>(); //enemy也用容器裝
+    public Hero testC;      //一定要先宣告一下，不然KeyListener不給過，但是可以在initial再寫
 
     public GameFrame(){
         super("GameFrame");
         setLayout(new FlowLayout());
         setLocationRelativeTo(null);
         addKeyListener(this);
-        initial();
-        working();
+        addMouseListener(new MouseAdapterDemo());
+        initial();          //設定關卡初始狀況，包含怪獸的位置和英雄的速度、初始位置
+        working();          //設定timertask，讓程式定期移動腳色和檢查生命
     }
 
     public void working(){
         timer = new Timer();
         timer.schedule(new TimerTask(){
             @Override
-            public void run(){
-                repaint();
+            public void run(){      //檢查位置
+                repaint();          //重畫角色的位置
             }
-        }, intervel, intervel);
+        }, 10, 10);        //每個微秒就重複一次
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
-                checkState();        //檢查所有生命和碰撞和enemy位置
+                checkState();        //檢查所有生命
+                for(int i = 0;i < 4;i++)    //讓enemy往hero移動
+                {                        
+                    EnemyList.get(i).posX += EnemyList.get(i).speedX;
+                    EnemyList.get(i).posY += EnemyList.get(i).speedY;
+                    EnemyList.get(i).move(EnemyList.get(i).posX,EnemyList.get(i).posY,testC.posX+(testC.width/2),testC.posY+(testC.height/2),2);
+                }
             }
         }, 100, 100);                   //每0.5秒就重複一次
     }
 
     public void checkState(){
-        testC.changeImg();
+        testC.changeImg();              //讓角色的腳可以移動，呈現動畫的感覺
+        for(int i = 0;i<EnemyList.size();i++)
+        {
+            testC.setHp(EnemyList.get(i));      //檢查hero血量
+        }
     }
     
     public void initial(){
         testC = new Hero(5, 5);
-        testC.changeImg();
+        SecureRandom rand = new SecureRandom();
+        for(int i = 0;i < 4;i++)        //巧恩晚點改，讓敵人平均分布https://blog.xuite.net/sky1208227/pen/8819750-%E3%80%8EJava%E3%80%8F%E6%95%B8%E5%AD%B8%E5%87%BD%E6%95%B8
+        {
+            int x,y;
+            x = (int)(rand.nextDouble()*1200.0);
+            y = (int)(rand.nextDouble()*750.0);
+            Enemy virus = new Enemy(x,y,testC.posX,testC.posY,2);
+            EnemyList.add(virus);
+        }
     }
 
     public void update(Graphics g) { 
@@ -58,13 +79,29 @@ public class GameFrame extends JFrame implements KeyListener{
         // System.out.println("test");
         BufferedImage bi =(BufferedImage)this.createImage(this.getSize().width,this.getSize().height);
         Graphics big =bi.getGraphics();
-        big.drawImage(new ImageIcon("routemap2020.png").getImage(), 0, 0, null);
-		big.drawImage(testC.img, testC.posX, testC.posY, testC.width, testC.height,null);
+        big.drawImage(new ImageIcon("routemap2020.png").getImage(), 0, 0, null);    //重複畫背景
+		big.drawImage(testC.img.get(0), testC.posX, testC.posY, testC.width, testC.height,null);    //畫hero本身
+        big.drawImage(testC.blood.get(0),testC.posX, testC.posY+15,testC.width,50,null);            //畫hero的血條
 
-		// if(testC.posX>400||testC.posY>400){
-		// 	eneryList.remove(i);
-		// 	System.out.println("remove"+ i);
-		// }
+        for(int i = 0;i<EnemyList.size();i++)
+        {
+            //正常移動(還沒有寫被子彈打中的消失部分)
+            big.drawImage(EnemyList.get(i).img.get(0), EnemyList.get(i).posX, EnemyList.get(i).posY, EnemyList.get(i).width, EnemyList.get(i).height, null);
+        }
+
+		for(int i = 0; i<WeaponList.size(); i++){
+            if(WeaponList.get(i).overScreen()){         //Weapon超出螢幕就移出陣列且不印出來
+            	WeaponList.remove(i);
+            	System.out.println("remove"+ i);
+            }
+            else{                                      //Weapon如果沒超出螢幕就更改位置後畫出來
+                WeaponList.get(i).posX += WeaponList.get(i).speedX; 
+                WeaponList.get(i).posY += WeaponList.get(i).speedY;
+                // System.out.println("posX is "+ WeaponList.get(i).posX+" and posY is "+ WeaponList.get(i).posY); 
+		        big.drawImage(WeaponList.get(i).img.get(0), WeaponList.get(i).posX, WeaponList.get(i).posY, WeaponList.get(i).width, WeaponList.get(i).height,null);
+            }
+
+        }
 
         g.drawImage(bi, 0, 0, null);
     }
@@ -75,7 +112,7 @@ public class GameFrame extends JFrame implements KeyListener{
 
     @Override
     public void keyReleased(KeyEvent e){
-        testC.moveFlag = -1;
+        testC.moveFlag = -1;            
     }
     @Override
     public void keyTyped(KeyEvent e){}
@@ -140,14 +177,14 @@ public class GameFrame extends JFrame implements KeyListener{
     }
 
     public void move(int event){        //如果放在hero裡面會無法找到(hero比較晚被編譯到)
-        System.out.println("posX is "+testC.posX+" and posY is "+testC.posY);
+        // System.out.println("posX is "+testC.posX+" and posY is "+testC.posY);
         switch(event){
         case 1:             //上
             if(testC.posY>=0)
                 testC.posY -= testC.speedY;
             break;
         case 2:             //下
-            if(testC.posY<=550)
+            if(testC.posY<=550)         //750-testC.height
                 testC.posY += testC.speedY;
             break;
         case 3:             //左
@@ -155,9 +192,25 @@ public class GameFrame extends JFrame implements KeyListener{
                 testC.posX -= testC.speedX;
             break;
         case 4:             //右
-            if(testC.posX<=1000)
+            if(testC.posX<=1000)         //1200-testC.width
                 testC.posX += testC.speedX;
             break;
+        }
+
+        for(int i = 0; i<EnemyList.size();i++)
+        {
+            testC.setHp(EnemyList.get(i));
+        }
+    }
+
+    public class MouseAdapterDemo extends MouseAdapter {
+			
+        public void mousePressed(MouseEvent event) {
+            // System.out.println("X is "+event.getX()+" and Y is "+event.getY());
+
+            // 10 代表斜向速度
+            Weapon tmpWeapon = new Weapon(testC.posX+testC.width/2, testC.posY+testC.height/2, event.getX(), event.getY(), 5);
+            WeaponList.add(tmpWeapon);
         }
     }
 }
