@@ -57,6 +57,7 @@ public class Hero extends Character{
                 bloodFlag++;
             }
         }
+        
         else
         {
             img.remove(0);
