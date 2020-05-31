@@ -33,7 +33,7 @@ public class GameFrame extends JFrame implements KeyListener{
         timer.schedule(new TimerTask(){
             @Override
             public void run(){      //檢查位置
-                hit();
+                Weaponhit();
                 repaint();          //重畫角色的位置
             }
         }, 10, 10);        //每個微秒就重複一次
@@ -214,7 +214,7 @@ public class GameFrame extends JFrame implements KeyListener{
             WeaponList.add(tmpWeapon);
         }
     }
-     public void hit(){
+     public void Weaponhit(){
             for (int j = 0; j < WeaponList.size(); j++) {
                 
             Rectangle weaponRect = new Rectangle(WeaponList.get(j).posX+WeaponList.get(j).width/2,WeaponList.get(j).posY+WeaponList.get(j).height/2,50,50);
