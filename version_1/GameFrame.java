@@ -224,8 +224,9 @@ public class GameFrame extends JFrame implements KeyListener{
                 rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2,30,30);
                 //碰撞檢測
                 if(weaponRect.intersects(rect)){
+                    WeaponList.remove(j);
                     EnemyList.get(i).hp -= 1;
-                    System.out.println("hit");
+                    //System.out.println("hit");
                 }
                 if(EnemyList.get(i).hp<=0){
                     EnemyList.remove(i);
