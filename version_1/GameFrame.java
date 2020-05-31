@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import java.util.*;
+import java.lang.Math; 
 import java.util.Timer; 
 import java.util.TimerTask; 
 import java.awt.image.BufferedImage;
@@ -37,10 +38,10 @@ public class GameFrame extends JFrame implements KeyListener{
                 repaint();          //重畫角色的位置
             }
         }, 10, 10);        //每個微秒就重複一次
+
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
-                checkState();        //檢查所有生命
                 for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
                 {                        
                     EnemyList.get(i).posX += EnemyList.get(i).speedX;
@@ -48,7 +49,14 @@ public class GameFrame extends JFrame implements KeyListener{
                     EnemyList.get(i).move(EnemyList.get(i).posX,EnemyList.get(i).posY,testC.posX+(testC.width/2),testC.posY+(testC.height/2),2);
                 }
             }
-        }, 100, 100);                   //每0.5秒就重複一次
+        }, 100, 100);                   //每0.1秒就重複一次
+
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run(){
+                checkState();        //檢查所有生命
+            }
+        }, 500, 500);                   //每0.5秒就重複一次
     }
 
     public void checkState(){
@@ -61,12 +69,29 @@ public class GameFrame extends JFrame implements KeyListener{
     
     public void initial(){
         testC = new Hero(5, 5);
+        int total = 10;                  //total of enemy
         SecureRandom rand = new SecureRandom();
-        for(int i = 0;i < 4;i++)        //巧恩晚點改，讓敵人平均分布https://blog.xuite.net/sky1208227/pen/8819750-%E3%80%8EJava%E3%80%8F%E6%95%B8%E5%AD%B8%E5%87%BD%E6%95%B8
+        double range = (3.141515926 * 2) / total;       //
+        System.out.println("range is "+range);
+        for(int i = 0;i < total;i++)        //巧恩晚點改，敵人不知道為什麼只有一隻
         {
-            int x,y;
-            x = (int)(rand.nextDouble()*1200.0);
-            y = (int)(rand.nextDouble()*750.0);
+            double angle = rand.nextDouble()*(range) + range*i;
+            rand = new SecureRandom();
+            int length = (int)(rand.nextDouble()*500+300);
+            // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
+            int x = (int)(length*Math.sin(angle));
+            x = testC.posX + x;
+            if(x <= 0)
+                x = 0;
+            else if(x >= 1000)          //應該要是1200-width，我先把width的最大值預設成200
+                x = 1000;
+            int y = (int)(length*Math.cos(angle));
+            y = testC.posY + y;
+            if(y <= 0)
+                y = 0;
+            else if(y >= 550)          //應該要是750-height，我先把width的最大值預設成200
+                y = 550;
+            System.out.println("in number."+i+" x is "+x+" and y is "+y);
             Enemy virus = new Enemy(x,y,testC.posX,testC.posY,2);
             EnemyList.add(virus);
         }
