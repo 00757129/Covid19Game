@@ -11,7 +11,7 @@ public class Hero extends Character{
     String[] Blood = {"12-12.png","11-12.png","10-12.png","9-12.png","8-12.png","7-12.png","6-12.png","5-12.png","4-12.png","3-12.png","2-12.png","1-12.png","0-12.png"};   //血量圖片
     
     public Hero(int sX, int sY, int rX, int rY){
-        super(sX, sY, rX, rY);
+        super(sX, sY, rX, rY,10);
         this.width = 200;
         this.height = 200;
         srcFlag = 0;
@@ -60,26 +60,26 @@ public class Hero extends Character{
         
         else
         {
-            img.remove(0);
-            blood.remove(0);
+            JOptionPane.showMessageDialog(null,"Lose!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
+            System.exit(1);
         }
     }
 
     public boolean hit(String dir,Enemy enemy){
-            Rectangle myrect = new Rectangle(posX,posY,30,30);
+            Rectangle myrect = new Rectangle(posX+width/2,posY+height/2,30,30);
             Rectangle rect =null;
             //for (int i = 0; i < eneryList.size(); i++) {
              //   Enery enery = eneryList.get(i);
                 if(dir.equals("Left")){
-                    rect = new Rectangle(enemy.posX+20,enemy.posY,30,30);
+                    rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2,30,30);
                 }
                 else if(dir.equals("Right")){
-                    rect = new Rectangle(enemy.posX-2,enemy.posY,30,30);
+                    rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2,30,30);
                 }
                 else if(dir.equals("Up")){
-                    rect = new Rectangle(enemy.posX,enemy.posY+1,30,30);
+                    rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2,30,30);
                 }else if(dir.equals("Down")){
-                    rect = new Rectangle(enemy.posX,enemy.posY-20,30,30);
+                    rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2,30,30);
                 }
                 //碰撞檢測
                 if(myrect.intersects(rect)){

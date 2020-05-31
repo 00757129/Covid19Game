@@ -13,7 +13,7 @@ public class GameFrame extends JFrame implements KeyListener{
 
     public Timer timer;                 
     public int level;
-    public int intervel = 10000 / 1000; //每intervel個微秒就repaint
+    public int intervel = 10000 / 10000; //每intervel個微秒就repaint
     public ArrayList<Weapon> WeaponList = new ArrayList<Weapon>();  //weapon用容器裝
     public ArrayList<Enemy> EnemyList = new ArrayList<Enemy>(); //enemy也用容器裝
     public Hero testC;      //一定要先宣告一下，不然KeyListener不給過，但是可以在initial再寫
@@ -36,7 +36,7 @@ public class GameFrame extends JFrame implements KeyListener{
                 repaint();
                 for(int i = 0;i < 4;i++)
                 {
-                    EnemyList.get(i).move(EnemyList.get(i).posX,EnemyList.get(i).posY,testC.posX,testC.posY,2);
+                    EnemyList.get(i).move(EnemyList.get(i).posX,EnemyList.get(i).posY,testC.posX+(testC.width/2),testC.posY+(testC.height/2),2);
                 }
             }
         }, intervel, intervel);
