@@ -11,6 +11,7 @@ public class Enemy extends Character{
 
     public Enemy(int enenmyX, int enenmyY, int heroX, int heroY, int speed){
         super(enenmyX, enenmyY, heroX, heroY, speed);
+        this.hp=1;
         this.width = 30;
         this.height = 30;
         img.add(new ImageIcon(Src[0]).getImage());

@@ -33,6 +33,7 @@ public class GameFrame extends JFrame implements KeyListener{
         timer.schedule(new TimerTask(){
             @Override
             public void run(){      //檢查位置
+                hit();
                 repaint();          //重畫角色的位置
             }
         }, 10, 10);        //每個微秒就重複一次
@@ -40,7 +41,7 @@ public class GameFrame extends JFrame implements KeyListener{
             @Override
             public void run(){
                 checkState();        //檢查所有生命
-                for(int i = 0;i < 4;i++)    //讓enemy往hero移動
+                for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
                 {                        
                     EnemyList.get(i).posX += EnemyList.get(i).speedX;
                     EnemyList.get(i).posY += EnemyList.get(i).speedY;
@@ -212,5 +213,26 @@ public class GameFrame extends JFrame implements KeyListener{
             Weapon tmpWeapon = new Weapon(testC.posX+testC.width/2, testC.posY+testC.height/2, event.getX(), event.getY(), 5);
             WeaponList.add(tmpWeapon);
         }
+    }
+     public void hit(){
+            for (int j = 0; j < WeaponList.size(); j++) {
+                
+            Rectangle weaponRect = new Rectangle(WeaponList.get(j).posX+WeaponList.get(j).width/2,WeaponList.get(j).posY+WeaponList.get(j).height/2,50,50);
+            Rectangle rect =null;
+            for (int i = 0; i < EnemyList.size(); i++) {
+                Enemy enemy = EnemyList.get(i);                
+                rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2,30,30);
+                //碰撞檢測
+                if(weaponRect.intersects(rect)){
+                    EnemyList.get(i).hp -= 1;
+                    System.out.println("hit");
+                }
+                if(EnemyList.get(i).hp<=0){
+                    EnemyList.remove(i);
+                }
+            }
+            
+            }
+            
     }
 }
