@@ -57,6 +57,7 @@ public class Hero extends Character{
                 bloodFlag++;
             }
         }
+        
         else
         {
             JOptionPane.showMessageDialog(null,"Lose!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
