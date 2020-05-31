@@ -11,7 +11,7 @@ public class Hero extends Character{
     String[] Blood = {"12-12.png","11-12.png","10-12.png","9-12.png","8-12.png","7-12.png","6-12.png","5-12.png","4-12.png","3-12.png","2-12.png","1-12.png","0-12.png"};   //血量圖片
     
     public Hero(int sX, int sY, int rX, int rY){
-        super(sX, sY, rX, rY);
+        super(sX, sY, rX, rY,10);
         this.width = 200;
         this.height = 200;
         srcFlag = 0;
