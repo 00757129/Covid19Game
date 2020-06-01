@@ -239,7 +239,7 @@ public class GameFrame extends JFrame implements KeyListener{
             WeaponList.add(tmpWeapon);
         }
     }
-     public void Weaponhit(){
+    public void Weaponhit(){
             for (int j = 0; j < WeaponList.size(); j++) {
                 
             Rectangle weaponRect = new Rectangle(WeaponList.get(j).posX+WeaponList.get(j).width/2,WeaponList.get(j).posY+WeaponList.get(j).height/2,50,50);
@@ -257,8 +257,12 @@ public class GameFrame extends JFrame implements KeyListener{
                     EnemyList.remove(i);
                 }
             }
-            
+            if(EnemyList.size()==0)     //殺光敵人後顯示視窗並關閉整個程式
+            {
+                JOptionPane.showMessageDialog(null,"Win!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
+                System.exit(1);
             }
+        }
             
     }
 }
