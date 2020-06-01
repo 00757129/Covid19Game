@@ -14,7 +14,7 @@ public class GameFrame extends JFrame implements KeyListener{
 
     public Timer timer;                 
     public int level;
-    public int intervel = 10000 / 10000; //每intervel個微秒就repaint
+    public int intervel = 1000000 / 100000; //每intervel個微秒就repaint
     public ArrayList<Weapon> WeaponList = new ArrayList<Weapon>();  //weapon用容器裝
     public ArrayList<Enemy> EnemyList = new ArrayList<Enemy>(); //enemy也用容器裝
     public Hero testC;      //一定要先宣告一下，不然KeyListener不給過，但是可以在initial再寫
@@ -36,8 +36,9 @@ public class GameFrame extends JFrame implements KeyListener{
             public void run(){      //檢查位置
                 Weaponhit();
                 repaint();          //重畫角色的位置
+                checkState();        //檢查所有生命
             }
-        }, 10, 10);        //每個微秒就重複一次
+        }, intervel, intervel);        //每個微秒就重複一次
 
         timer.schedule(new TimerTask(){
             @Override
@@ -54,13 +55,13 @@ public class GameFrame extends JFrame implements KeyListener{
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
-                checkState();        //檢查所有生命
+                testC.changeImg();       //檢查所有生命
             }
-        }, 500, 500);                   //每0.5秒就重複一次
+        }, 200, 200);                   //每0.5秒就重複一次
     }
 
     public void checkState(){
-        testC.changeImg();              //讓角色的腳可以移動，呈現動畫的感覺
+        //testC.changeImg();              //讓角色的腳可以移動，呈現動畫的感覺
         for(int i = 0;i<EnemyList.size();i++)
         {
             testC.setHp(EnemyList.get(i));      //檢查hero血量
@@ -141,39 +142,47 @@ public class GameFrame extends JFrame implements KeyListener{
         testC.moveFlag = -1;            
     }
     @Override
-    public void keyTyped(KeyEvent e){}
-    @Override
-    public void keyPressed(KeyEvent e) {
+    public void keyTyped(KeyEvent e){
         int key = e.getKeyCode();
         
         if(key == KeyEvent.VK_UP) {        
-            move(1);
+            //move(1);
+            if(testC.posY>=0)
+                testC.posY -= testC.speedY;
             if(testC.lastFlag==0)
                 testC.moveFlag = 1;
             else
                 testC.moveFlag = 0;
         }
         else if(key == KeyEvent.VK_DOWN){        //上下的圖片先暫時跟原本(僅限左右)的相反     
-            move(2);
+            //move(2);
+             if(testC.posY<=550)         //750-testC.height
+                testC.posY += testC.speedY;
             if(testC.lastFlag==0)
                 testC.moveFlag = 1;
             else
                 testC.moveFlag = 0;
         }
         else if( key == KeyEvent.VK_LEFT ){        //上下的圖片先暫時跟原本(僅限左右)的相反  
-            move(3);        
+            //move(3);   
+            if(testC.posX>=0)
+                testC.posX -= testC.speedX;     
             testC.moveFlag = 0;
             testC.lastFlag = testC.moveFlag;
         }
         else if( key == KeyEvent.VK_RIGHT ){
-            move(4);
+            //move(4);
+            if(testC.posX<=1000)         //1200-testC.width
+                testC.posX += testC.speedX;
             testC.moveFlag = 1;
             testC.lastFlag = testC.moveFlag;
         }
         // Move the Circle
 
         else if( key == KeyEvent.VK_W ){        //上下的圖片先暫時跟原本(僅限左右)的相反  
-            move(1);
+            //move(1);
+            if(testC.posY>=0)
+                testC.posY -= testC.speedY;
             if(testC.lastFlag==0)
                 testC.moveFlag = 1;
             else
@@ -181,7 +190,9 @@ public class GameFrame extends JFrame implements KeyListener{
         }
         
         else if( key == KeyEvent.VK_S ){        //上下的圖片先暫時跟原本(僅限左右)的相反      
-            move(2);
+            //move(2);
+            if(testC.posY<=550)         //750-testC.height
+                testC.posY += testC.speedY;
             if(testC.lastFlag==0)
                 testC.moveFlag = 1;
             else
@@ -189,12 +200,91 @@ public class GameFrame extends JFrame implements KeyListener{
         }
         
         else if( key == KeyEvent.VK_A ){
-            move(3);
+            //move(3);
+            if(testC.posX>=0)
+                testC.posX -= testC.speedX;
             testC.moveFlag = 0;
             testC.lastFlag = testC.moveFlag;
         }
         else if( key == KeyEvent.VK_D){            
-            move(4);
+            //move(4);
+            if(testC.posX<=1000)         //1200-testC.width
+                testC.posX += testC.speedX;
+            testC.moveFlag = 1;
+            testC.lastFlag = testC.moveFlag;
+        }
+        else
+            testC.moveFlag = -1;
+    }
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+        
+        if(key == KeyEvent.VK_UP) {        
+            //move(1);
+            if(testC.posY>=0)
+                testC.posY -= testC.speedY;
+            if(testC.lastFlag==0)
+                testC.moveFlag = 1;
+            else
+                testC.moveFlag = 0;
+        }
+        else if(key == KeyEvent.VK_DOWN){        //上下的圖片先暫時跟原本(僅限左右)的相反     
+            //move(2);
+             if(testC.posY<=550)         //750-testC.height
+                testC.posY += testC.speedY;
+            if(testC.lastFlag==0)
+                testC.moveFlag = 1;
+            else
+                testC.moveFlag = 0;
+        }
+        else if( key == KeyEvent.VK_LEFT ){        //上下的圖片先暫時跟原本(僅限左右)的相反  
+            //move(3);   
+            if(testC.posX>=0)
+                testC.posX -= testC.speedX;     
+            testC.moveFlag = 0;
+            testC.lastFlag = testC.moveFlag;
+        }
+        else if( key == KeyEvent.VK_RIGHT ){
+            //move(4);
+            if(testC.posX<=1000)         //1200-testC.width
+                testC.posX += testC.speedX;
+            testC.moveFlag = 1;
+            testC.lastFlag = testC.moveFlag;
+        }
+        // Move the Circle
+
+        else if( key == KeyEvent.VK_W ){        //上下的圖片先暫時跟原本(僅限左右)的相反  
+            //move(1);
+            if(testC.posY>=0)
+                testC.posY -= testC.speedY;
+            if(testC.lastFlag==0)
+                testC.moveFlag = 1;
+            else
+                testC.moveFlag = 0;
+        }
+        
+        else if( key == KeyEvent.VK_S ){        //上下的圖片先暫時跟原本(僅限左右)的相反      
+            //move(2);
+            if(testC.posY<=550)         //750-testC.height
+                testC.posY += testC.speedY;
+            if(testC.lastFlag==0)
+                testC.moveFlag = 1;
+            else
+                testC.moveFlag = 0;
+        }
+        
+        else if( key == KeyEvent.VK_A ){
+            //move(3);
+            if(testC.posX>=0)
+                testC.posX -= testC.speedX;
+            testC.moveFlag = 0;
+            testC.lastFlag = testC.moveFlag;
+        }
+        else if( key == KeyEvent.VK_D){            
+            //move(4);
+            if(testC.posX<=1000)         //1200-testC.width
+                testC.posX += testC.speedX;
             testC.moveFlag = 1;
             testC.lastFlag = testC.moveFlag;
         }
