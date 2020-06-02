@@ -37,7 +37,6 @@ public class GameFrame extends JFrame implements KeyListener{
             public void run(){      //檢查位置
                 Weaponhit();
                 repaint();          //重畫角色的位置
-                checkState();        //檢查所有生命
                 questionevent();
             }
         }, intervel, intervel);        //每個微秒就重複一次
@@ -57,9 +56,17 @@ public class GameFrame extends JFrame implements KeyListener{
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
-                testC.changeImg();       //檢查所有生命
+                testC.changeImg();       
             }
-        }, 200, 200);                   //每0.5秒就重複一次
+        }, 200, 200);                   //每0.1秒就重複一次
+
+
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run(){
+                checkState();        //檢查所有生命
+            }
+        }, 500, 500);                   //每0.5秒就重複一次
     }
 
     public void checkState(){
