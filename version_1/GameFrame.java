@@ -83,8 +83,8 @@ public class GameFrame extends JFrame implements KeyListener{
         int total = 10;                  //total of enemy
         SecureRandom rand = new SecureRandom();
         double range = (3.141515926 * 2) / total;       //
-        System.out.println("range is "+range);
-        for(int i = 0;i < total;i++)        //巧恩晚點改，敵人不知道為什麼只有一隻
+        // System.out.println("range is "+range);
+        for(int i = 0;i < total;i++)
         {
             double angle = rand.nextDouble()*(range) + range*i;
             rand = new SecureRandom();
@@ -94,15 +94,15 @@ public class GameFrame extends JFrame implements KeyListener{
             x = testC.posX + x;
             if(x <= 0)
                 x = 0;
-            else if(x >= 1000)          //應該要是1200-width，我先把width的最大值預設成200
+            else if(x >= 1000)          //應該要是1200-width，我先把hero的width的最大值預設成200
                 x = 1000;
             int y = (int)(length*Math.cos(angle));
             y = testC.posY + y;
             if(y <= 0)
                 y = 0;
-            else if(y >= 550)          //應該要是750-height，我先把width的最大值預設成200
+            else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
                 y = 550;
-            System.out.println("in number."+i+" x is "+x+" and y is "+y);
+            // System.out.println("in number."+i+" x is "+x+" and y is "+y);
             Enemy virus = new Enemy(x,y,testC.posX,testC.posY,2);
             EnemyList.add(virus);
         }
@@ -129,7 +129,7 @@ public class GameFrame extends JFrame implements KeyListener{
 		for(int i = 0; i<WeaponList.size(); i++){
             if(WeaponList.get(i).overScreen()){         //Weapon超出螢幕就移出陣列且不印出來
             	WeaponList.remove(i);
-            	System.out.println("remove"+ i);
+            	// System.out.println("remove"+ i);
             }
             else{                                      //Weapon如果沒超出螢幕就更改位置後畫出來
                 WeaponList.get(i).posX += WeaponList.get(i).speedX; 
@@ -191,6 +191,7 @@ public class GameFrame extends JFrame implements KeyListener{
 
         else if( key == KeyEvent.VK_W ){        //上下的圖片先暫時跟原本(僅限左右)的相反  
             //move(1);
+            System.out.println("in W");
             if(testC.posY>=0)
                 testC.posY -= testC.speedY;
             if(testC.lastFlag==0)
