@@ -18,7 +18,11 @@ public class GameFrame extends JFrame implements KeyListener{
     public ArrayList<Weapon> WeaponList = new ArrayList<Weapon>();  //weapon用容器裝
     public ArrayList<Enemy> EnemyList = new ArrayList<Enemy>(); //enemy也用容器裝
     public Hero testC;      //一定要先宣告一下，不然KeyListener不給過，但是可以在initial再寫
-    public ArrayList<Rectangle> placeRect = new ArrayList<Rectangle>();    //裝各地點位置的arraylist
+    public ArrayList<Place> placeRect = new ArrayList<Place>();    //裝各地點位置的arraylist
+    public int playerChoice;
+    JRadioButton ans1;
+    JRadioButton ans2; 
+    JRadioButton ans3;
 
     public GameFrame(){
         super("GameFrame");
@@ -342,11 +346,11 @@ public class GameFrame extends JFrame implements KeyListener{
     }
 
     public void setQuestionPlace(){     //設定question觸發位置
-        int [] placeX = {42, 210, 540, 616, 966, 396};
+        int [] placeX = {104, 210, 540, 616, 966, 396};
         int [] placeY = {376, 632, 478, 576, 609, 174};
         for(int i = 0;i < 6 ;i++)
         {
-            Rectangle place = new Rectangle(placeX[i],placeY[i],5,5);
+            Place place = new Place(placeX[i],placeY[i],i);
             placeRect.add(place);
         }
     }
@@ -356,76 +360,188 @@ public class GameFrame extends JFrame implements KeyListener{
         JLabel questionplace;
         JLabel questionPart1;
         JLabel questionPart2;
-        JButton ans1;
-        JButton ans2;
-        JButton ans3;
+        JLabel questionPart3;
+        ButtonGroup ansGroup = new ButtonGroup();
+        RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
+        int input;
 
-        switch(no)
+        switch(no + 1)
         {
             case 1:
                 questionplace = new JLabel("1.林口長庚醫院：假訊息查證");
                 questionPart1 = new JLabel("防疫期間很多人因為擔心身旁親友的安危，所以都會瘋狂轉傳很多訊息，當遇到下列訊息該怎麼做才最合適?");
-                questionPart2 = new JLabel("驚傳！<br/>林口長庚收治多名疑似武漢肺炎病患，政府尚未公開說明。<br/>但是長庚醫院現在隨時處於馬上封院的情況，請呼籲親友不要隨便去林口長庚就診");
-                ans1 = new JButton("A.太可怕了，趕快轉傳給其他親朋好友");
-                ans2 = new JButton("B.先去假訊息查證中心或看政府新聞稿想辦法查證，並將查證的結果分享給轉傳訊息的人");
-                ans3 = new JButton("C.隨便啦~他們愛怎麼轉傳都不關我的事");
-                JOptionPane.showMessageDialog(null,new Object[]{questionplace,questionPart1,questionPart2,ans1,ans2,ans3},"問題一",JOptionPane.QUESTION_MESSAGE);
+                questionPart2 = new JLabel("驚傳！林口長庚收治多名疑似武漢肺炎病患，政府尚未公開說明。");
+                questionPart3 = new JLabel("但是長庚醫院現在隨時處於馬上封院的情況，請呼籲親友不要隨便去林口長庚就診");
+                ans1 = new JRadioButton("A.太可怕了，趕快轉傳給其他親朋好友");
+                ans2 = new JRadioButton("B.先去假訊息查證中心或看政府新聞稿想辦法查證，並將查證的結果分享給轉傳訊息的人");
+                ans3 = new JRadioButton("C.隨便啦~他們愛怎麼轉傳都不關我的事");
+                ansGroup = new ButtonGroup();
+                ansGroup.add(ans1);
+                ansGroup.add(ans2);
+                ansGroup.add(ans3);
+                ans1.addItemListener(handlerRadioButtonSource);
+                ans2.addItemListener(handlerRadioButtonSource);
+                ans3.addItemListener(handlerRadioButtonSource);
+                input = JOptionPane.showConfirmDialog(null,new Object[]{questionplace,questionPart1,questionPart2,questionPart3,ans1,ans2,ans3},"問題一",JOptionPane.DEFAULT_OPTION);
+                //RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
+                if(input == 0)
+                {
+                    checkCorrect(2);
+                }
             break;
 
             case 2:
                 questionplace = new JLabel("2.亞東醫院：疫情期間進出醫院");
-                questionPart1 = new JLabel("防疫期間，進出醫院可以看到除了平常政府發放的醫療醫用口罩醫護人員都會戴N95口罩<br/>請問N95的95代表甚麼?");
-                ans1 = new JButton("A.可阻擋95%直徑0.3微米以上的非油性顆粒");
-                ans2 = new JButton("B.一片口罩台幣95元");
-                ans3 = new JButton("C.可阻擋95%直徑0.1微米以上的微生物與細菌");
-                JOptionPane.showMessageDialog(null,new Object[]{questionplace,questionPart1,ans1,ans2,ans3},"問題二",JOptionPane.QUESTION_MESSAGE);
+                questionPart1 = new JLabel("防疫期間，進出醫院可以看到除了平常政府發放的醫療醫用口罩醫護人員都會戴N95口罩");
+                questionPart2 = new JLabel("請問N95的95代表甚麼?");
+                ans1 = new JRadioButton("A.可阻擋95%直徑0.3微米以上的非油性顆粒");
+                ans2 = new JRadioButton("B.一片口罩台幣95元");
+                ans3 = new JRadioButton("C.可阻擋95%直徑0.1微米以上的微生物與細菌");
+                ansGroup = new ButtonGroup();
+                ansGroup.add(ans1);
+                ansGroup.add(ans2);
+                ansGroup.add(ans3);           
+                ans1.addItemListener(handlerRadioButtonSource);
+                ans2.addItemListener(handlerRadioButtonSource);
+                ans3.addItemListener(handlerRadioButtonSource);     
+                input = JOptionPane.showConfirmDialog(null,new Object[]{questionplace,questionPart1,questionPart2,ans1,ans2,ans3},"問題二",JOptionPane.DEFAULT_OPTION);
+                if(input == 0)
+                {
+                    checkCorrect(1);
+                }
             break;
 
             case 3:
                 questionplace = new JLabel("3.台北車站：出入人多場合");
-                questionPart1 = new JLabel("防疫期間，離開家裡都需要仔細的洗手<br/>請問下列何者為正確洗手方法?");
-                ans1 = new JButton("A.內外夾弓大立腕");
-                ans2 = new JButton("B.內外弓夾腕立大");
-                ans3 = new JButton("C.外內大力夾弓腕");
-                JOptionPane.showMessageDialog(null,new Object[]{questionplace,questionPart1,ans1,ans2,ans3},"問題三",JOptionPane.QUESTION_MESSAGE);
+                questionPart1 = new JLabel("防疫期間，離開家裡都需要仔細的洗手");
+                questionPart2 = new JLabel("請問下列何者為正確洗手方法?");
+                ans1 = new JRadioButton("A.內外夾弓大立腕");
+                ans2 = new JRadioButton("B.內外弓夾腕立大");
+                ans3 = new JRadioButton("C.外內大力夾弓腕");
+                ansGroup = new ButtonGroup();
+                ansGroup.add(ans1);
+                ansGroup.add(ans2);
+                ansGroup.add(ans3);    
+                ans1.addItemListener(handlerRadioButtonSource);
+                ans2.addItemListener(handlerRadioButtonSource);
+                ans3.addItemListener(handlerRadioButtonSource);            
+                input = JOptionPane.showConfirmDialog(null,new Object[]{questionplace,questionPart1,questionPart2,ans1,ans2,ans3},"問題三",JOptionPane.DEFAULT_OPTION);
+                //RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
+                if(input == 0)
+                {
+                    checkCorrect(1);
+                }
             break;
 
             case 4:
                 questionplace = new JLabel("4.公館：宿舍內、校園內可以注意的防疫");
-                questionPart1 = new JLabel("師大公館有名住宿生於3/31確診新型冠狀病毒<br/>為確保不要在宿舍與校區交叉感染的疑慮，校方要求與該名學生密切互動的13名師生進行居家隔離<br/>請問下列哪個選項提及的防疫措施有要求 “完全禁止外出”");
-                ans1 = new JButton("A.居家檢疫");
-                ans2 = new JButton("B.居家檢疫、居家隔離");
-                ans3 = new JButton("C.居家隔離");
-                JOptionPane.showMessageDialog(null,new Object[]{questionplace,questionPart1,ans1,ans2,ans3},"問題四",JOptionPane.QUESTION_MESSAGE);
+                questionPart1 = new JLabel("師大公館有名住宿生於3/31確診新型冠狀病毒");
+                questionPart2 = new JLabel("為確保不要在宿舍與校區交叉感染的疑慮，校方要求與該名學生密切互動的13名師生進行居家隔離<br/>請問下列哪個選項提及的防疫措施有要求 “完全禁止外出”");
+                ans1 = new JRadioButton("A.居家檢疫");
+                ans2 = new JRadioButton("B.居家檢疫、居家隔離");
+                ans3 = new JRadioButton("C.居家隔離");
+                ansGroup = new ButtonGroup();
+                ansGroup.add(ans1);
+                ansGroup.add(ans2);
+                ansGroup.add(ans3);
+                ans1.addItemListener(handlerRadioButtonSource);
+                ans2.addItemListener(handlerRadioButtonSource);
+                ans3.addItemListener(handlerRadioButtonSource);
+                input = JOptionPane.showConfirmDialog(null,new Object[]{questionplace,questionPart1,questionPart2,ans1,ans2,ans3},"問題四",JOptionPane.DEFAULT_OPTION);
+                if(input == 0)
+                {
+                    checkCorrect(3);
+                }
             break;
 
             case 5:
                 questionplace = new JLabel("5.動物園：公共空間的防疫辦法");
-                questionPart1 = new JLabel("以往動物園在假日時總是人滿為患，大家都來這邊看動物<br/>請問在防疫期間，不推薦前往動物園的原因為何?");
-                ans1 = new JButton("A.動物有可能會被遊客感染再傳染給人類");
-                ans2 = new JButton("B.動物園人過多，怕會遭到其他旅客感染");
-                ans3 = new JButton("C.以上皆是");
-                JOptionPane.showMessageDialog(null,new Object[]{questionplace,questionPart1,ans1,ans2,ans3},"問題五",JOptionPane.QUESTION_MESSAGE);
+                questionPart1 = new JLabel("以往動物園在假日時總是人滿為患，大家都來這邊看動物");
+                questionPart2 = new JLabel("請問在防疫期間，不推薦前往動物園的原因為何?");
+                ans1 = new JRadioButton("A.動物有可能會被遊客感染再傳染給人類");
+                ans2 = new JRadioButton("B.動物園人過多，怕會遭到其他旅客感染");
+                ans3 = new JRadioButton("C.以上皆是");
+                ansGroup = new ButtonGroup();
+                ansGroup.add(ans1);
+                ansGroup.add(ans2);
+                ansGroup.add(ans3);
+                ans1.addItemListener(handlerRadioButtonSource);
+                ans2.addItemListener(handlerRadioButtonSource);
+                ans3.addItemListener(handlerRadioButtonSource);
+                input = JOptionPane.showConfirmDialog(null,new Object[]{questionplace,questionPart1,questionPart2,ans1,ans2,ans3},"問題五",JOptionPane.DEFAULT_OPTION);
+                //RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
+                if(input == 0)
+                {
+                    checkCorrect(2);
+                }
             break;
 
             case 6:
                 questionplace = new JLabel("6.新北投：就算在戶外泡溫泉依舊需要實名制");
-                questionPart1 = new JLabel("防疫期間，各地觀光景點都有防疫標準，就連新北投的泡腳溫泉也不例外<br/>請問下列何者為防疫期間前往新北投需配合的事項?");
-                ans1 = new JButton("A.登記實名制");
-                ans2 = new JButton("B.戴口罩");
-                ans3 = new JButton("C.以上皆是");
-                JOptionPane.showMessageDialog(null,new Object[]{questionplace,questionPart1,ans1,ans2,ans3},"問題四",JOptionPane.QUESTION_MESSAGE);
+                questionPart1 = new JLabel("防疫期間，各地觀光景點都有防疫標準，就連新北投的泡腳溫泉也不例外");
+                questionPart2 = new JLabel("請問下列何者為防疫期間前往新北投需配合的事項?");
+                ans1 = new JRadioButton("A.登記實名制");
+                ans2 = new JRadioButton("B.戴口罩");
+                ans3 = new JRadioButton("C.以上皆是");
+                ansGroup = new ButtonGroup();
+                ansGroup.add(ans1);
+                ansGroup.add(ans2);
+                ansGroup.add(ans3);
+                ans1.addItemListener(handlerRadioButtonSource);
+                ans2.addItemListener(handlerRadioButtonSource);
+                ans3.addItemListener(handlerRadioButtonSource);
+                input = JOptionPane.showConfirmDialog(null,new Object[]{questionplace,questionPart1,questionPart2,ans1,ans2,ans3},"問題六",JOptionPane.DEFAULT_OPTION);
+                //RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
+                if(input == 0)
+                {
+                    checkCorrect(3);
+                }
             break;
         }
     }
 
+    public void checkCorrect(int correctAns)
+    {
+        System.out.println(playerChoice);
+        if(playerChoice == correctAns)
+        {
+            JOptionPane.showMessageDialog(null,"恭喜答對","答題結果",JOptionPane.INFORMATION_MESSAGE);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null,"嗚嗚答錯囉~","答題結果",JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private class RadioButtonHandlerSource implements ItemListener
+    {
+        @Override
+        public void itemStateChanged(ItemEvent event)
+        {
+            if(ans1.isSelected())
+            {
+                playerChoice = 1;
+            }
+            else if (ans2.isSelected())
+            {
+                playerChoice = 2;
+            }
+            else if (ans3.isSelected())
+            {
+                playerChoice = 3;
+            }
+        }
+    }
+
+
     public void questionevent(){
         Rectangle heroRect = new Rectangle(testC.posX+testC.width/2,testC.posY+testC.height/2,50,50);
+        int removeTime = 0;
         for(int i = 0;i<placeRect.size();i++)
         {
-            if(heroRect.intersects(placeRect.get(i)))       //踩到有事件的位置
+            if(heroRect.intersects(placeRect.get(i).rect))       //踩到有事件的位置
             {
-                setQuestionFrame(i);
+                setQuestionFrame(placeRect.get(i).no);
                 placeRect.remove(i);
             }
         }
