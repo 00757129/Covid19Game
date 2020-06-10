@@ -64,6 +64,10 @@ public class GameFrame extends JFrame implements KeyListener{
             @Override
             public void run(){
                 testC.changeImg();       
+                for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
+                {                        
+                    EnemyList.changeImg(level);
+                }
             }
         }, 200, 200);                   //每0.1秒就重複一次
 
@@ -85,6 +89,7 @@ public class GameFrame extends JFrame implements KeyListener{
     }
     
     public void initial(){
+        level = 0;
         testC = new Hero(5, 5);
         setQuestionPlace1();
         int total = 10;                  //total of enemy
@@ -116,7 +121,7 @@ public class GameFrame extends JFrame implements KeyListener{
     }
 
     public void initial_2(){
-       
+        level = 1;
         JOptionPane.showMessageDialog(this,"通過第一關！");
         System.out.println("inital_2");
         //backGroundImageWidth=600;
