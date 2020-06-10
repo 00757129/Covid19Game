@@ -21,6 +21,8 @@ public class GameFrame extends JFrame implements KeyListener{
     public ArrayList<Place> placeRect = new ArrayList<Place>();    //裝各地點位置的arraylist
     public int playerChoice;
     public Image backGroundImage =new ImageIcon("routemap2020.png").getImage();
+    int backGroundImageHight=750;
+    int backGroundImageWidth=1200;
     JRadioButton ans1;
     JRadioButton ans2; 
     JRadioButton ans3;
@@ -108,7 +110,7 @@ public class GameFrame extends JFrame implements KeyListener{
             else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
                 y = 550;
             // System.out.println("in number."+i+" x is "+x+" and y is "+y);
-            Enemy virus = new Enemy(x,y,testC.posX,testC.posY,2,1,0);
+            Enemy virus = new Enemy(x,y,testC.posX,testC.posY,2,1,0,30,30);
             EnemyList.add(virus);
         }
     }
@@ -117,7 +119,8 @@ public class GameFrame extends JFrame implements KeyListener{
        
         JOptionPane.showMessageDialog(this,"通過第一關！");
         System.out.println("inital_2");
-
+        //backGroundImageWidth=600;
+        //backGroundImageHight=400;
         testC = new Hero(5, 5);
         //setQuestionPlace();
         backGroundImage =new ImageIcon("taiwan.jpg").getImage();
@@ -144,7 +147,7 @@ public class GameFrame extends JFrame implements KeyListener{
             else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
                 y = 550;
             // System.out.println("in number."+i+" x is "+x+" and y is "+y);
-            Enemy virus = new Enemy(x,y,testC.posX,testC.posY,2,6,1);
+            Enemy virus = new Enemy(x,y,testC.posX,testC.posY,2,6,1,100,100);
             EnemyList.add(virus);
         }
     }
@@ -160,7 +163,7 @@ public class GameFrame extends JFrame implements KeyListener{
         // System.out.println("test");
         BufferedImage bi =(BufferedImage)this.createImage(this.getSize().width,this.getSize().height);
         Graphics big =bi.getGraphics();
-        big.drawImage(backGroundImage, 0, 0, null);    //重複畫背景
+        big.drawImage(backGroundImage,0,0, backGroundImageWidth, backGroundImageHight, null);    //重複畫背景
 		big.drawImage(testC.img.get(0), testC.posX, testC.posY, testC.width, testC.height,null);    //畫hero本身
         big.drawImage(testC.blood.get(0),testC.posX, testC.posY+15,testC.width,50,null);            //畫hero的血條
 

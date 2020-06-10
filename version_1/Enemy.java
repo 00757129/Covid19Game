@@ -9,11 +9,11 @@ public class Enemy extends Character{
 
     String[] Src = {"covid.png","boss2.png"};
 
-    public Enemy(int enenmyX, int enenmyY, int heroX, int heroY, int speed,int hp,int src){
+    public Enemy(int enenmyX, int enenmyY, int heroX, int heroY, int speed,int hp,int src,int width,int height){
         super(enenmyX, enenmyY, heroX, heroY, speed);
         this.hp=hp;
-        this.width = 30;
-        this.height = 30;
+        this.width = width;
+        this.height = height;
         img.add(new ImageIcon(Src[src]).getImage());
     }
 
