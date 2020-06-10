@@ -86,7 +86,7 @@ public class GameFrame extends JFrame implements KeyListener{
     
     public void initial(){
         testC = new Hero(5, 5);
-        setQuestionPlace();
+        setQuestionPlace1();
         int total = 10;                  //total of enemy
         SecureRandom rand = new SecureRandom();
         double range = (3.141515926 * 2) / total;       //
@@ -122,7 +122,7 @@ public class GameFrame extends JFrame implements KeyListener{
         //backGroundImageWidth=600;
         //backGroundImageHight=400;
         testC = new Hero(5, 5);
-        //setQuestionPlace();
+        setQuestionPlace2();
         backGroundImage =new ImageIcon("taiwan.jpg").getImage();
         int total = 10;                  //total of enemy
         SecureRandom rand = new SecureRandom();
@@ -388,10 +388,20 @@ public class GameFrame extends JFrame implements KeyListener{
         }
     }
 
-    public void setQuestionPlace(){     //設定question觸發位置
+    public void setQuestionPlace1(){     //設定question觸發位置
         int [] placeX = {104, 210, 540, 616, 966, 396};
         int [] placeY = {376, 632, 478, 576, 609, 174};
         for(int i = 0;i < 6 ;i++)
+        {
+            Place place = new Place(placeX[i],placeY[i],i);
+            placeRect.add(place);
+        }
+    }
+
+    public void setQuestionPlace2(){
+        int [] placeX = {};
+        int [] placeY = {};
+        for(int i = 0;i<;i++)
         {
             Place place = new Place(placeX[i],placeY[i],i);
             placeRect.add(place);
@@ -548,11 +558,11 @@ public class GameFrame extends JFrame implements KeyListener{
         System.out.println(playerChoice);
         if(playerChoice == correctAns)
         {
-            JOptionPane.showMessageDialog(null,"恭喜答對","答題結果",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,"甚麼?竟然對了!真令人無法置信!!","答題結果",JOptionPane.INFORMATION_MESSAGE);
         }
         else
         {
-            JOptionPane.showMessageDialog(null,"嗚嗚答錯囉~","答題結果",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,"哈哈~恭喜答錯~","答題結果",JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
