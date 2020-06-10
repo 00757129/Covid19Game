@@ -7,14 +7,14 @@ import java.util.*;
 
 public class Enemy extends Character{
 
-    String[] Src = {"covid.png"};
+    String[] Src = {"covid.png","boss2.png"};
 
-    public Enemy(int enenmyX, int enenmyY, int heroX, int heroY, int speed){
+    public Enemy(int enenmyX, int enenmyY, int heroX, int heroY, int speed,int hp,int src){
         super(enenmyX, enenmyY, heroX, heroY, speed);
-        this.hp=1;
+        this.hp=hp;
         this.width = 30;
         this.height = 30;
-        img.add(new ImageIcon(Src[0]).getImage());
+        img.add(new ImageIcon(Src[src]).getImage());
     }
 
     public void move(int enenmyX, int enenmyY, int heroX, int heroY, int speed)

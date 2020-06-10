@@ -20,6 +20,7 @@ public class GameFrame extends JFrame implements KeyListener{
     public Hero testC;      //一定要先宣告一下，不然KeyListener不給過，但是可以在initial再寫
     public ArrayList<Place> placeRect = new ArrayList<Place>();    //裝各地點位置的arraylist
     public int playerChoice;
+    public Image backGroundImage =new ImageIcon("routemap2020.png").getImage();
     JRadioButton ans1;
     JRadioButton ans2; 
     JRadioButton ans3;
@@ -107,10 +108,49 @@ public class GameFrame extends JFrame implements KeyListener{
             else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
                 y = 550;
             // System.out.println("in number."+i+" x is "+x+" and y is "+y);
-            Enemy virus = new Enemy(x,y,testC.posX,testC.posY,2);
+            Enemy virus = new Enemy(x,y,testC.posX,testC.posY,2,1,0);
             EnemyList.add(virus);
         }
     }
+
+    public void initial_2(){
+       
+        JOptionPane.showMessageDialog(this,"通過第一關！");
+        System.out.println("inital_2");
+
+        testC = new Hero(5, 5);
+        //setQuestionPlace();
+        backGroundImage =new ImageIcon("taiwan.jpg").getImage();
+        int total = 10;                  //total of enemy
+        SecureRandom rand = new SecureRandom();
+        double range = (3.141515926 * 2) / total;       //
+        // System.out.println("range is "+range);
+        for(int i = 0;i < total;i++)
+        {
+            double angle = rand.nextDouble()*(range) + range*i;
+            rand = new SecureRandom();
+            int length = (int)(rand.nextDouble()*500+300);
+            // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
+            int x = (int)(length*Math.sin(angle));
+            x = testC.posX + x;
+            if(x <= 0)
+                x = 0;
+            else if(x >= 1000)          //應該要是1200-width，我先把hero的width的最大值預設成200
+                x = 1000;
+            int y = (int)(length*Math.cos(angle));
+            y = testC.posY + y;
+            if(y <= 0)
+                y = 0;
+            else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
+                y = 550;
+            // System.out.println("in number."+i+" x is "+x+" and y is "+y);
+            Enemy virus = new Enemy(x,y,testC.posX,testC.posY,2,6,1);
+            EnemyList.add(virus);
+        }
+    }
+
+
+
 
     public void update(Graphics g) { 
         this.paint(g); 
@@ -120,7 +160,7 @@ public class GameFrame extends JFrame implements KeyListener{
         // System.out.println("test");
         BufferedImage bi =(BufferedImage)this.createImage(this.getSize().width,this.getSize().height);
         Graphics big =bi.getGraphics();
-        big.drawImage(new ImageIcon("routemap2020.png").getImage(), 0, 0, null);    //重複畫背景
+        big.drawImage(backGroundImage, 0, 0, null);    //重複畫背景
 		big.drawImage(testC.img.get(0), testC.posX, testC.posY, testC.width, testC.height,null);    //畫hero本身
         big.drawImage(testC.blood.get(0),testC.posX, testC.posY+15,testC.width,50,null);            //畫hero的血條
 
@@ -567,8 +607,11 @@ public class GameFrame extends JFrame implements KeyListener{
             }
             if(EnemyList.size()==0)     //殺光敵人後顯示視窗並關閉整個程式
             {
-                JOptionPane.showMessageDialog(null,"Win!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
-                System.exit(1);
+                //JOptionPane.showMessageDialog(null,"Win!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
+                
+
+                initial_2();
+                //System.exit(1);
             }
         }
             
