@@ -14,9 +14,6 @@ public class Hero extends Character{
         super(sX, sY, rX, rY,10);
         this.width = 200;
         this.height = 200;
-        srcFlag = 0;
-        moveFlag = -1;
-        bloodFlag = 0;
         img.add(new ImageIcon("hero_1.png").getImage());
         blood.add(new ImageIcon("12-12.png").getImage());
     }
@@ -25,9 +22,6 @@ public class Hero extends Character{
         super(sX, sY);
         this.width = 200;
         this.height = 200;
-        srcFlag = 0;
-        bloodFlag = 0;
-        moveFlag = -1;
         img.add(new ImageIcon("hero_1.png").getImage());
         blood.add(new ImageIcon("12-12.png").getImage());
     }
@@ -91,6 +85,8 @@ public class Hero extends Character{
             return false;
     }
 
+    @Override
+    public void changeImg(int level){}
     public void check(){
         System.out.println("speedX is "+speedX+" while speedY is "+speedY);
         System.out.println("rectX is "+rectX+" while rectY is "+rectY);
