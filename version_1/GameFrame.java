@@ -73,11 +73,19 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
+<<<<<<< Updated upstream
                 testC.changeImg();       
                 // for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
                 // {                        
                 //     EnemyList.changeImg(level);
                 // }
+=======
+                testC.changeImg(); 
+                for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
+                {                        
+                    EnemyList.changeImg(level);
+                }     
+>>>>>>> Stashed changes
             }
         }, 200, 200);                   //每0.1秒就重複一次
 
@@ -116,7 +124,10 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
     
     public void initial(){
+<<<<<<< Updated upstream
         System.out.println("inital");
+=======
+>>>>>>> Stashed changes
         level = 0;
         testC = new Hero(5, 5);
         setQuestionPlace1();
@@ -150,7 +161,11 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
     public void initial_2(){
         level = 1;
+<<<<<<< Updated upstream
         
+=======
+        JOptionPane.showMessageDialog(this,"通過第一關！");
+>>>>>>> Stashed changes
         System.out.println("inital_2");
         //backGroundImageWidth=600;
         //backGroundImageHight=400;
@@ -305,41 +320,41 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         }
         // Move the Circle
 
-        else if( key == KeyEvent.VK_W ){        //上下的圖片先暫時跟原本(僅限左右)的相反  
-            //move(1);
-            System.out.println("in W");
-            if(testC.posY>=0)
-                testC.posY -= testC.speedY;
-            if(testC.lastFlag==0)
-                testC.moveFlag = 1;
-            else
-                testC.moveFlag = 0;
-        }
+        // else if( key == KeyEvent.VK_W ){        //上下的圖片先暫時跟原本(僅限左右)的相反  
+        //     //move(1);
+        //     System.out.println("in W");
+        //     if(testC.posY>=0)
+        //         testC.posY -= testC.speedY;
+        //     if(testC.lastFlag==0)
+        //         testC.moveFlag = 1;
+        //     else
+        //         testC.moveFlag = 0;
+        // }
         
-        else if( key == KeyEvent.VK_S ){        //上下的圖片先暫時跟原本(僅限左右)的相反      
-            //move(2);
-            if(testC.posY<=550)         //750-testC.height
-                testC.posY += testC.speedY;
-            if(testC.lastFlag==0)
-                testC.moveFlag = 1;
-            else
-                testC.moveFlag = 0;
-        }
+        // else if( key == KeyEvent.VK_S ){        //上下的圖片先暫時跟原本(僅限左右)的相反      
+        //     //move(2);
+        //     if(testC.posY<=550)         //750-testC.height
+        //         testC.posY += testC.speedY;
+        //     if(testC.lastFlag==0)
+        //         testC.moveFlag = 1;
+        //     else
+        //         testC.moveFlag = 0;
+        // }
         
-        else if( key == KeyEvent.VK_A ){
-            //move(3);
-            if(testC.posX>=0)
-                testC.posX -= testC.speedX;
-            testC.moveFlag = 0;
-            testC.lastFlag = testC.moveFlag;
-        }
-        else if( key == KeyEvent.VK_D){            
-            //move(4);
-            if(testC.posX<=1000)         //1200-testC.width
-                testC.posX += testC.speedX;
-            testC.moveFlag = 1;
-            testC.lastFlag = testC.moveFlag;
-        }
+        // else if( key == KeyEvent.VK_A ){
+        //     //move(3);
+        //     if(testC.posX>=0)
+        //         testC.posX -= testC.speedX;
+        //     testC.moveFlag = 0;
+        //     testC.lastFlag = testC.moveFlag;
+        // }
+        // else if( key == KeyEvent.VK_D){            
+        //     //move(4);
+        //     if(testC.posX<=1000)         //1200-testC.width
+        //         testC.posX += testC.speedX;
+        //     testC.moveFlag = 1;
+        //     testC.lastFlag = testC.moveFlag;
+        // }
         else
             testC.moveFlag = -1;
     }
