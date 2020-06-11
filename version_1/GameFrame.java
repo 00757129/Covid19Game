@@ -10,14 +10,15 @@ import java.util.TimerTask;
 import java.awt.image.BufferedImage;
 import java.security.*;
 
-public class GameFrame extends JFrame implements KeyListener{
+public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
     public Timer timer;                 
     public int level;
+    public int start=0;
     public int intervel = 1000000 / 100000; //每intervel個微秒就repaint
     public ArrayList<Weapon> WeaponList = new ArrayList<Weapon>();  //weapon用容器裝
     public ArrayList<Enemy> EnemyList = new ArrayList<Enemy>(); //enemy也用容器裝
-    public Hero testC;      //一定要先宣告一下，不然KeyListener不給過，但是可以在initial再寫
+    public Hero testC =new Hero(5, 5);;      //一定要先宣告一下，不然KeyListener不給過，但是可以在initial再寫
     public ArrayList<Place> placeRect = new ArrayList<Place>();    //裝各地點位置的arraylist
     public int playerChoice;
     public Image backGroundImage =new ImageIcon("routemap2020.png").getImage();
@@ -27,15 +28,23 @@ public class GameFrame extends JFrame implements KeyListener{
     JRadioButton ans2; 
     JRadioButton ans3;
     JRadioButton ans4;
+    public JLabel label;  public JPanel mainJpanel,labelPanel,levelOnePanel,levelTwoPanel,levelThreePanel,introductionPanel; 
+    public JButton levelOneButton,levelTwoButton,levelThreeButton,introductionButton; 
+    
+
 
     public GameFrame(){
         super("GameFrame");
-        setLayout(new FlowLayout());
+        setLayout(null); 
+        //setLayout(new FlowLayout());
+        
         setLocationRelativeTo(null);
-        addKeyListener(this);
-        addMouseListener(new MouseAdapterDemo());
-        initial();          //設定關卡初始狀況，包含怪獸的位置和英雄的速度、初始位置
-        working();          //設定timertask，讓程式定期移動腳色和檢查生命
+        //addKeyListener(this);
+        //addMouseListener(new MouseAdapterDemo());
+        SetStart();
+
+        //initial();          //設定關卡初始狀況，包含怪獸的位置和英雄的速度、初始位置
+        //working();          //設定timertask，讓程式定期移動腳色和檢查生命
     }
 
     public void working(){
@@ -88,8 +97,26 @@ public class GameFrame extends JFrame implements KeyListener{
             testC.setHp(EnemyList.get(i));      //檢查hero血量
         }
     }
+    public void SetStart(){
+       
+        //label=new JLabel("COVID-19");label.setBounds(550,50,100,40); 
+        levelOneButton=new JButton("第一關");levelOneButton.setBounds(550,150,100,40); 
+        levelTwoButton=new JButton("第二關");levelTwoButton.setBounds(550,250,100,40);
+        levelThreeButton=new JButton("第三關");levelThreeButton.setBounds(550,350,100,40); 
+        introductionButton=new JButton("遊戲介紹");introductionButton.setBounds(550,450,100,40); 
+        levelOneButton.addActionListener(this);levelTwoButton.addActionListener(this);levelThreeButton.addActionListener(this);
+        introductionButton.addActionListener(this);
+        //add(label);
+        add(levelOneButton);add(levelTwoButton);add(levelThreeButton);add(introductionButton);
+        //add(mainJpanel);
+        SwingUtilities.updateComponentTreeUI(this);    
+        repaint();
+        revalidate();
+
+    }
     
     public void initial(){
+        System.out.println("inital");
         level = 0;
         testC = new Hero(5, 5);
         setQuestionPlace1();
@@ -123,7 +150,7 @@ public class GameFrame extends JFrame implements KeyListener{
 
     public void initial_2(){
         level = 1;
-        JOptionPane.showMessageDialog(this,"通過第一關！");
+        
         System.out.println("inital_2");
         //backGroundImageWidth=600;
         //backGroundImageHight=400;
@@ -162,14 +189,16 @@ public class GameFrame extends JFrame implements KeyListener{
 
 
     public void update(Graphics g) { 
-        this.paint(g); 
+        //this.paint(g); 
     }
     
     public void paint(Graphics g){
         // System.out.println("test");
+        if(start==0)return;
         BufferedImage bi =(BufferedImage)this.createImage(this.getSize().width,this.getSize().height);
         Graphics big =bi.getGraphics();
         big.drawImage(backGroundImage,0,0, backGroundImageWidth, backGroundImageHight, null);    //重複畫背景
+        
 		big.drawImage(testC.img.get(0), testC.posX, testC.posY, testC.width, testC.height,null);    //畫hero本身
         big.drawImage(testC.blood.get(0),testC.posX, testC.posY+15,testC.width,50,null);            //畫hero的血條
 
@@ -182,7 +211,7 @@ public class GameFrame extends JFrame implements KeyListener{
 		for(int i = 0; i<WeaponList.size(); i++){
             if(WeaponList.get(i).overScreen()){         //Weapon超出螢幕就移出陣列且不印出來
             	WeaponList.remove(i);
-            	// System.out.println("remove"+ i);
+            	 System.out.println("remove"+ i);
             }
             else{                                      //Weapon如果沒超出螢幕就更改位置後畫出來
                 WeaponList.get(i).posX += WeaponList.get(i).speedX; 
@@ -199,6 +228,40 @@ public class GameFrame extends JFrame implements KeyListener{
     public Image ChooseBackGround(int level){
         return new ImageIcon("routemap2020.png").getImage();
     }
+
+
+   
+           //public void actionPerformed()  迴車鍵與按下Button後之處理
+     @Override
+      public void actionPerformed(ActionEvent event)
+      {
+          removeAll();start=1;
+          System.out.println(event.getActionCommand());
+          if(event.getActionCommand().equals("第一關")){
+                this.requestFocus();
+                addKeyListener(this);
+                addMouseListener(new MouseAdapterDemo());
+              initial();
+              working();
+          }else if(event.getActionCommand().equals("第二關")){
+              this.requestFocus();
+               addKeyListener(this);
+               addMouseListener(new MouseAdapterDemo());
+              initial_2();
+              working();
+          }else if(event.getActionCommand().equals("第三關")){
+              this.requestFocus();
+               addKeyListener(this);
+               addMouseListener(new MouseAdapterDemo());
+              initial_2();
+              working();
+          }else{
+
+          }
+         
+
+      } 
+      
 
     @Override
     public void keyReleased(KeyEvent e){
@@ -792,7 +855,7 @@ public class GameFrame extends JFrame implements KeyListener{
             {
                 //JOptionPane.showMessageDialog(null,"Win!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
                 
-
+                JOptionPane.showMessageDialog(this,"你真棒！");
                 initial_2();
                 //System.exit(1);
             }
