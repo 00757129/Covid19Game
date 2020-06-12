@@ -9,11 +9,14 @@ import java.util.Timer;
 import java.util.TimerTask; 
 import java.awt.image.BufferedImage;
 import java.security.*;
+import java.io.*;
+import javafx.scene.media.Media;
+
 
 public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
     public Timer timer;  
-    public int enemyIndex;               
+    public int enemyIndex = 0;               
     public int level;
     public int start=0;
     public int intervel = 1000000 / 100000; //每intervel個微秒就repaint
@@ -48,79 +51,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         //working();          //設定timertask，讓程式定期移動腳色和檢查生命
     }
 
-    public void working(){
-        timer = new Timer();
-        timer.schedule(new TimerTask(){
-            @Override
-            public void run(){      //檢查位置
-                Weaponhit();
-                repaint();          //重畫角色的位置
-                questionevent();
-            }
-        }, intervel, intervel);        //每個微秒就重複一次
-
-        timer.schedule(new TimerTask(){
-            @Override
-            public void run(){
-                for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
-                {                        
-                    EnemyList.get(i).posX += EnemyList.get(i).speedX;
-                    EnemyList.get(i).posY += EnemyList.get(i).speedY;
-                    EnemyList.get(i).move(EnemyList.get(i).posX,EnemyList.get(i).posY,testC.posX+(testC.width/2),testC.posY+(testC.height/2),2);
-                }
-            }
-        }, 100, 100);                   //每0.1秒就重複一次
-
-        timer.schedule(new TimerTask(){
-            @Override
-            public void run(){
-                testC.changeImg();       
-                for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
-                {                        
-                    EnemyList.get(i).changeImg(level);
-                }
-            }
-        }, 200, 200);                   //每0.1秒就重複一次
-
-
-        timer.schedule(new TimerTask(){
-            @Override
-            public void run(){
-                checkState();        //檢查所有生命
-            }
-        }, 500, 500);                   //每0.5秒就重複一次
-    }
-
-    public void checkState(){
-        //testC.changeImg();              //讓角色的腳可以移動，呈現動畫的感覺
-        for(int i = 0;i<EnemyList.size();i++)
-        {
-            testC.setHp(EnemyList.get(i));      //檢查hero血量
-        }
-    }
-    public void SetStart(){
-       mainJpanel=new JPanel();
-       mainJpanel.setLayout(null);
-        label=new JLabel("COVID-19");label.setBounds(500,50,100,40); 
-        levelOneButton=new JButton("Level 1");levelOneButton.setBounds(500,150,100,40); 
-        levelTwoButton=new JButton("Level 2");levelTwoButton.setBounds(500,250,100,40);
-        levelThreeButton=new JButton("Level 3");levelThreeButton.setBounds(500,350,100,40); 
-        
-        levelOneButton.addActionListener(this);levelTwoButton.addActionListener(this);levelThreeButton.addActionListener(this);
-        
-        mainJpanel.add(label);
-        mainJpanel.add(levelOneButton);mainJpanel.add(levelTwoButton);mainJpanel.add(levelThreeButton);
-        getContentPane().add(mainJpanel, BorderLayout.CENTER);
-        mainJpanel.setVisible(true);
-        levelTwoButton.requestFocus();
-        SwingUtilities.updateComponentTreeUI(this);    
-        repaint();
-        revalidate();
-        validate();
-
-    }
-
-    public void addEnemy(int total){        
+    public void addEnemy(int total){      
         SecureRandom rand = new SecureRandom();
         double range = (3.141515926 * 2) / total;       //
         // System.out.println("range is "+range);
@@ -141,10 +72,16 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
             y = 550;
         // System.out.println("in number."+i+" x is "+x+" and y is "+y);
-        Enemy virus = new Enemy(level, x,y,testC.posX,testC.posY,2,6,1,100,100);
+        Enemy virus;
+        if(level==0)            
+            virus = new Enemy(level, x,y,testC.posX,testC.posY,2,6,1,30,30);
+        else if(level==1)
+            virus = new Enemy(level, x,y,testC.posX,testC.posY,2,6,1,90,120);
+        else
+            virus = new Enemy(level, x,y,testC.posX,testC.posY,2,6,1,50,50);
         EnemyList.add(virus);
     }
-    
+
     public void initial(){
         System.out.println("inital");
         enemyIndex = 0;
@@ -177,44 +114,104 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
 
      public void initial_3(){
-        level = 2;
-        
+        // level = 1;           //暫定        
         System.out.println("inital_3");
         //backGroundImageWidth=600;
         //backGroundImageHight=400;
         testC = new Hero(5, 5);
         setQuestionPlace2();
         backGroundImage =new ImageIcon("taiwan.jpg").getImage();
-        int total = 10;                  //total of enemy
-        SecureRandom rand = new SecureRandom();
-        double range = (3.141515926 * 2) / total;       //
-        // System.out.println("range is "+range);
-        for(int i = 0;i < total;i++)
-        {
-            double angle = rand.nextDouble()*(range) + range*i;
-            rand = new SecureRandom();
-            int length = (int)(rand.nextDouble()*500+300);
-            // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
-            int x = (int)(length*Math.sin(angle));
-            x = testC.posX + x;
-            if(x <= 0)
-                x = 0;
-            else if(x >= 1000)          //應該要是1200-width，我先把hero的width的最大值預設成200
-                x = 1000;
-            int y = (int)(length*Math.cos(angle));
-            y = testC.posY + y;
-            if(y <= 0)
-                y = 0;
-            else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
-                y = 550;
-            // System.out.println("in number."+i+" x is "+x+" and y is "+y);
-            Enemy virus = new Enemy(level, x,y,testC.posX,testC.posY,2,6,1,100,100);
-            EnemyList.add(virus);
+        for(int i = 0; i<10; i++){
+            addEnemy(10);
+            enemyIndex++;
         }
     }
 
+    public void working(){
+        timer = new Timer();
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run(){      //檢查位置
+                Weaponhit();
+                repaint();          //重畫角色的位置
+                questionevent();
+            }
+        }, intervel, intervel);        //每個微秒就重複一次
+
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run(){
+                for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
+                {                        
+                    EnemyList.get(i).posX += EnemyList.get(i).speedX;
+                    EnemyList.get(i).posY += EnemyList.get(i).speedY;
+                    EnemyList.get(i).move(EnemyList.get(i).posX,EnemyList.get(i).posY,testC.posX+(testC.width/2),testC.posY+(testC.height/2),2);
+                }
+            }
+        }, 100, 100);                   //每0.1秒就重複一次
+
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run(){
+                testC.changeImg();   
+                for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
+                {                        
+                    EnemyList.get(i).changeImg(level);
+                }
+            }
+        }, 200, 200);                   //每0.1秒就重複一次
 
 
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run(){
+                checkState();        //檢查所有生命
+            }  
+        }, 500, 500);                   //每0.5秒就重複一次
+
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run(){
+                checkState();        //檢查所有生命
+                addEnemy(10);
+                enemyIndex++;
+            }  
+        }, 3000*(level+1), 3000*(level+1));                   //每0.5秒就重複一次
+    }
+
+    public void checkState(){
+        //testC.changeImg();              //讓角色的腳可以移動，呈現動畫的感覺
+        for(int i = 0;i<EnemyList.size();i++)
+        {
+            testC.setHp(EnemyList.get(i));      //檢查hero血量
+        }
+    }
+    public void SetStart(){
+       mainJpanel=new JPanel();
+       mainJpanel.setLayout(null);
+        label=new JLabel("COVID-19");label.setBounds(500,50,100,40); 
+        levelOneButton=new JButton("Level 1");levelOneButton.setBounds(500,150,100,40); 
+        levelTwoButton=new JButton("Level 2");levelTwoButton.setBounds(500,250,100,40);
+        levelThreeButton=new JButton("Level 3");levelThreeButton.setBounds(500,350,100,40); 
+        
+        levelOneButton.addActionListener(this);levelTwoButton.addActionListener(this);levelThreeButton.addActionListener(this);
+        
+        mainJpanel.add(label);
+        mainJpanel.add(levelOneButton);mainJpanel.add(levelTwoButton);mainJpanel.add(levelThreeButton);
+        getContentPane().add(mainJpanel, BorderLayout.CENTER);
+        mainJpanel.setVisible(true);
+        levelTwoButton.requestFocus();
+        SwingUtilities.updateComponentTreeUI(this);    
+        repaint();
+        revalidate();
+        validate();
+
+        String test = "test.mp3";
+        Media back = new Media(new File(test).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(hit);
+        mediaPlayer.play();
+
+    }
 
     public void update(Graphics g) { 
         //this.paint(g); 
@@ -241,7 +238,6 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 		for(int i = 0; i<WeaponList.size(); i++){
             if(WeaponList.get(i).overScreen()){         //Weapon超出螢幕就移出陣列且不印出來
             	WeaponList.remove(i);
-            	 System.out.println("remove"+ i);
             }
             else{                                      //Weapon如果沒超出螢幕就更改位置後畫出來
                 WeaponList.get(i).posX += WeaponList.get(i).speedX; 

@@ -15,7 +15,7 @@ public class Enemy extends Character{
         this.hp=hp;
         this.width = width;
         this.height = height;
-        img.add(new ImageIcon(Src[level][0]).getImage());
+        img.add(new ImageIcon(Src[level][0]).getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
     }
 
     public void move(int enenmyX, int enenmyY, int heroX, int heroY, int speed)
