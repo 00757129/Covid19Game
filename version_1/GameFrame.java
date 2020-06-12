@@ -36,7 +36,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     public GameFrame(){
         super("GameFrame");
         setLayout(null); 
-        //setLayout(new FlowLayout());
+        setLayout(new BorderLayout());
         
         setLocationRelativeTo(null);
         //addKeyListener(this);
@@ -98,20 +98,24 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         }
     }
     public void SetStart(){
-       
-        //label=new JLabel("COVID-19");label.setBounds(550,50,100,40); 
+       mainJpanel=new JPanel();
+       mainJpanel.setLayout(null);
+        label=new JLabel("COVID-19");label.setBounds(550,50,100,40); 
         levelOneButton=new JButton("第一關");levelOneButton.setBounds(550,150,100,40); 
         levelTwoButton=new JButton("第二關");levelTwoButton.setBounds(550,250,100,40);
         levelThreeButton=new JButton("第三關");levelThreeButton.setBounds(550,350,100,40); 
         introductionButton=new JButton("遊戲介紹");introductionButton.setBounds(550,450,100,40); 
         levelOneButton.addActionListener(this);levelTwoButton.addActionListener(this);levelThreeButton.addActionListener(this);
         introductionButton.addActionListener(this);
-        //add(label);
-        add(levelOneButton);add(levelTwoButton);add(levelThreeButton);add(introductionButton);
-        //add(mainJpanel);
+        mainJpanel.add(label);
+        mainJpanel.add(levelOneButton);mainJpanel.add(levelTwoButton);mainJpanel.add(levelThreeButton);mainJpanel.add(introductionButton);
+        getContentPane().add(mainJpanel, BorderLayout.CENTER);
+        mainJpanel.setVisible(true);
+        levelTwoButton.requestFocus();
         SwingUtilities.updateComponentTreeUI(this);    
         repaint();
         revalidate();
+        validate();
 
     }
     
@@ -194,7 +198,8 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     
     public void paint(Graphics g){
         // System.out.println("test");
-        if(start==0)return;
+        if(start==0){levelTwoButton.requestFocus();levelThreeButton.requestFocus();introductionButton.requestFocus();label.requestFocus();
+            return;}
         BufferedImage bi =(BufferedImage)this.createImage(this.getSize().width,this.getSize().height);
         Graphics big =bi.getGraphics();
         big.drawImage(backGroundImage,0,0, backGroundImageWidth, backGroundImageHight, null);    //重複畫背景
