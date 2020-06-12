@@ -74,10 +74,10 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             @Override
             public void run(){
                 testC.changeImg();       
-                // for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
-                // {                        
-                //     EnemyList.changeImg(level);
-                // }
+                for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
+                {                        
+                    EnemyList.get(i).changeImg(level);
+                }
             }
         }, 200, 200);                   //每0.1秒就重複一次
 
@@ -147,7 +147,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
                 y = 550;
             // System.out.println("in number."+i+" x is "+x+" and y is "+y);
-            Enemy virus = new Enemy(x,y,testC.posX,testC.posY,2,1,0,30,30);
+            Enemy virus = new Enemy(level, x,y,testC.posX,testC.posY,2,1,0,30,30);
             EnemyList.add(virus);
         }
     }
@@ -184,7 +184,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
                 y = 550;
             // System.out.println("in number."+i+" x is "+x+" and y is "+y);
-            Enemy virus = new Enemy(x,y,testC.posX,testC.posY,2,6,1,100,100);
+            Enemy virus = new Enemy(level, x,y,testC.posX,testC.posY,2,6,1,100,100);
             EnemyList.add(virus);
         }
     }
