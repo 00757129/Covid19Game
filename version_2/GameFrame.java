@@ -99,25 +99,17 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         }
     }
     public void SetStart(){
-        mainJpanel=new JPanel();
-        mainJpanel.setLayout(null);
-        label=new JLabel("COVID-19");label.setBounds(550,50,100,40); 
-        levelOneButton=new JButton("第一關");
-        levelOneButton.setBounds(550,150,100,40); 
-        levelTwoButton=new JButton("第二關");
-        levelTwoButton.setBounds(550,250,100,40);
-        levelThreeButton=new JButton("第三關");
-        levelThreeButton.setBounds(550,350,100,40); 
-        introductionButton=new JButton("遊戲介紹");
-        introductionButton.setBounds(550,450,100,40); 
-        levelOneButton.addActionListener(this);
-        levelTwoButton.addActionListener(this);
-        levelThreeButton.addActionListener(this);
-        introductionButton.addActionListener(this);
+       mainJpanel=new JPanel();
+       mainJpanel.setLayout(null);
+        label=new JLabel("COVID-19");label.setBounds(500,50,100,40); 
+        levelOneButton=new JButton("Level 1");levelOneButton.setBounds(500,150,100,40); 
+        levelTwoButton=new JButton("Level 2");levelTwoButton.setBounds(500,250,100,40);
+        levelThreeButton=new JButton("Level 3");levelThreeButton.setBounds(500,350,100,40); 
+        
+        levelOneButton.addActionListener(this);levelTwoButton.addActionListener(this);levelThreeButton.addActionListener(this);
+        
         mainJpanel.add(label);
-        mainJpanel.add(levelOneButton);
-        mainJpanel.add(levelTwoButton);mainJpanel.add(levelThreeButton);
-        mainJpanel.add(introductionButton);
+        mainJpanel.add(levelOneButton);mainJpanel.add(levelTwoButton);mainJpanel.add(levelThreeButton);
         getContentPane().add(mainJpanel, BorderLayout.CENTER);
         mainJpanel.setVisible(true);
         levelTwoButton.requestFocus();
@@ -184,6 +176,43 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         }
     }
 
+     public void initial_3(){
+        level = 2;
+        
+        System.out.println("inital_3");
+        //backGroundImageWidth=600;
+        //backGroundImageHight=400;
+        testC = new Hero(5, 5);
+        setQuestionPlace2();
+        backGroundImage =new ImageIcon("taiwan.jpg").getImage();
+        int total = 10;                  //total of enemy
+        SecureRandom rand = new SecureRandom();
+        double range = (3.141515926 * 2) / total;       //
+        // System.out.println("range is "+range);
+        for(int i = 0;i < total;i++)
+        {
+            double angle = rand.nextDouble()*(range) + range*i;
+            rand = new SecureRandom();
+            int length = (int)(rand.nextDouble()*500+300);
+            // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
+            int x = (int)(length*Math.sin(angle));
+            x = testC.posX + x;
+            if(x <= 0)
+                x = 0;
+            else if(x >= 1000)          //應該要是1200-width，我先把hero的width的最大值預設成200
+                x = 1000;
+            int y = (int)(length*Math.cos(angle));
+            y = testC.posY + y;
+            if(y <= 0)
+                y = 0;
+            else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
+                y = 550;
+            // System.out.println("in number."+i+" x is "+x+" and y is "+y);
+            Enemy virus = new Enemy(level, x,y,testC.posX,testC.posY,2,6,1,100,100);
+            EnemyList.add(virus);
+        }
+    }
+
 
 
 
@@ -193,7 +222,8 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     
     public void paint(Graphics g){
         // System.out.println("test");
-        if(start==0){levelTwoButton.requestFocus();levelThreeButton.requestFocus();introductionButton.requestFocus();label.requestFocus();
+        if(start==0){g.drawImage(new ImageIcon("covid-19.jpg").getImage(),0,0, backGroundImageWidth, backGroundImageHight, null); 
+        levelOneButton.requestFocus();levelTwoButton.requestFocus();levelThreeButton.requestFocus();label.requestFocus();mainJpanel.requestFocus();
             return;}
         BufferedImage bi =(BufferedImage)this.createImage(this.getSize().width,this.getSize().height);
         Graphics big =bi.getGraphics();
@@ -237,23 +267,23 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
       {
           removeAll();start=1;
           System.out.println(event.getActionCommand());
-          if(event.getActionCommand().equals("第一關")){
+          if(event.getActionCommand().equals("Level 1")){
                 this.requestFocus();
                 addKeyListener(this);
                 addMouseListener(new MouseAdapterDemo());
               initial();
               working();
-          }else if(event.getActionCommand().equals("第二關")){
+          }else if(event.getActionCommand().equals("Level 2")){
               this.requestFocus();
                addKeyListener(this);
                addMouseListener(new MouseAdapterDemo());
               initial_2();
               working();
-          }else if(event.getActionCommand().equals("第三關")){
+          }else if(event.getActionCommand().equals("Level 3")){
               this.requestFocus();
                addKeyListener(this);
                addMouseListener(new MouseAdapterDemo());
-              initial_2();
+              initial_3();
               working();
           }else{
 
@@ -856,7 +886,9 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 //JOptionPane.showMessageDialog(null,"Win!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
                 
                 JOptionPane.showMessageDialog(this,"你真棒！");
-                initial_2();
+                if(level==0) initial_2();
+                else if (level==1)initial_3();
+                else {}
                 //System.exit(1);
             }
         }
