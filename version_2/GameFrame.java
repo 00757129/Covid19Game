@@ -12,7 +12,8 @@ import java.security.*;
 
 public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
-    public Timer timer;                 
+    public Timer timer;  
+    public int enemyIndex;               
     public int level;
     public int start=0;
     public int intervel = 1000000 / 100000; //每intervel個微秒就repaint
@@ -98,17 +99,25 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         }
     }
     public void SetStart(){
-       mainJpanel=new JPanel();
-       mainJpanel.setLayout(null);
+        mainJpanel=new JPanel();
+        mainJpanel.setLayout(null);
         label=new JLabel("COVID-19");label.setBounds(550,50,100,40); 
-        levelOneButton=new JButton("第一關");levelOneButton.setBounds(550,150,100,40); 
-        levelTwoButton=new JButton("第二關");levelTwoButton.setBounds(550,250,100,40);
-        levelThreeButton=new JButton("第三關");levelThreeButton.setBounds(550,350,100,40); 
-        introductionButton=new JButton("遊戲介紹");introductionButton.setBounds(550,450,100,40); 
-        levelOneButton.addActionListener(this);levelTwoButton.addActionListener(this);levelThreeButton.addActionListener(this);
+        levelOneButton=new JButton("第一關");
+        levelOneButton.setBounds(550,150,100,40); 
+        levelTwoButton=new JButton("第二關");
+        levelTwoButton.setBounds(550,250,100,40);
+        levelThreeButton=new JButton("第三關");
+        levelThreeButton.setBounds(550,350,100,40); 
+        introductionButton=new JButton("遊戲介紹");
+        introductionButton.setBounds(550,450,100,40); 
+        levelOneButton.addActionListener(this);
+        levelTwoButton.addActionListener(this);
+        levelThreeButton.addActionListener(this);
         introductionButton.addActionListener(this);
         mainJpanel.add(label);
-        mainJpanel.add(levelOneButton);mainJpanel.add(levelTwoButton);mainJpanel.add(levelThreeButton);mainJpanel.add(introductionButton);
+        mainJpanel.add(levelOneButton);
+        mainJpanel.add(levelTwoButton);mainJpanel.add(levelThreeButton);
+        mainJpanel.add(introductionButton);
         getContentPane().add(mainJpanel, BorderLayout.CENTER);
         mainJpanel.setVisible(true);
         levelTwoButton.requestFocus();
@@ -118,9 +127,35 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         validate();
 
     }
+
+    public void addEnemy(int total){        
+        SecureRandom rand = new SecureRandom();
+        double range = (3.141515926 * 2) / total;       //
+        // System.out.println("range is "+range);
+        double angle = rand.nextDouble()*(range) + range*enemyIndex;
+        rand = new SecureRandom();
+        int length = (int)(rand.nextDouble()*500+300);
+        // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
+        int x = (int)(length*Math.sin(angle));
+        x = testC.posX + x;
+        if(x <= 0)
+            x = 0;
+        else if(x >= 1000)          //應該要是1200-width，我先把hero的width的最大值預設成200
+            x = 1000;
+        int y = (int)(length*Math.cos(angle));
+        y = testC.posY + y;
+        if(y <= 0)
+            y = 0;
+        else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
+            y = 550;
+        // System.out.println("in number."+i+" x is "+x+" and y is "+y);
+        Enemy virus = new Enemy(level, x,y,testC.posX,testC.posY,2,6,1,100,100);
+        EnemyList.add(virus);
+    }
     
     public void initial(){
         System.out.println("inital");
+        enemyIndex = 0;
         level = 0;
         testC = new Hero(5, 5);
         setQuestionPlace1();
@@ -128,64 +163,24 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         SecureRandom rand = new SecureRandom();
         double range = (3.141515926 * 2) / total;       //
         // System.out.println("range is "+range);
-        for(int i = 0;i < total;i++)
-        {
-            double angle = rand.nextDouble()*(range) + range*i;
-            rand = new SecureRandom();
-            int length = (int)(rand.nextDouble()*500+300);
-            // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
-            int x = (int)(length*Math.sin(angle));
-            x = testC.posX + x;
-            if(x <= 0)
-                x = 0;
-            else if(x >= 1000)          //應該要是1200-width，我先把hero的width的最大值預設成200
-                x = 1000;
-            int y = (int)(length*Math.cos(angle));
-            y = testC.posY + y;
-            if(y <= 0)
-                y = 0;
-            else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
-                y = 550;
-            // System.out.println("in number."+i+" x is "+x+" and y is "+y);
-            Enemy virus = new Enemy(level, x,y,testC.posX,testC.posY,2,1,0,30,30);
-            EnemyList.add(virus);
+        for(int i = 0; i<10; i++){
+            addEnemy(10);
+            enemyIndex++;
         }
     }
 
     public void initial_2(){
         level = 1;
-        
+        enemyIndex = 0;
         System.out.println("inital_2");
         //backGroundImageWidth=600;
         //backGroundImageHight=400;
         testC = new Hero(5, 5);
         setQuestionPlace2();
         backGroundImage =new ImageIcon("taiwan.jpg").getImage();
-        int total = 10;                  //total of enemy
-        SecureRandom rand = new SecureRandom();
-        double range = (3.141515926 * 2) / total;       //
-        // System.out.println("range is "+range);
-        for(int i = 0;i < total;i++)
-        {
-            double angle = rand.nextDouble()*(range) + range*i;
-            rand = new SecureRandom();
-            int length = (int)(rand.nextDouble()*500+300);
-            // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
-            int x = (int)(length*Math.sin(angle));
-            x = testC.posX + x;
-            if(x <= 0)
-                x = 0;
-            else if(x >= 1000)          //應該要是1200-width，我先把hero的width的最大值預設成200
-                x = 1000;
-            int y = (int)(length*Math.cos(angle));
-            y = testC.posY + y;
-            if(y <= 0)
-                y = 0;
-            else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
-                y = 550;
-            // System.out.println("in number."+i+" x is "+x+" and y is "+y);
-            Enemy virus = new Enemy(level, x,y,testC.posX,testC.posY,2,6,1,100,100);
-            EnemyList.add(virus);
+        for(int i = 0; i<10; i++){
+            addEnemy(10);
+            enemyIndex++;
         }
     }
 
