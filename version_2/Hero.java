@@ -14,9 +14,6 @@ public class Hero extends Character{
         super(sX, sY, rX, rY,10);
         this.width = 200;
         this.height = 200;
-        srcFlag = 0;
-        moveFlag = -1;
-        bloodFlag = 0;
         img.add(new ImageIcon("hero_1.png").getImage());
         blood.add(new ImageIcon("12-12.png").getImage());
     }
@@ -25,18 +22,17 @@ public class Hero extends Character{
         super(sX, sY);
         this.width = 200;
         this.height = 200;
-        srcFlag = 0;
-        bloodFlag = 0;
-        moveFlag = -1;
         img.add(new ImageIcon("hero_1.png").getImage());
         blood.add(new ImageIcon("12-12.png").getImage());
     }
 
     @Override
     public void changeImg(){                //跑動畫，如果moveFlag為0或1時就更換照片
-        if(moveFlag>=0){           
+        // System.out.println("In ChangeImg, moveFlag is "+this.moveFlag);
+        if(this.moveFlag>=0){           
             // System.out.println("in 33 line in Hero"); 
             String src = Src[moveFlag][srcFlag];
+            System.out.println("Hero src of image is "+src);
             img.set(0, new ImageIcon(src).getImage());
             if(srcFlag==3)
                 srcFlag = 0;
@@ -44,6 +40,9 @@ public class Hero extends Character{
                 srcFlag++;
         }
     }
+
+    @Override
+    public void changeImg(int level){}
 
     public void setHp(Enemy enemy)
     {
@@ -57,6 +56,7 @@ public class Hero extends Character{
                 bloodFlag++;
             }
         }
+        
         else
         {
             JOptionPane.showMessageDialog(null,"Lose!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);

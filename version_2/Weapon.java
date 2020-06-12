@@ -17,7 +17,8 @@ public class Weapon extends Character{
     }
 
     @Override
-    public void changeImg(){
+    public void changeImg(){}
 
-    }
+    @Override
+    public void changeImg(int level){}
 }

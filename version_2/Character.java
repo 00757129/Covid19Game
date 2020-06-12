@@ -23,6 +23,9 @@ public abstract class Character{
         this.rectY = rY;
         this.posX = this.rectX;
         this.posY = this.rectY;
+        this.srcFlag = 0;
+        this.moveFlag = -1;
+        this.bloodFlag = 0;
     }
 
     public Character(int sX, int sY){
@@ -32,6 +35,9 @@ public abstract class Character{
         this.rectY = 750 / 2;
         this.posX = this.rectX - this.width/2;
         this.posY = this.rectY - this.height/2;
+        this.srcFlag = 0;
+        this.moveFlag = -1;
+        this.bloodFlag = 0;
     }
 
     public Character(int heroX, int heroY, int mouseX, int mouseY, int speed){
@@ -40,6 +46,9 @@ public abstract class Character{
         this.rectY = heroY;
         this.posX = this.rectX;
         this.posY = this.rectY;
+        this.srcFlag = 0;
+        this.moveFlag = -1;
+        this.bloodFlag = 0;
     }
 
     public void changeSpeed(int heroX, int heroY, int mouseX, int mouseY, int speed){
@@ -61,4 +70,5 @@ public abstract class Character{
     }
 
     public abstract void changeImg();
+    public abstract void changeImg(int level);
 }

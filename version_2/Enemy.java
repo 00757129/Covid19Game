@@ -7,13 +7,15 @@ import java.util.*;
 
 public class Enemy extends Character{
 
-    String[] Src = {"covid.png"};
+    String[][] Src = {{"covid.png"}, {"boss2.png", "boss2_2.png"}};
+    int[] limit = {1, 2};
 
-    public Enemy(int enenmyX, int enenmyY, int heroX, int heroY, int speed){
+    public Enemy(int level, int enenmyX, int enenmyY, int heroX, int heroY, int speed,int hp,int src,int width,int height){
         super(enenmyX, enenmyY, heroX, heroY, speed);
-        this.width = 30;
-        this.height = 30;
-        img.add(new ImageIcon(Src[0]).getImage());
+        this.hp=hp;
+        this.width = width;
+        this.height = height;
+        img.add(new ImageIcon(Src[level][0]).getImage());
     }
 
     public void move(int enenmyX, int enenmyY, int heroX, int heroY, int speed)
@@ -29,7 +31,15 @@ public class Enemy extends Character{
     }
 
     @Override
-    public void changeImg(){
+    public void changeImg(){}
 
+    @Override
+    public void changeImg(int level){   
+        String src = Src[level][srcFlag];
+        img.set(0, new ImageIcon(src).getImage());
+        srcFlag++;
+        if(srcFlag == limit[level])
+            srcFlag = 0;
+        
     }
 }
