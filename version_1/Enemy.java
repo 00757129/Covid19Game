@@ -7,7 +7,8 @@ import java.util.*;
 
 public class Enemy extends Character{
 
-    String[] Src = {"covid.png","boss2.png"};
+    String[][] Src = {{"covid.png"},{"boss2.png","boss2_2.png"}};
+    int[] limit = {1, 2};
 
     public Enemy(int enenmyX, int enenmyY, int heroX, int heroY, int speed,int hp,int src,int width,int height){
         super(enenmyX, enenmyY, heroX, heroY, speed);
@@ -30,7 +31,14 @@ public class Enemy extends Character{
     }
 
     @Override
-    public void changeImg(){
-
+    public void changeImg(int level){             
+        // System.out.println("in 33 line in Hero"); 
+        String src = Src[moveFlag][srcFlag];
+        // System.out.println("Hero src of image is "+src);
+        img.set(0, new ImageIcon(src).getImage());
+        if(srcFlag==3)
+            srcFlag = 0;
+        else
+            srcFlag++;
     }
 }
