@@ -73,19 +73,11 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
-<<<<<<< Updated upstream
-                testC.changeImg();       
-                // for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
-                // {                        
-                //     EnemyList.changeImg(level);
-                // }
-=======
                 testC.changeImg(); 
                 for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
                 {                        
                     EnemyList.changeImg(level);
                 }     
->>>>>>> Stashed changes
             }
         }, 200, 200);                   //每0.1秒就重複一次
 
@@ -128,10 +120,6 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
     
     public void initial(){
-<<<<<<< Updated upstream
-        System.out.println("inital");
-=======
->>>>>>> Stashed changes
         level = 0;
         testC = new Hero(5, 5);
         setQuestionPlace1();
@@ -165,11 +153,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
     public void initial_2(){
         level = 1;
-<<<<<<< Updated upstream
-        
-=======
         JOptionPane.showMessageDialog(this,"通過第一關！");
->>>>>>> Stashed changes
         System.out.println("inital_2");
         //backGroundImageWidth=600;
         //backGroundImageHight=400;
