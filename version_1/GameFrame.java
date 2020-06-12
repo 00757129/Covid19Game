@@ -90,6 +90,89 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         }, 500, 500);                   //每0.5秒就重複一次
     }
 
+    public void working2(){
+        timer = new Timer();
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run(){      //檢查位置
+                Weaponhit();
+                repaint();          //重畫角色的位置
+                questionevent();
+            }
+        }, intervel, intervel);        //每個微秒就重複一次
+
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run(){
+                for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
+                {                        
+                    EnemyList.get(i).posX += EnemyList.get(i).speedX;
+                    EnemyList.get(i).posY += EnemyList.get(i).speedY;
+                    EnemyList.get(i).move(EnemyList.get(i).posX,EnemyList.get(i).posY,testC.posX+(testC.width/2),testC.posY+(testC.height/2),2);
+                }
+            }
+        }, 100, 100);                   //每0.1秒就重複一次
+
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run(){
+                testC.changeImg();       
+                for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
+                {                        
+                    EnemyList.get(i).changeImg(level);
+                }
+            }
+        }, 200, 200);                   //每0.1秒就重複一次
+
+
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run(){
+                checkState();        //檢查所有生命
+            }
+        }, 500, 500);                   //每0.5秒就重複一次
+
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run(){
+                //花三點血召喚
+                for(int i = 0;i<EnemyList.size();i++)
+                {
+                    if(EnemyList.get(i).hp>=3)
+                    {
+                        SecureRandom rand = new SecureRandom();
+                        double range = (3.141515926 * 2) / 3;
+                        for(int j = 0;j<3;j++)
+                        {
+                            double angle = rand.nextDouble()*(range) + range*j;
+                            rand = new SecureRandom();
+                            int length = (int)(rand.nextDouble()*500+300);
+                            // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
+                            int x = (int)(length*Math.sin(angle));
+                            x = testC.posX + x;
+                            if(x <= 0)
+                                x = 0;
+                            else if(x >= 1000)          //應該要是1200-width，我先把hero的width的最大值預設成200
+                                x = 1000;
+                            int y = (int)(length*Math.cos(angle));
+                            y = testC.posY + y;
+                            if(y <= 0)
+                                y = 0;
+                            else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
+                                y = 550;
+                            // System.out.println("in number."+i+" x is "+x+" and y is "+y);
+                            Enemy virus = new Enemy(0, x,y,testC.posX,testC.posY,2,1,0,30,30);
+                            EnemyList.add(virus);
+                        }
+                        EnemyList.get(i).hp-=3;
+                        EnemyList.get(i).setHp(3,level);
+                        System.out.println(EnemyList.get(i).hp);
+                    }
+                }
+            }
+        },5000,5000);        //每5秒重複一次
+    }
+
     public void checkState(){
         //testC.changeImg();              //讓角色的腳可以移動，呈現動畫的感覺
         for(int i = 0;i<EnemyList.size();i++)
@@ -97,6 +180,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             testC.setHp(EnemyList.get(i));      //檢查hero血量
         }
     }
+    
     public void SetStart(){
        mainJpanel=new JPanel();
        mainJpanel.setLayout(null);
@@ -161,7 +245,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         testC = new Hero(5, 5);
         setQuestionPlace2();
         backGroundImage =new ImageIcon("taiwan.jpg").getImage();
-        int total = 10;                  //total of enemy
+        int total = 2;                  //total of enemy
         SecureRandom rand = new SecureRandom();
         double range = (3.141515926 * 2) / total;       //
         // System.out.println("range is "+range);
@@ -184,7 +268,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
                 y = 550;
             // System.out.println("in number."+i+" x is "+x+" and y is "+y);
-            Enemy virus = new Enemy(level, x,y,testC.posX,testC.posY,2,6,1,100,100);
+            Enemy virus = new Enemy(level, x,y,testC.posX,testC.posY,2,6,1,150,150);
             EnemyList.add(virus);
         }
     }
@@ -249,6 +333,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         {
             //正常移動(還沒有寫被子彈打中的消失部分)
             big.drawImage(EnemyList.get(i).img.get(0), EnemyList.get(i).posX, EnemyList.get(i).posY, EnemyList.get(i).width, EnemyList.get(i).height, null);
+            big.drawImage(EnemyList.get(i).blood.get(0),EnemyList.get(i).posX,EnemyList.get(i).posY+15,EnemyList.get(i).width,50,null);
         }
 
 		for(int i = 0; i<WeaponList.size(); i++){
@@ -291,7 +376,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                addKeyListener(this);
                addMouseListener(new MouseAdapterDemo());
               initial_2();
-              working();
+              working2();
           }else if(event.getActionCommand().equals("Level 3")){
               this.requestFocus();
                addKeyListener(this);
@@ -889,6 +974,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     WeaponList.remove(j);
                     EnemyList.get(i).hp -= 1;
                     //System.out.println("hit");
+                    EnemyList.get(i).setHp(1,level);
                 }
                 if(EnemyList.get(i).hp<=0){
                     EnemyList.remove(i);
