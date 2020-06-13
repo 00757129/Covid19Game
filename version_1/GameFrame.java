@@ -134,7 +134,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         testC = new Hero(5, 5);
         setQuestionPlace3();
         backGroundImage =new ImageIcon("worldmap.jpg").getImage();
-        int total = 10;
+        int total = 1;
         rand = new SecureRandom();
         double range = (3.141515926 * 2) / total;       //
         for(int i = 0; i<total; i++){
@@ -155,7 +155,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
                 y = 550;
             // System.out.println("in number."+i+" x is "+x+" and y is "+y);
-            Enemy virus = new Enemy(2, x,y,testC.posX,testC.posY,2,6,0,120,150);
+            Enemy virus = new Enemy(2, x,y,testC.posX,testC.posY,2,12,0,350,350);
             EnemyList.add(virus);
         }
     }
@@ -286,6 +286,9 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 {
                     if(EnemyList.get(i).hp>=3)
                     {
+                        EnemyList.get(i).hp-=3;
+                        EnemyList.get(i).setHp(3,level);
+
                         rand = new SecureRandom();
                         double range = (3.141515926 * 2) / 3;
                         for(int j = 0;j<3;j++)
@@ -311,15 +314,10 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                             Enemy virus = new Enemy(0, x,y,testC.posX,testC.posY,2,1,0,30,30);
                             EnemyList.add(virus);
                         }
-                        EnemyList.get(i).hp-=3;
-                        System.out.println("GameFrame i is "+i);
-
-                        EnemyList.get(i).setHp(3,level);            
-                        System.out.println(EnemyList.get(i).hp);
                     }
                 }
             }
-        },5000,5000);        //每5秒重複一次
+        },4500,4500);        //每5秒重複一次
 
         timer.schedule(new TimerTask(){         //定時增加怪物
             @Override       
@@ -380,7 +378,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             @Override
             public void run(){
                 testC.changeImg();       
-                for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
+                for(int i = 0;i < EnemyList.size();i++)    
                 {                        
                     EnemyList.get(i).changeImg(level);
                 }
@@ -395,49 +393,55 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             }
         }, 500, 500);                   //每0.5秒就重複一次
 
-        // timer.schedule(new TimerTask(){
-        //     @Override
-        //     public void run(){
-        //         //花三點血召喚
-        //         int original = EnemyList.size();
-        //         for(int i = 0;i<original;i++)
-        //         {
-        //             if(EnemyList.get(i).hp>=3)
-        //             {
-        //                 rand = new SecureRandom();
-        //                 double range = (3.141515926 * 2) / 3;
-        //                 for(int j = 0;j<3;j++)
-        //                 {
-        //                     enemyIndex++;
-        //                     double angle = rand.nextDouble()*(range) + range*j;
-        //                     rand = new SecureRandom();
-        //                     int length = (int)(rand.nextDouble()*500+300);
-        //                     // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
-        //                     int x = (int)(length*Math.sin(angle));
-        //                     x = testC.posX + x;
-        //                     if(x <= 0)
-        //                         x = 0;
-        //                     else if(x >= 1000)          //應該要是1200-width，我先把hero的width的最大值預設成200
-        //                         x = 1000;
-        //                     int y = (int)(length*Math.cos(angle));
-        //                     y = testC.posY + y;
-        //                     if(y <= 0)
-        //                         y = 0;
-        //                     else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
-        //                         y = 550;
-        //                     // System.out.println("in number."+i+" x is "+x+" and y is "+y);
-        //                     Enemy virus = new Enemy(0, x,y,testC.posX,testC.posY,2,1,0,30,30);
-        //                     EnemyList.add(virus);
-        //                 }
-        //                 EnemyList.get(i).hp-=3;
-        //                 System.out.println("GameFrame i is "+i);
+        //不知道為甚麼進不去這裡面，但是下面進得去
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run(){
+                System.out.println("in");
+                if(EnemyList.get(0).hp>=4)
+                {
+                    System.out.println("in");
+                     //大媽減2血量並讓敵人加速
+                    EnemyList.get(0).hp-=2;
+                    EnemyList.get(0).setHp(2,level);
 
-        //                 EnemyList.get(i).setHp(3,level);            
-        //                 System.out.println(EnemyList.get(i).hp);
-        //             }
-        //         }
-        //     }
-        // },5000,5000);        //每5秒重複一次
+                    for(int i = 0;i<EnemyList.size();i++)
+                    {
+                        EnemyList.get(i).speedX++;
+                        EnemyList.get(i).speedY++;
+                    }
+                    
+                    //大媽血量減2召喚
+                    EnemyList.get(0).hp-=2;
+                    EnemyList.get(0).setHp(2,level);
+
+                    int total = 2;
+                    rand = new SecureRandom();
+                    double range = (3.141515926 * 2) / total;
+                    rand = new SecureRandom();
+                    double angle = rand.nextDouble()*(range) + range*enemyIndex;
+                    rand = new SecureRandom();
+                    int length = (int)(rand.nextDouble()*500+300);
+                    // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
+                    int x = (int)(length*Math.sin(angle));
+                    x = testC.posX + x;
+                    if(x <= 0)
+                        x = 0;
+                    else if(x >= 1000)          //應該要是1200-width，我先把hero的width的最大值預設成200
+                        x = 1000;
+                    int y = (int)(length*Math.cos(angle));
+                    y = testC.posY + y;
+                    if(y <= 0)
+                        y = 0;
+                    else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
+                        y = 550;
+                    // System.out.println("in number."+i+" x is "+x+" and y is "+y);
+                    Enemy virus = new Enemy(2, x,y,testC.posX,testC.posY,2,1,0,50,50);
+                    EnemyList.add(virus);
+                }
+                
+            }
+        },5000,5000);
 
         timer.schedule(new TimerTask(){         //定時增加怪物
             @Override       
@@ -792,8 +796,8 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
 
     public void setQuestionPlace3(){
-        int [] placeX = {770,697,510,590,633,465};  //還沒算
-        int [] placeY = {63,365,610,345,150,420};   //還沒算
+        int [] placeX = {980,445,93,410,1130,180};  //還沒算(幫你算~)
+        int [] placeY = {260,270,178,150,450,525};   //還沒算(幫你算~)
         for(int i = 0;i<6;i++)
         {
             Place place = new Place(placeX[i],placeY[i],i);
@@ -1274,6 +1278,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         @Override
         public void itemStateChanged(ItemEvent event)
         {
+            playerChoice = -1;
             if(ans1.isSelected())
             {
                 playerChoice = 1;
@@ -1286,8 +1291,11 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             {
                 playerChoice = 3;
             }
-            else{
+            else if(ans4.isSelected()){
                 playerChoice = 4;
+            }
+            else{
+                playerChoice = -1;
             }
         }
     }
@@ -1304,6 +1312,8 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     setQuestionFrame(placeRect.get(i).no);
                 else if(level == 1)
                     setQuestionFrame2(placeRect.get(i).no);
+                else if(level == 2)
+                    setQuestionFrame3(placeRect.get(i).no);
                 placeRect.remove(i);
             }
         }

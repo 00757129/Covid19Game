@@ -32,7 +32,7 @@ public class Hero extends Character{
         if(this.moveFlag>=0){           
             // System.out.println("in 33 line in Hero"); 
             String src = Src[moveFlag][srcFlag];
-            System.out.println("Hero src of image is "+src);
+            // System.out.println("Hero src of image is "+src);
             img.set(0, new ImageIcon(src).getImage());
             if(srcFlag==3)
                 srcFlag = 0;
