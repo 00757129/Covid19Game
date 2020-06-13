@@ -243,6 +243,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 Weaponhit();
                 repaint();          //重畫角色的位置
                 questionevent();
+                
             }
         }, intervel, intervel);        //每個微秒就重複一次
 
@@ -275,7 +276,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             public void run(){
                 checkState();        //檢查所有生命
             }
-        }, 500, 500);                   //每0.5秒就重複一次
+        }, 200, 200);                   //每0.5秒就重複一次
 
         timer.schedule(new TimerTask(){
             @Override
@@ -359,6 +360,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 Weaponhit();
                 repaint();          //重畫角色的位置
                 questionevent();
+                checkState();    
             }
         }, intervel, intervel);        //每個微秒就重複一次
 
@@ -441,7 +443,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 }
                 
             }
-        },5000,5000);
+        },4000,4000);
 
         timer.schedule(new TimerTask(){         //定時增加怪物
             @Override       
@@ -479,6 +481,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         //testC.changeImg();              //讓角色的腳可以移動，呈現動畫的感覺
         for(int i = 0;i<EnemyList.size();i++)
         {
+            
             testC.setHp(EnemyList.get(i));      //檢查hero血量
         }
     }
