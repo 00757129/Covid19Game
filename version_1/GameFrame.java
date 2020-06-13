@@ -349,7 +349,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     EnemyList.add(virus);
                 }
             }
-        }, 4500, 4500);                   //每3秒就重複一次
+        }, 4500, 4500);                 //每3秒就重複一次
     }
 
     public void working3(){
@@ -360,7 +360,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 Weaponhit();
                 repaint();          //重畫角色的位置
                 questionevent();
-                checkState();    
+                  
             }
         }, intervel, intervel);        //每個微秒就重複一次
 
@@ -443,11 +443,12 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 }
                 
             }
-        },4000,4000);
+        },3000,3000);
 
         timer.schedule(new TimerTask(){         //定時增加怪物
             @Override       
             public void run(){                
+                System.out.println("in2");
                 if(end==false){
                     int total = 5;
                     rand = new SecureRandom();
@@ -575,7 +576,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                addKeyListener(this);
                addMouseListener(new MouseAdapterDemo());
               initial_3();
-              working();
+              working3();
           }else{
 
           }
