@@ -51,8 +51,8 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         //working();          //設定timertask，讓程式定期移動腳色和檢查生命
     }
 
-    public void addEnemy(int total){      
-        SecureRandom rand = new SecureRandom();
+    public void addEnemy(int total, int type){      
+        // SecureRandom rand = new SecureRandom();
         double range = (3.141515926 * 2) / total;       //
         // System.out.println("range is "+range);
         double angle = rand.nextDouble()*(range) + range*enemyIndex;
@@ -73,12 +73,13 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             y = 550;
         // System.out.println("in number."+i+" x is "+x+" and y is "+y);
         Enemy virus;
-        if(level==0)            
-            virus = new Enemy(level, x,y,testC.posX,testC.posY,2,6,1,30,30);
-        else if(level==1)
-            virus = new Enemy(level, x,y,testC.posX,testC.posY,2,6,1,90,120);
+        if(type==0)            
+            virus = new Enemy(type, x,y,testC.posX,testC.posY,2,6,1,30,30);
+        else if(type==1)
+            virus = new Enemy(type, x,y,testC.posX,testC.posY,2,6,1,120,150);
         else
-            virus = new Enemy(level, x,y,testC.posX,testC.posY,2,6,1,50,50);
+            virus = new Enemy(type, x,y,testC.posX,testC.posY,2,6,1,50,50);
+        
         EnemyList.add(virus);
     }
 
