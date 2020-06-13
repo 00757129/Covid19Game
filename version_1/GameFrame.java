@@ -393,7 +393,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             public void run(){
                 checkState();        //檢查所有生命
             }
-        }, 500, 500);                   //每0.5秒就重複一次
+        }, 300, 300);                   //每0.5秒就重複一次
 
         //不知道為甚麼進不去這裡面，但是下面進得去
         timer.schedule(new TimerTask(){
@@ -438,7 +438,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     else if(y >= 550)          //應該要是750-height，我先把hero的height的最大值預設成200
                         y = 550;
                     // System.out.println("in number."+i+" x is "+x+" and y is "+y);
-                    Enemy virus = new Enemy(2, x,y,testC.posX,testC.posY,2,1,0,50,50);
+                    Enemy virus = new Enemy(0, x,y,testC.posX,testC.posY,2,1,0,50,50);
                     EnemyList.add(virus);
                 }
                 

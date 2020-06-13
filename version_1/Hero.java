@@ -70,7 +70,7 @@ public class Hero extends Character{
             Rectangle myrect = new Rectangle(posX+width/2,posY+height/2-15,width/2,height/2);
             Rectangle rect =null;
                     rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2,enemy.width-enemy.width/3,enemy.height-enemy.height/3);
-               if(enemy.type==2)rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2-80,enemy.width-50,enemy.height+100);
+               if(enemy.type==2)rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2-150,enemy.width-80,enemy.height);
                 //System.out.println(enemy.width +" "+ enemy.height+ " "+enemy.posX+" "+enemy.posY +"     "+posX+" "+posY+" "+width);
                 //碰撞檢測
                 if(myrect.intersects(rect)){
