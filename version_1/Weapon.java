@@ -9,10 +9,10 @@ public class Weapon extends Character{
 
     String[] Src = {"medicine.png"};
 
-    public Weapon(int heroX, int heroY, int mouseX, int mouseY, int speed){
+    public Weapon(int heroX, int heroY, int mouseX, int mouseY, int width, int height, int speed){
         super(heroX, heroY, mouseX, mouseY, speed);
-        this.width = 50;
-        this.height = 50;
+        this.width = width;
+        this.height = height;
         img.add(new ImageIcon(Src[0]).getImage());
     }
 

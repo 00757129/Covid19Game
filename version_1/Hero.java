@@ -10,18 +10,18 @@ public class Hero extends Character{
     String[][] Src = {{"hero_1.png", "hero_2.png", "hero_3.png", "hero_4.png"}, {"hero_5.png", "hero_6.png", "hero_7.png", "hero_8.png"}};  //角色圖片
     String[] Blood = {"12-12.png","11-12.png","10-12.png","9-12.png","8-12.png","7-12.png","6-12.png","5-12.png","4-12.png","3-12.png","2-12.png","1-12.png","0-12.png"};   //血量圖片
     
-    public Hero(int sX, int sY, int rX, int rY){
+    public Hero(int sX, int sY, int rX, int rY, int w, int h){
         super(sX, sY, rX, rY,10);
-        this.width = 200;
-        this.height = 200;
+        this.width = w;
+        this.height = h;
         img.add(new ImageIcon("hero_1.png").getImage());
         blood.add(new ImageIcon("12-12.png").getImage());
     }
 
-    public Hero(int sX, int sY){
+    public Hero(int sX, int sY, int w, int h){
         super(sX, sY);
-        this.width = 200;
-        this.height = 200;
+        this.width = w;
+        this.height = h;
         img.add(new ImageIcon("hero_1.png").getImage());
         blood.add(new ImageIcon("12-12.png").getImage());
     }
@@ -67,10 +67,10 @@ public class Hero extends Character{
     }
 
     public boolean hit(String dir,Enemy enemy){
-            Rectangle myrect = new Rectangle(posX+width/2,posY+height/2-15,width/2,height/2);
+            Rectangle myrect = new Rectangle(posX+width/2,posY+height/2-screenSizeY(15),width/2,height/2);
             Rectangle rect =null;
                     rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2,enemy.width-enemy.width/3,enemy.height-enemy.height/3);
-               if(enemy.type==2)rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2-150,enemy.width-80,enemy.height);
+               if(enemy.type==2)rect = new Rectangle(enemy.posX+enemy.width/2, enemy.posY+enemy.height/2-screenSizeY(150), enemy.width-screenSizeX(80), enemy.height);
                 //System.out.println(enemy.width +" "+ enemy.height+ " "+enemy.posX+" "+enemy.posY +"     "+posX+" "+posY+" "+width);
                 //碰撞檢測
                 if(myrect.intersects(rect)){

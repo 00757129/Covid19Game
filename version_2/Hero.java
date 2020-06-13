@@ -32,6 +32,7 @@ public class Hero extends Character{
         if(this.moveFlag>=0){           
             // System.out.println("in 33 line in Hero"); 
             String src = Src[moveFlag][srcFlag];
+            // System.out.println("Hero src of image is "+src);
             img.set(0, new ImageIcon(src).getImage());
             if(srcFlag==3)
                 srcFlag = 0;
@@ -49,8 +50,10 @@ public class Hero extends Character{
         {
             String hp = Blood[bloodFlag];
             blood.set(0, new ImageIcon(hp).getImage());
+            //System.out.println(enemy.width);
             if(this.hit("Left",enemy) || this.hit("Right",enemy) || this.hit("Up",enemy) || this.hit("Down",enemy))
             {
+                System.out.println(enemy.posX+" "+enemy.posY+" "+enemy.width+" "+enemy.height+ " "+posX+" "+posY);
                 System.out.println("hit!!");
                 bloodFlag++;
             }
@@ -64,21 +67,11 @@ public class Hero extends Character{
     }
 
     public boolean hit(String dir,Enemy enemy){
-            Rectangle myrect = new Rectangle(posX+width/2,posY+height/2,30,30);
+            Rectangle myrect = new Rectangle(posX+width/2,posY+height/2-15,width/2,height/2);
             Rectangle rect =null;
-            //for (int i = 0; i < eneryList.size(); i++) {
-             //   Enery enery = eneryList.get(i);
-                if(dir.equals("Left")){
-                    rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2,30,30);
-                }
-                else if(dir.equals("Right")){
-                    rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2,30,30);
-                }
-                else if(dir.equals("Up")){
-                    rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2,30,30);
-                }else if(dir.equals("Down")){
-                    rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2,30,30);
-                }
+                    rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2,enemy.width-enemy.width/3,enemy.height-enemy.height/3);
+               if(enemy.type==2)rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2-150,enemy.width-80,enemy.height);
+                //System.out.println(enemy.width +" "+ enemy.height+ " "+enemy.posX+" "+enemy.posY +"     "+posX+" "+posY+" "+width);
                 //碰撞檢測
                 if(myrect.intersects(rect)){
                     return true;

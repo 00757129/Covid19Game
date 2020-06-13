@@ -16,6 +16,10 @@ public abstract class Character{
     public ArrayList<Image> img = new ArrayList<Image>();
     public ArrayList<Image> blood = new ArrayList<Image>();
 
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    int backGroundImageHeight = (int)screenSize.getHeight();
+    int backGroundImageWidth = (int)screenSize.getWidth();
+
     public Character(int sX, int sY, int rX, int rY){
         this.speedX = sX;
         this.speedY = sY;
@@ -31,8 +35,8 @@ public abstract class Character{
     public Character(int sX, int sY){
         this.speedX = sX;
         this.speedY = sY;
-        this.rectX = 1200 / 2;          //先預設正中間
-        this.rectY = 750 / 2;
+        this.rectX =  screenSizeX(1200) / 2;          //先預設正中間
+        this.rectY = screenSizeY(750) / 2;
         this.posX = this.rectX - this.width/2;
         this.posY = this.rectY - this.height/2;
         this.srcFlag = 0;
@@ -63,10 +67,27 @@ public abstract class Character{
     }
 
     public Boolean overScreen(){        //如果超出螢幕就回傳true
-        if(((posX>=0)&&(posX<=1200-this.width))&&((posY>=0)&&(posY<=750-this.height)))
+        if(((posX>=0)&&(posX<=screenSizeX(1200)-this.width))&&((posY>=0)&&(posY<=screenSizeY(750)-this.height)))
             return false;
         else
             return true;
+    }
+
+    public int screenSizeX(int x){
+        x = (int)(x*backGroundImageWidth/1200);
+        return x;
+    }
+
+    public int screenSizeY(int y){
+        y = (int)(y*backGroundImageHeight/750);
+        return y;
+    }
+
+    public int screenSize(int tmp){
+        double original = Math.pow(Math.pow(750, 2)+Math.pow(1200, 2), 0.5);
+        double now = Math.pow(Math.pow(backGroundImageWidth, 2)+Math.pow(backGroundImageHeight, 2), 0.5);
+        tmp = (int)(tmp*now/original);
+        return tmp;
     }
 
     public abstract void changeImg();
