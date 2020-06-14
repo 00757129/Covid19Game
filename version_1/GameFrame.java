@@ -455,8 +455,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
                     for(int i = 0;i<EnemyList.size();i++)
                     {
-                        EnemyList.get(i).speedX++;
-                        EnemyList.get(i).speedY++;
+                        EnemyList.get(i).changeSpeed(EnemyList.get(i).posX,EnemyList.get(i).posY,testC.posX,testC.posY,EnemyList.get(i).speed+=8);
                     }
                     
                     //大媽血量減2召喚
