@@ -29,6 +29,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     int backGroundImageHeight = (int)screenSize.getHeight();
     int backGroundImageWidth = (int)screenSize.getWidth();
     int correct=0;
+    int qNum = 3;
     // int backGroundImageHeight = backGroundImageHeight;
     // int backGroundImageWidth = 1200;
     boolean end;
@@ -58,6 +59,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     public void initial(){
         backGroundImage=new ImageIcon("routemap2020.png").getImage();
         end = false;
+        correct = 0;
         enemyIndex = 0;
         level = 0;
         testC = new Hero(screenSizeX(5), screenSizeY(5), screenSize(200), screenSize(200));
@@ -95,6 +97,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
 
     public void initial_2(){
+        correct = 0;
         end = false;
         level = 1;
         enemyIndex = 0;
@@ -131,6 +134,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
 
      public void initial_3(){
+        correct = 0;
         end = false;
         level = 2;           //暫定     
         testC = new Hero(screenSizeX(5), screenSizeY(5), screenSize(200), screenSize(200));
@@ -943,6 +947,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
                 ans3.addItemListener(handlerRadioButtonSource);
+                qNum = 3;  
                 input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,questionPart3,ans1,ans2,ans3},"捷運林口長庚醫院站",JOptionPane.DEFAULT_OPTION);
                 //RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
                 if(input == 0)
@@ -963,7 +968,8 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ansGroup.add(ans3);           
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
-                ans3.addItemListener(handlerRadioButtonSource);     
+                ans3.addItemListener(handlerRadioButtonSource);   
+                qNum = 3;    
                 input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,ans1,ans2,ans3},"捷運亞東醫院站",JOptionPane.DEFAULT_OPTION);
                 if(input == 0)
                 {
@@ -983,7 +989,8 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ansGroup.add(ans3);    
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
-                ans3.addItemListener(handlerRadioButtonSource);            
+                ans3.addItemListener(handlerRadioButtonSource);    
+                qNum = 3;          
                 input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,ans1,ans2,ans3},"捷運台北車站",JOptionPane.DEFAULT_OPTION);
                 //RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
                 if(input == 0)
@@ -993,8 +1000,9 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             break;
 
             case 4:
-                questionPart1 = new JLabel("師大公館有名住宿生於3/31確診新型冠狀病毒");
-                questionPart2 = new JLabel("為確保不要在宿舍與校區交叉感染的疑慮，校方要求與該名學生密切互動的13名師生進行居家隔離<br/>請問下列哪個選項提及的防疫措施有要求 “完全禁止外出”");
+                questionPart1 = new JLabel("師大公館校區有名住宿生於3/31確診新型冠狀病毒，");
+                questionPart2 = new JLabel("為確保不要有在宿舍與校區交叉感染的風險，校方要求與該名學生密切互動的13名師生進行居家隔離。請問下列哪個選項提及的防疫措施有要求 “完全禁止外出”");
+                questionPart3 = new JLabel("請問下列哪個選項提及的防疫措施有要求 “完全禁止外出”");
                 ans1 = new JRadioButton("A.居家檢疫");
                 ans2 = new JRadioButton("B.居家檢疫、居家隔離");
                 ans3 = new JRadioButton("C.居家隔離");
@@ -1005,7 +1013,8 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
                 ans3.addItemListener(handlerRadioButtonSource);
-                input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,ans1,ans2,ans3},"捷運公館站",JOptionPane.DEFAULT_OPTION);
+                qNum = 3;  
+                input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,questionPart3,ans1,ans2,ans3},"捷運公館站",JOptionPane.DEFAULT_OPTION);
                 if(input == 0)
                 {
                     checkCorrect(3);
@@ -1025,6 +1034,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
                 ans3.addItemListener(handlerRadioButtonSource);
+                qNum = 3;  
                 input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,ans1,ans2,ans3},"捷運動物園站",JOptionPane.DEFAULT_OPTION);
                 //RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
                 if(input == 0)
@@ -1046,6 +1056,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
                 ans3.addItemListener(handlerRadioButtonSource);
+                qNum = 3;  
                 input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,ans1,ans2,ans3},"捷運新北投站",JOptionPane.DEFAULT_OPTION);
                 //RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
                 if(input == 0)
@@ -1070,8 +1081,8 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         switch(no + 1)
         {
             case 1:
-                questionPart1 = new JLabel("郵輪是現今不少人出遊時的選擇，但因為郵輪的封閉性、可方便快速去多國觀光以及在海上漂泊等因素，因此郵輪在防疫期間成為各國政府的燙手山芋。");
-                questionPart2 = new JLabel("如何處理郵輪上的防疫問題也是非常重要的議題。");
+                questionPart1 = new JLabel("郵輪是現今不少人出遊時的選擇，但因為郵輪的封閉性、可方便快速去多國觀光以及在海上漂泊等因素，");
+                questionPart2 = new JLabel("因此郵輪在防疫期間成為各國政府的燙手山芋。");
                 questionPart3 = new JLabel("防疫期間基隆港曾停靠了不少郵輪(如. 寶瓶星號等)");
                 questionPart4 = new JLabel("請問關於台灣政府對郵輪防疫的政策下列何者正確?");
                 ans1 = new JRadioButton("A.只有有被篩檢出病情的人才需要隔離");
@@ -1084,6 +1095,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
                 ans3.addItemListener(handlerRadioButtonSource);
+                qNum = 3;
                 input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,questionPart3,questionPart4,ans1,ans2,ans3},"基隆",JOptionPane.DEFAULT_OPTION);
                 //RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
                 if(input == 0)
@@ -1107,7 +1119,9 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ansGroup.add(ans4);      
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
-                ans3.addItemListener(handlerRadioButtonSource);     
+                ans3.addItemListener(handlerRadioButtonSource);  
+                ans4.addItemListener(handlerRadioButtonSource);  
+                qNum = 4;  
                 input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,questionPart3,ans1,ans2,ans3,ans4},"花蓮",JOptionPane.DEFAULT_OPTION);
                 if(input == 0)
                 {
@@ -1117,13 +1131,13 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
             case 3:
                 questionPart1 = new JLabel("清明連假期間墾丁大街湧入了大量的觀光客，讓不少專業醫療人員擔心此舉恐會成為防疫破口。");
-                questionPart2 = new JLabel("在經歷此事後，墾丁觀光大街便實施了「人車分流大街徒步區」、「口罩臨檢」、「沿街宣導口罩、保持社交距離」等防疫措施。");
-                questionPart3 = new JLabel("而1968App也將墾丁大街等觀光地點加入到人潮示警點。");
+                questionPart2 = new JLabel("在經歷此事後，墾丁觀光大街便實施了「人車分流大街徒步區」、「口罩臨檢」、「沿街宣導口罩、保持社交距離」");
+                questionPart3 = new JLabel("等防疫措施。而1968App也將墾丁大街等觀光地點加入到人潮示警點。");
                 questionPart4 = new JLabel("請問下列關於1968App的敘述何者正確?");
                 ans1 = new JRadioButton("A.為交通專用的App路況發生問題時可觀看即時路況");
                 ans2 = new JRadioButton("B.為防疫專用的App可查詢口罩剩餘數量");
                 ans3 = new JRadioButton("C.為交通專用的App可查詢火車時刻表");
-                ans4 = new JRadioButton("D.為防疫專用的App可觀看中央流行指揮中心直播新竹：護理之家禁止探病");
+                ans4 = new JRadioButton("D.為防疫專用的App可觀看中央流行指揮中心直播");
                 ansGroup = new ButtonGroup();
                 ansGroup.add(ans1);
                 ansGroup.add(ans2);
@@ -1131,7 +1145,9 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ansGroup.add(ans4);    
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
-                ans3.addItemListener(handlerRadioButtonSource);            
+                ans3.addItemListener(handlerRadioButtonSource);  
+                ans4.addItemListener(handlerRadioButtonSource); 
+                qNum = 4;            
                 input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,questionPart3,questionPart4,ans1,ans2,ans3,ans4},"屏東",JOptionPane.DEFAULT_OPTION);
                 //RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
                 if(input == 0)
@@ -1154,6 +1170,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
                 ans3.addItemListener(handlerRadioButtonSource);
+                qNum = 3;  
                 input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,questionPart3,ans1,ans2,ans3},"南投",JOptionPane.DEFAULT_OPTION);
                 if(input == 0)
                 {
@@ -1175,6 +1192,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
                 ans3.addItemListener(handlerRadioButtonSource);
+                qNum = 3;  
                 input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,questionPart3,ans1,ans2,ans3},"新竹",JOptionPane.DEFAULT_OPTION);
                 //RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
                 if(input == 0)
@@ -1198,6 +1216,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
                 ans3.addItemListener(handlerRadioButtonSource);
+                qNum = 3;  
                 input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,questionPart3,questionPart4,ans1,ans2,ans3},"嘉義",JOptionPane.DEFAULT_OPTION);
                 //RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
                 if(input == 0)
@@ -1232,9 +1251,12 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ansGroup.add(ans1);
                 ansGroup.add(ans2);
                 ansGroup.add(ans3);
+                ansGroup.add(ans4);
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
                 ans3.addItemListener(handlerRadioButtonSource);
+                ans4.addItemListener(handlerRadioButtonSource);
+                qNum = 4;
                 input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,ans1,ans2,ans3,ans4},"美國",JOptionPane.DEFAULT_OPTION);
                 //RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
                 if(input == 0)
@@ -1252,11 +1274,11 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ansGroup = new ButtonGroup();
                 ansGroup.add(ans1);
                 ansGroup.add(ans2);
-                ansGroup.add(ans3);     
-                ansGroup.add(ans4);      
+                ansGroup.add(ans3);      
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
-                ans3.addItemListener(handlerRadioButtonSource);     
+                ans3.addItemListener(handlerRadioButtonSource);  
+                qNum = 3;   
                 input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,ans1,ans2,ans3},"中國",JOptionPane.DEFAULT_OPTION);
                 if(input == 0)
                 {
@@ -1274,11 +1296,11 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ansGroup = new ButtonGroup();
                 ansGroup.add(ans1);
                 ansGroup.add(ans2);
-                ansGroup.add(ans3);
-                ansGroup.add(ans4);    
+                ansGroup.add(ans3);  
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
-                ans3.addItemListener(handlerRadioButtonSource);            
+                ans3.addItemListener(handlerRadioButtonSource); 
+                qNum = 3;           
                 input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,questionPart3,ans1,ans2,ans3},"英國",JOptionPane.DEFAULT_OPTION);
                 //RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
                 if(input == 0)
@@ -1301,6 +1323,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
                 ans3.addItemListener(handlerRadioButtonSource);
+                qNum = 3;
                 input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,questionPart3,ans1,ans2,ans3},"俄羅斯",JOptionPane.DEFAULT_OPTION);
                 if(input == 0)
                 {
@@ -1322,6 +1345,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
                 ans3.addItemListener(handlerRadioButtonSource);
+                qNum = 3;
                 input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,questionPart3,ans1,ans2,ans3},"巴西",JOptionPane.DEFAULT_OPTION);
                 //RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
                 if(input == 0)
@@ -1344,6 +1368,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 ans1.addItemListener(handlerRadioButtonSource);
                 ans2.addItemListener(handlerRadioButtonSource);
                 ans3.addItemListener(handlerRadioButtonSource);
+                qNum = 3;
                 input = JOptionPane.showConfirmDialog(null,new Object[]{questionPart1,questionPart2,questionPart3,ans1,ans2,ans3},"南非",JOptionPane.DEFAULT_OPTION);
                 //RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
                 if(input == 0)
@@ -1360,6 +1385,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         if(playerChoice == correctAns)
         {
             JOptionPane.showMessageDialog(null,"甚麼?竟然對了!真令人無法置信!!","答題結果",JOptionPane.INFORMATION_MESSAGE);
+            correct++;
         }
         else
         {
@@ -1373,19 +1399,19 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         public void itemStateChanged(ItemEvent event)
         {
             playerChoice = -1;
-            if(ans1.isSelected())
+            if((qNum >= 1)&&(ans1.isSelected()))
             {
                 playerChoice = 1;
             }
-            else if (ans2.isSelected())
+            else if ((qNum >= 2)&&(ans2.isSelected()))
             {
                 playerChoice = 2;
             }
-            else if (ans3.isSelected())
+            else if ((qNum >= 3)&&(ans3.isSelected()))
             {
                 playerChoice = 3;
             }
-            else if(ans4.isSelected()){
+            else if((qNum >= 4)&&(ans4.isSelected())){
                 playerChoice = 4;
             }
             else{
@@ -1432,9 +1458,10 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     EnemyList.remove(i);
                 }
             }
-            if((EnemyList.size()==0&&correct>=3)||end==true)     //殺光敵人後顯示視窗並關閉整個程式
+            if((correct>=3))     //殺光敵人後顯示視窗並關閉整個程式
             {
                 //JOptionPane.showMessageDialog(null,"Win!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
+                end = true;
                 
                 JOptionPane.showMessageDialog(this,"你真棒！");
                 end = true;
