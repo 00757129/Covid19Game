@@ -565,7 +565,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         //mainJpanel.add(imagePanel);
         
         mainJpanel.add(levelOneButton);mainJpanel.add(levelTwoButton);mainJpanel.add(levelThreeButton);mainJpanel.add(introductionButton);mainJpanel.add(label);
-        this.getLayeredPane().add(introductionlabel, new Integer(Integer.MAX_VALUE)); 
+        //this.getLayeredPane().add(introductionlabel, new Integer(Integer.MAX_VALUE)); 
         introductionPanel.add(returnbutton);introductionPanel.add(introductionlabel);introductionPanel.add(introBut);
         getContentPane().add(mainJpanel, BorderLayout.CENTER);
         mainJpanel.setVisible(true);
@@ -606,13 +606,16 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         big.drawImage(backGroundImage,0,0, backGroundImageWidth, backGroundImageHeight, null);    //重複畫背景
         
 		big.drawImage(testC.img.get(0), testC.posX, testC.posY, testC.width, testC.height,null);    //畫hero本身
-        big.drawImage(testC.blood.get(0),testC.posX, testC.posY+15,testC.width,50,null);            //畫hero的血條
+        big.drawImage(testC.blood.get(0),testC.posX, testC.posY+20,testC.width,50,null);            //畫hero的血條
 
         for(int i = 0;i<EnemyList.size();i++)
         {
             //正常移動(還沒有寫被子彈打中的消失部分)
             big.drawImage(EnemyList.get(i).img.get(0), EnemyList.get(i).posX, EnemyList.get(i).posY, EnemyList.get(i).width, EnemyList.get(i).height, null);
-            big.drawImage(EnemyList.get(i).blood.get(0),EnemyList.get(i).posX,EnemyList.get(i).posY+15,EnemyList.get(i).width,50,null);
+            if(EnemyList.get(i).type == 0)
+                big.drawImage(EnemyList.get(i).blood.get(0),EnemyList.get(i).posX,EnemyList.get(i).posY-30,EnemyList.get(i).width,50,null);
+            else
+                big.drawImage(EnemyList.get(i).blood.get(0),EnemyList.get(i).posX,EnemyList.get(i).posY-5,EnemyList.get(i).width,50,null);
         }
 
 		for(int i = 0; i<WeaponList.size(); i++){
