@@ -89,8 +89,8 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             enemyIndex++;
         }
         
-        t=0;
-        //JOptionPane.showMessageDialog(this,"武漢病毒介紹......","發現新怪物", JOptionPane.PLAIN_MESSAGE,new ImageIcon("covid.png"));
+        // t=0;
+        // JOptionPane.showMessageDialog(this,"武漢病毒介紹......","發現新怪物", JOptionPane.PLAIN_MESSAGE,new ImageIcon("covid.png"));
     }
 
     public void initial_2(){
@@ -165,8 +165,11 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     public void working(){
         
         JLabel jlb = new JLabel();
-        JLabel jlb2 = new JLabel("武漢病毒介紹......");
-        int width = 50,height = 50;
+        JLabel jlb2 = new JLabel("武漢病毒：是一種由嚴重急性呼吸系統綜合徵冠狀病毒2引發的傳染病。");
+        JLabel jlb3 = new JLabel("該病首名病人2019年末於中華人民共和國湖北省武漢市確診，");
+        JLabel jlb4 = new JLabel("其後此病在全球各國大規模爆發並急速擴散。");
+        JLabel jlb5 = new JLabel("是個不好好處理就會一直冒出來的麻煩呢！");
+        int width = 200,height = 200;
         ImageIcon image = new ImageIcon("covid.png");
         image.setImage(image.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
         jlb.setIcon(image);
@@ -183,7 +186,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 
             }
         }, intervel, intervel);        //每個微秒就重複一次
-        if(t==0){JOptionPane.showMessageDialog(null,new Object[]{jlb,jlb2},"發現新怪物!",JOptionPane.DEFAULT_OPTION);t=1;}
+        if(t==0){JOptionPane.showMessageDialog(null,new Object[]{jlb,jlb2, jlb3, jlb4, jlb5},"發現新怪物!",JOptionPane.DEFAULT_OPTION);t=1;}
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
@@ -250,8 +253,10 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
 
     public void working2(){
-         JLabel jlb = new JLabel();
-        JLabel jlb2 = new JLabel("boss2介紹......");
+        JLabel jlb = new JLabel();
+        JLabel jlb2 = new JLabel("阿伯總覺得什麼大風大浪他沒見過，一點小小的病毒才不會嚇到他呢！");
+        JLabel jlb3 = new JLabel("最近開始莫名的發燒，還有咳嗽症狀，感覺狀況有點不妙呢...");
+        JLabel jlb4 = new JLabel("每隔一段時間阿伯就會扣三滴生命值，召喚更多病毒怪物。");
         int width = 200,height = 200;
         ImageIcon image = new ImageIcon("boss2.png");
         image.setImage(image.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
@@ -269,7 +274,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 
             }
         }, intervel, intervel);        //每個微秒就重複一次
-        if(t==0){JOptionPane.showMessageDialog(null,new Object[]{jlb,jlb2},"發現新怪物!",JOptionPane.DEFAULT_OPTION);t=1;}
+        if(t==0){JOptionPane.showMessageDialog(null,new Object[]{jlb,jlb2, jlb3, jlb4},"發現新怪物-咳嗽的老阿伯",JOptionPane.DEFAULT_OPTION);t=1;}
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
@@ -379,7 +384,9 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
     public void working3(){
          JLabel jlb = new JLabel();
-        JLabel jlb2 = new JLabel("boss3介紹......");
+        JLabel jlb2 = new JLabel("鄰居當中熱心助人的大媽阿姨，不畏被遭受感染的風險，每天依舊去不同人家裡打麻將。");
+        JLabel jlb3 = new JLabel("口頭禪是[你知道嗎，隔壁...家的孩子真的有夠優秀欸，你們家的孩子呢]");
+        JLabel jlb4 = new JLabel("是所有求學孩子的惡夢大媽，大媽每隔一段時間就會扣生命值，召喚出更多病毒");
         int width = 200,height = 200;
         ImageIcon image = new ImageIcon("boss3.png");
         image.setImage(image.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
@@ -397,7 +404,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                   
             }
         }, intervel, intervel);        //每個微秒就重複一次
-        if(t==0){JOptionPane.showMessageDialog(null,new Object[]{jlb,jlb2},"發現新怪物!",JOptionPane.DEFAULT_OPTION);t=1;}
+        if(t==0){JOptionPane.showMessageDialog(null,new Object[]{jlb,jlb2, jlb3, jlb4},"發現新怪-鄰居大媽",JOptionPane.DEFAULT_OPTION);t=1;}
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
