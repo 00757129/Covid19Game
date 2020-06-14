@@ -23,11 +23,12 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     public Hero testC = new Hero(screenSizeX(5), screenSizeY(5), screenSize(200), screenSize(200));      //一定要先宣告一下，不然KeyListener不給過，但是可以在initial再寫
     public ArrayList<Place> placeRect = new ArrayList<Place>();    //裝各地點位置的arraylist
     public int playerChoice;
-    public Image backGroundImage =new ImageIcon("routemap2020.png").getImage();
+    public Icon bGImage =new ImageIcon("covid-19.jpg");
+    public Image backGroundImage =new ImageIcon("covid-19.jpg").getImage();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     int backGroundImageHeight = (int)screenSize.getHeight();
     int backGroundImageWidth = (int)screenSize.getWidth();
-    
+    int correct=0;
     // int backGroundImageHeight = backGroundImageHeight;
     // int backGroundImageWidth = 1200;
     boolean end;
@@ -35,8 +36,8 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     JRadioButton ans2; 
     JRadioButton ans3;
     JRadioButton ans4;
-    public JLabel label;  public JPanel mainJpanel,labelPanel,levelOnePanel,levelTwoPanel,levelThreePanel,introductionPanel; 
-    public JButton levelOneButton,levelTwoButton,levelThreeButton,introductionButton; 
+    public JLabel label,introductionlabel,bgLabel;  public JPanel mainJpanel,labelPanel,levelOnePanel,levelTwoPanel,levelThreePanel,introductionPanel,imagePanel; 
+    public JButton levelOneButton,levelTwoButton,levelThreeButton,introductionButton,returnbutton; 
     
 
 
@@ -55,7 +56,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
 
     public void initial(){
-        
+        backGroundImage=new ImageIcon("routemap2020.png").getImage();
         end = false;
         enemyIndex = 0;
         level = 0;
@@ -531,25 +532,38 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
     
     public void SetStart(){
-       mainJpanel=new JPanel();
-       mainJpanel.setLayout(null);
+        /*
+        bGImage =new ImageIcon("covid-19.jpg");
+        bgLabel = new JLabel(bGImage);      // 把背景圖顯示在Label中
+        bgLabel.setBounds(0, 0, backGroundImageWidth, backGroundImageHeight);    // 把含有背景圖之Label位置設置為圖片剛好填充整個版面
+        // 把内容視窗轉為JPanel，否則不能使用setOpaque()來使視窗變成透明
+        imagePanel = new JPanel();
+        imagePanel.setOpaque(false);
+        this.getLayeredPane().add(bgLabel, new Integer(Integer.MIN_VALUE));     // 把背景圖添加到分層窗格的最底層以作為背景
+        */
+
+
+       mainJpanel=new JPanel();introductionPanel=new JPanel();
+       mainJpanel.setLayout(null);introductionPanel.setLayout(null);
+       introductionlabel=new JLabel("introduction......");introductionlabel.setBounds(screenSizeX(500),screenSizeX(50),100,40); 
         label=new JLabel("COVID-19");label.setBounds(screenSizeX(500),screenSizeX(50),100,40); 
         levelOneButton=new JButton("Level 1");levelOneButton.setBounds(screenSizeX(500),screenSizeY(150),screenSizeX(100),screenSizeY(40)); 
         levelTwoButton=new JButton("Level 2");levelTwoButton.setBounds(screenSizeX(500),screenSizeY(250),screenSizeX(100),screenSizeY(40));
         levelThreeButton=new JButton("Level 3");levelThreeButton.setBounds(screenSizeX(500),screenSizeY(350),screenSizeX(100),screenSizeY(40)); 
-        // levelIntroButton=new JButton("遊戲介紹");levelIntroButton.setBounds(screenSizeX(500),screenSizeY(450),screenSizeX(100),screenSizeY(40)); 
-        
-        levelOneButton.addActionListener(this);levelTwoButton.addActionListener(this);levelThreeButton.addActionListener(this);//levelIntroButton.addActionListener(this);
-        
+        introductionButton=new JButton("Intrduction");introductionButton.setBounds(screenSizeX(500),screenSizeY(450),screenSizeX(100),screenSizeY(40)); 
+        returnbutton=new JButton("Return");returnbutton.setBounds(screenSizeX(500),screenSizeY(450),screenSizeX(100),screenSizeY(40)); 
+
+        levelOneButton.addActionListener(this);levelTwoButton.addActionListener(this);levelThreeButton.addActionListener(this);introductionButton.addActionListener(this);
+        introductionButton.addActionListener(this);returnbutton.addActionListener(this);
+        //mainJpanel.add(imagePanel);
         mainJpanel.add(label);
-        mainJpanel.add(levelOneButton);mainJpanel.add(levelTwoButton);mainJpanel.add(levelThreeButton);
+        mainJpanel.add(levelOneButton);mainJpanel.add(levelTwoButton);mainJpanel.add(levelThreeButton);mainJpanel.add(introductionButton);
+        this.getLayeredPane().add(introductionlabel, new Integer(Integer.MAX_VALUE)); 
+        introductionPanel.add(introductionlabel);introductionPanel.add(returnbutton);
         getContentPane().add(mainJpanel, BorderLayout.CENTER);
         mainJpanel.setVisible(true);
-        levelTwoButton.requestFocus();
         SwingUtilities.updateComponentTreeUI(this);    
-        repaint();
-        revalidate();
-        validate();
+       
 
     }
 
@@ -577,7 +591,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     public void paint(Graphics g){
         // System.out.println("test");
         if(start==0){g.drawImage(new ImageIcon("covid-19.jpg").getImage(),0,0, backGroundImageWidth, backGroundImageHeight, null); 
-        levelOneButton.requestFocus();levelTwoButton.requestFocus();levelThreeButton.requestFocus();label.requestFocus();mainJpanel.requestFocus();
+        levelOneButton.requestFocus();levelTwoButton.requestFocus();levelThreeButton.requestFocus();label.requestFocus();introductionButton.requestFocus();mainJpanel.requestFocus();
             return;}
         BufferedImage bi =(BufferedImage)this.createImage(this.getSize().width,this.getSize().height);
         Graphics big =bi.getGraphics();
@@ -619,29 +633,52 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
      @Override
       public void actionPerformed(ActionEvent event)
       {
-          removeAll();
-          start=1;
+         
           System.out.println(event.getActionCommand());
           if(event.getActionCommand().equals("Level 1")){
+                removeAll();
+                start=1;
                 this.requestFocus();
                 addKeyListener(this);
                 addMouseListener(new MouseAdapterDemo());
                 initial();
                 working();
           }else if(event.getActionCommand().equals("Level 2")){
+                removeAll();
+                start=1;
                 this.requestFocus();
                 addKeyListener(this);
                 addMouseListener(new MouseAdapterDemo());
                 initial_2();
                 working2();
           }else if(event.getActionCommand().equals("Level 3")){
+                removeAll();
+                start=1;
                 this.requestFocus();
                 addKeyListener(this);
                 addMouseListener(new MouseAdapterDemo());
                 initial_3();
                 working3();
-          }else{
+          }else if(event.getActionCommand().equals("Intrduction")){
+                mainJpanel.setVisible(false);
+                start=0;
+                add(introductionPanel);
+                getContentPane().add(introductionPanel, BorderLayout.CENTER);
+                introductionPanel.setVisible(true);
+                SwingUtilities.updateComponentTreeUI(this);  
+                introductionPanel.requestFocus();  
+                introductionButton.requestFocus();
+                introductionlabel.requestFocus();
+                introductionPanel.requestFocus();
+                
 
+          }else if(event.getActionCommand().equals("Return")){
+              introductionPanel.setVisible(false);
+             
+                getContentPane().add(mainJpanel, BorderLayout.CENTER);
+                repaint();
+                mainJpanel.setVisible(true);
+                mainJpanel.requestFocus();
           }
          
 
@@ -1395,7 +1432,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     EnemyList.remove(i);
                 }
             }
-            if(EnemyList.size()==0)     //殺光敵人後顯示視窗並關閉整個程式
+            if((EnemyList.size()==0&&correct>=3)||end==true)     //殺光敵人後顯示視窗並關閉整個程式
             {
                 //JOptionPane.showMessageDialog(null,"Win!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
                 
@@ -1404,7 +1441,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
                 if(level==0) initial_2();
                 else if (level==1)initial_3();
-                else {}
+                else {JOptionPane.showMessageDialog(this,"恭喜通過所有關卡！");}
                 //System.exit(1);
             }
         }
