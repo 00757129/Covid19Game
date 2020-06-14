@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import java.security.*;
 
 public class GameFrame extends JFrame implements KeyListener,ActionListener{
-
+    int t=0;
     public Timer timer;      
     public int enemyIndex = 0;               
     public int level;
@@ -55,6 +55,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
 
     public void initial(){
+        
         end = false;
         enemyIndex = 0;
         level = 0;
@@ -87,6 +88,9 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             EnemyList.add(virus);
             enemyIndex++;
         }
+        
+        t=0;
+        //JOptionPane.showMessageDialog(this,"武漢病毒介紹......","發現新怪物", JOptionPane.PLAIN_MESSAGE,new ImageIcon("covid.png"));
     }
 
     public void initial_2(){
@@ -122,7 +126,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             Enemy virus = new Enemy(1, x,y,testC.posX,testC.posY,2,6,0,screenSize(120),screenSize(120));
             EnemyList.add(virus);
             enemyIndex++;
-        }
+        } t=0;
     }
 
      public void initial_3(){
@@ -155,10 +159,20 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             Enemy virus = new Enemy(2, x,y,testC.posX,testC.posY,2,12,0,screenSize(350),screenSize(350));
             EnemyList.add(virus);
             enemyIndex++;
-        }
+        } t=0;
     }
 
     public void working(){
+        
+        JLabel jlb = new JLabel();
+        JLabel jlb2 = new JLabel("武漢病毒介紹......");
+        int width = 50,height = 50;
+        ImageIcon image = new ImageIcon("covid.png");
+        image.setImage(image.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
+        jlb.setIcon(image);
+        jlb.setSize(width, height);
+        
+
         timer = new Timer();
         timer.schedule(new TimerTask(){
             @Override
@@ -166,9 +180,10 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 Weaponhit();
                 repaint();          //重畫角色的位置
                 questionevent();
+                
             }
         }, intervel, intervel);        //每個微秒就重複一次
-
+        if(t==0){JOptionPane.showMessageDialog(null,new Object[]{jlb,jlb2},"發現新怪物!",JOptionPane.DEFAULT_OPTION);t=1;}
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
@@ -235,6 +250,15 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
 
     public void working2(){
+         JLabel jlb = new JLabel();
+        JLabel jlb2 = new JLabel("boss2介紹......");
+        int width = 200,height = 200;
+        ImageIcon image = new ImageIcon("boss2.png");
+        image.setImage(image.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
+        jlb.setIcon(image);
+        jlb.setSize(width, height);
+        
+
         timer = new Timer();
         timer.schedule(new TimerTask(){
             @Override
@@ -245,7 +269,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 
             }
         }, intervel, intervel);        //每個微秒就重複一次
-
+        if(t==0){JOptionPane.showMessageDialog(null,new Object[]{jlb,jlb2},"發現新怪物!",JOptionPane.DEFAULT_OPTION);t=1;}
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
@@ -354,6 +378,15 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
 
     public void working3(){
+         JLabel jlb = new JLabel();
+        JLabel jlb2 = new JLabel("boss3介紹......");
+        int width = 200,height = 200;
+        ImageIcon image = new ImageIcon("boss3.png");
+        image.setImage(image.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
+        jlb.setIcon(image);
+        jlb.setSize(width, height);
+        
+
         timer = new Timer();
         timer.schedule(new TimerTask(){
             @Override
@@ -364,7 +397,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                   
             }
         }, intervel, intervel);        //每個微秒就重複一次
-
+        if(t==0){JOptionPane.showMessageDialog(null,new Object[]{jlb,jlb2},"發現新怪物!",JOptionPane.DEFAULT_OPTION);t=1;}
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
@@ -502,7 +535,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         levelOneButton.addActionListener(this);levelTwoButton.addActionListener(this);levelThreeButton.addActionListener(this);//levelIntroButton.addActionListener(this);
         
         mainJpanel.add(label);
-        mainJpanel.add(levelOneButton);mainJpanel.add(levelTwoButton);mainJpanel.add(levelThreeButton);mainJpanel.add(levelIntroButton);
+        mainJpanel.add(levelOneButton);mainJpanel.add(levelTwoButton);mainJpanel.add(levelThreeButton);
         getContentPane().add(mainJpanel, BorderLayout.CENTER);
         mainJpanel.setVisible(true);
         levelTwoButton.requestFocus();
