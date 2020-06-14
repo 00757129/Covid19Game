@@ -38,7 +38,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     JRadioButton ans3;
     JRadioButton ans4;
     public JLabel label,introductionlabel,bgLabel;  public JPanel mainJpanel,labelPanel,levelOnePanel,levelTwoPanel,levelThreePanel,introductionPanel,imagePanel; 
-    public JButton levelOneButton,levelTwoButton,levelThreeButton,introductionButton,returnbutton; 
+    public JButton levelOneButton,levelTwoButton,levelThreeButton,introductionButton,returnbutton,introBut; 
     
 
 
@@ -169,7 +169,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
     public void working(){
         
-        JLabel jlb = new JLabel();
+        JLabel jlb = new JLabel("",SwingConstants.CENTER);
         JLabel jlb2 = new JLabel("武漢病毒：是一種由嚴重急性呼吸系統綜合徵冠狀病毒2引發的傳染病。");
         JLabel jlb3 = new JLabel("該病首名病人2019年末於中華人民共和國湖北省武漢市確診，");
         JLabel jlb4 = new JLabel("其後此病在全球各國大規模爆發並急速擴散。");
@@ -258,7 +258,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
 
     public void working2(){
-        JLabel jlb = new JLabel();
+         JLabel jlb = new JLabel("",SwingConstants.CENTER);
         JLabel jlb2 = new JLabel("阿伯總覺得什麼大風大浪他沒見過，一點小小的病毒才不會嚇到他呢！");
         JLabel jlb3 = new JLabel("最近開始莫名的發燒，還有咳嗽症狀，感覺狀況有點不妙呢...");
         JLabel jlb4 = new JLabel("每隔一段時間阿伯就會扣三滴生命值，召喚更多病毒怪物。");
@@ -388,7 +388,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
 
     public void working3(){
-         JLabel jlb = new JLabel();
+         JLabel jlb = new JLabel("",SwingConstants.CENTER);
         JLabel jlb2 = new JLabel("鄰居當中熱心助人的大媽阿姨，不畏被遭受感染的風險，每天依舊去不同人家裡打麻將。");
         JLabel jlb3 = new JLabel("口頭禪是[你知道嗎，隔壁...家的孩子真的有夠優秀欸，你們家的孩子呢]");
         JLabel jlb4 = new JLabel("是所有求學孩子的惡夢大媽，大媽每隔一段時間就會扣生命值，召喚出更多病毒");
@@ -545,8 +545,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         imagePanel.setOpaque(false);
         this.getLayeredPane().add(bgLabel, new Integer(Integer.MIN_VALUE));     // 把背景圖添加到分層窗格的最底層以作為背景
         */
-
-
+        bGImage =new ImageIcon("bullet.png");
        mainJpanel=new JPanel();introductionPanel=new JPanel();
        mainJpanel.setLayout(null);introductionPanel.setLayout(null);
        introductionlabel=new JLabel("introduction......");introductionlabel.setBounds(screenSizeX(500),screenSizeX(50),100,40); 
@@ -556,14 +555,18 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         levelThreeButton=new JButton("Level 3");levelThreeButton.setBounds(screenSizeX(500),screenSizeY(350),screenSizeX(100),screenSizeY(40)); 
         introductionButton=new JButton("Intrduction");introductionButton.setBounds(screenSizeX(500),screenSizeY(450),screenSizeX(100),screenSizeY(40)); 
         returnbutton=new JButton("Return");returnbutton.setBounds(screenSizeX(500),screenSizeY(450),screenSizeX(100),screenSizeY(40)); 
+////////////////////////////介紹圖
+         bGImage =new ImageIcon("bullet.png");
+        introBut=new JButton(bGImage);introBut.setBounds(screenSizeX(300),screenSizeY(100),screenSizeX(400),screenSizeY(300)); 
+//////////////////////////
 
         levelOneButton.addActionListener(this);levelTwoButton.addActionListener(this);levelThreeButton.addActionListener(this);introductionButton.addActionListener(this);
         introductionButton.addActionListener(this);returnbutton.addActionListener(this);
         //mainJpanel.add(imagePanel);
-        mainJpanel.add(label);
-        mainJpanel.add(levelOneButton);mainJpanel.add(levelTwoButton);mainJpanel.add(levelThreeButton);mainJpanel.add(introductionButton);
+        
+        mainJpanel.add(levelOneButton);mainJpanel.add(levelTwoButton);mainJpanel.add(levelThreeButton);mainJpanel.add(introductionButton);mainJpanel.add(label);
         this.getLayeredPane().add(introductionlabel, new Integer(Integer.MAX_VALUE)); 
-        introductionPanel.add(introductionlabel);introductionPanel.add(returnbutton);
+        introductionPanel.add(returnbutton);introductionPanel.add(introductionlabel);introductionPanel.add(introBut);
         getContentPane().add(mainJpanel, BorderLayout.CENTER);
         mainJpanel.setVisible(true);
         SwingUtilities.updateComponentTreeUI(this);    
@@ -596,7 +599,8 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         // System.out.println("test");
         if(start==0){g.drawImage(new ImageIcon("covid-19.jpg").getImage(),0,0, backGroundImageWidth, backGroundImageHeight, null); 
         levelOneButton.requestFocus();levelTwoButton.requestFocus();levelThreeButton.requestFocus();label.requestFocus();introductionButton.requestFocus();mainJpanel.requestFocus();
-            return;}
+            //introductionPanel.requestFocus();introductionlabel.requestFocus();
+            return;}else if(start==2){introductionButton.requestFocus();introBut.requestFocus();introductionPanel.requestFocus();}
         BufferedImage bi =(BufferedImage)this.createImage(this.getSize().width,this.getSize().height);
         Graphics big =bi.getGraphics();
         big.drawImage(backGroundImage,0,0, backGroundImageWidth, backGroundImageHeight, null);    //重複畫背景
@@ -663,28 +667,29 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 addMouseListener(new MouseAdapterDemo());
                 initial_3();
                 working3();
+            
           }else if(event.getActionCommand().equals("Intrduction")){
                 mainJpanel.setVisible(false);
-                start=0;
+                start=2;
                 add(introductionPanel);
+                //getContentPane().add(introductionPanel,  new Integer(Integer.MAX_VALUE));
                 getContentPane().add(introductionPanel, BorderLayout.CENTER);
                 introductionPanel.setVisible(true);
                 SwingUtilities.updateComponentTreeUI(this);  
-                introductionPanel.requestFocus();  
+                //introductionPanel.requestFocus();  
                 introductionButton.requestFocus();
-                introductionlabel.requestFocus();
-                introductionPanel.requestFocus();
-                
+                introBut.requestFocus();
+                introductionPanel.requestFocus(); 
+                this.requestFocus();
 
           }else if(event.getActionCommand().equals("Return")){
               introductionPanel.setVisible(false);
-             
+             start=0;
                 getContentPane().add(mainJpanel, BorderLayout.CENTER);
                 repaint();
                 mainJpanel.setVisible(true);
                 mainJpanel.requestFocus();
           }
-         
 
       }       
 
