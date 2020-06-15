@@ -29,6 +29,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     int backGroundImageHeight = (int)screenSize.getHeight();
     int backGroundImageWidth = (int)screenSize.getWidth();
     int correct=0;
+    int uncorrect=0;
     int qNum = 3;
     // int backGroundImageHeight = backGroundImageHeight;
     // int backGroundImageWidth = 1200;
@@ -600,6 +601,8 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         levelOneButton.requestFocus();levelTwoButton.requestFocus();levelThreeButton.requestFocus();label.requestFocus();introductionButton.requestFocus();mainJpanel.requestFocus();
             //introductionPanel.requestFocus();introductionlabel.requestFocus();
             return;}else if(start==2){introductionButton.requestFocus();introBut.requestFocus();introductionPanel.requestFocus();}
+            else if(start==3){System.out.println("paint");//g.drawImage(new ImageIcon("covid-19.jpg").getImage(),0,0, backGroundImageWidth, backGroundImageHeight, null); 
+        levelOneButton.requestFocus();levelTwoButton.requestFocus();levelThreeButton.requestFocus();label.requestFocus();introductionButton.requestFocus();mainJpanel.requestFocus();}
         BufferedImage bi =(BufferedImage)this.createImage(this.getSize().width,this.getSize().height);
         Graphics big =bi.getGraphics();
         big.drawImage(backGroundImage,0,0, backGroundImageWidth, backGroundImageHeight, null);    //重複畫背景
@@ -686,6 +689,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
           }else if(event.getActionCommand().equals("Return")){
               introductionPanel.setVisible(false);
+             
              start=0;
                 getContentPane().add(mainJpanel, BorderLayout.CENTER);
                 repaint();
@@ -1397,6 +1401,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         else
         {
             JOptionPane.showMessageDialog(null,"哈哈~恭喜答錯~","答題結果",JOptionPane.INFORMATION_MESSAGE);
+            uncorrect++;System.out.println("uncorrect");
         }
     }
 
@@ -1465,7 +1470,9 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     EnemyList.remove(i);
                 }
             }
-            if((correct>=3))     //殺光敵人後顯示視窗並關閉整個程式
+            
+        }
+        if((correct>=3))     //殺光敵人後顯示視窗並關閉整個程式
             {
                 //JOptionPane.showMessageDialog(null,"Win!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
                 end = true;
@@ -1475,10 +1482,24 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
                 if(level==0) initial_2();
                 else if (level==1)initial_3();
-                else {JOptionPane.showMessageDialog(this,"恭喜通過所有關卡！");}
+                else {JOptionPane.showMessageDialog(this,"恭喜你成為防疫大使！");}
                 //System.exit(1);
             }
-        }
+            //System.out.println(uncorrect);
+            if(uncorrect>=3){
+                JOptionPane.showMessageDialog(this,"答錯太多啦！重新再來吧！");
+                uncorrect=0;
+                
+                
+                for (int i = 0; i < EnemyList.size(); i++) {
+                     EnemyList.remove(i);
+                }
+                for (int p = 0; p < WeaponList.size(); p++) {
+                     WeaponList.remove(p);
+                }
+               initial_3();
+               working3();
+            }
             
     }
 }
