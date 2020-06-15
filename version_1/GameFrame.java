@@ -319,7 +319,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 int original = EnemyList.size();
                 for(int i = 0;i<original;i++)
                 {
-                    if(EnemyList.get(i).hp>=3)
+                    if(EnemyList.get(i).hp>3)
                     {
                         EnemyList.get(i).hp-=3;
                         EnemyList.get(i).setHp(3,level);
@@ -447,7 +447,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             @Override
             public void run(){
                 System.out.println("in");
-                if(EnemyList.get(0).hp>=4)
+                if(EnemyList.get(0).hp>4)
                 {
                     System.out.println("in");
                      //大媽減2血量並讓敵人加速
