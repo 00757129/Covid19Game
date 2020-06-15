@@ -1483,7 +1483,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 if(level==0) initial_2();
                 else if (level==1)initial_3();
                 else {JOptionPane.showMessageDialog(this,"恭喜你成為防疫大使！");}
-                //System.exit(1);
+                System.exit(1);
             }
             //System.out.println(uncorrect);
             if(uncorrect>=3){
@@ -1497,8 +1497,17 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 for (int p = 0; p < WeaponList.size(); p++) {
                      WeaponList.remove(p);
                 }
-               initial_3();
-               working3();
+                if(level==0){
+                     initial();
+               working();
+                }else if(level==1){
+                     initial_2();
+               working2();
+                }else{
+                 initial_3();
+                working3();
+                }
+              
             }
             
     }
