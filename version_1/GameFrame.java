@@ -29,6 +29,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     int backGroundImageHeight = (int)screenSize.getHeight();
     int backGroundImageWidth = (int)screenSize.getWidth();
     int correct=0;
+    int uncorrect=0;
     int qNum = 3;
     // int backGroundImageHeight = backGroundImageHeight;
     // int backGroundImageWidth = 1200;
@@ -60,6 +61,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         backGroundImage=new ImageIcon("routemap2020.png").getImage();
         end = false;
         correct = 0;
+        uncorrect = 0;
         enemyIndex = 0;
         level = 0;
         testC = new Hero(screenSizeX(5), screenSizeY(5), screenSize(200), screenSize(200));
@@ -98,6 +100,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
     public void initial_2(){
         correct = 0;
+        uncorrect = 0;
         end = false;
         level = 1;
         enemyIndex = 0;
@@ -135,6 +138,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
      public void initial_3(){
         correct = 0;
+        uncorrect = 0;
         end = false;
         level = 2;           //暫定     
         testC = new Hero(screenSizeX(5), screenSizeY(5), screenSize(200), screenSize(200));
@@ -1385,11 +1389,13 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         if(playerChoice == correctAns)
         {
             JOptionPane.showMessageDialog(null,"甚麼?竟然對了!真令人無法置信!!","答題結果",JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("答對題數為"+correct);
             correct++;
         }
         else
         {
             JOptionPane.showMessageDialog(null,"哈哈~恭喜答錯~","答題結果",JOptionPane.INFORMATION_MESSAGE);
+            uncorrect++;
         }
     }
 
@@ -1458,7 +1464,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     EnemyList.remove(i);
                 }
             }
-            if((correct>=3))     //殺光敵人後顯示視窗並關閉整個程式
+            if((correct>=2))     //殺光敵人後顯示視窗並關閉整個程式
             {
                 //JOptionPane.showMessageDialog(null,"Win!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
                 end = true;
