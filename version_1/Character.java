@@ -6,7 +6,7 @@ import java.util.*;
 
 public abstract class Character{
     public int full, hp, atk;       //full：全滿血量
-    public int speedX, speedY;      //移動速度
+    public int speedX, speedY,speed;      //移動速度
     public int rectX, rectY;         //初始位置
     public int posX, posY;          //現在位置
     public int width, height;        //圖片大小
@@ -64,6 +64,7 @@ public abstract class Character{
         y = y*rate;
         this.speedX = (int)x;
         this.speedY = (int)y;
+        this.speed = speed;
     }
 
     public Boolean overScreen(){        //如果超出螢幕就回傳true
