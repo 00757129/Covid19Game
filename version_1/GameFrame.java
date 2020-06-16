@@ -574,10 +574,11 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         levelTwoButton=new JButton("2.快樂台灣");levelTwoButton.setBounds(screenSizeX(500),screenSizeY(250),screenSizeX(100),screenSizeY(40));
         levelThreeButton=new JButton("3.病毒世界");levelThreeButton.setBounds(screenSizeX(500),screenSizeY(350),screenSizeX(100),screenSizeY(40)); 
         introductionButton=new JButton("Intrduction");introductionButton.setBounds(screenSizeX(500),screenSizeY(450),screenSizeX(100),screenSizeY(40)); 
-        returnbutton=new JButton("Return");returnbutton.setBounds(screenSizeX(500),screenSizeY(450),screenSizeX(100),screenSizeY(40)); 
+        returnbutton=new JButton("Return");returnbutton.setBounds(screenSizeX(500),screenSizeY(550),screenSizeX(100),screenSizeY(40)); 
 ////////////////////////////介紹圖
-        bGImage =new ImageIcon("bullet.png");
-        introBut=new JButton(bGImage);introBut.setBounds(screenSizeX(300),screenSizeY(100),screenSizeX(400),screenSizeY(300)); 
+
+        bGImage =new ImageIcon("introduction_2.png");
+        introBut=new JButton(bGImage);introBut.setBounds(screenSizeX(230),screenSizeY(55),screenSizeX(650),screenSizeY(470)); 
 //////////////////////////
 
         levelOneButton.addActionListener(this);levelTwoButton.addActionListener(this);levelThreeButton.addActionListener(this);introductionButton.addActionListener(this);
@@ -672,7 +673,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
       {
          
           //System.out.println(event.getActionCommand());
-          if(event.getActionCommand().equals("Level 1")){
+          if(event.getActionCommand().equals("1.捷運大逃生")){
                 removeAll();
                 start=1;
                 this.requestFocus();
@@ -680,7 +681,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 addMouseListener(new MouseAdapterDemo());
                 initial();
                 working();
-          }else if(event.getActionCommand().equals("Level 2")){
+          }else if(event.getActionCommand().equals("2.快樂台灣")){
                 removeAll();
                 start=1;
                 this.requestFocus();
@@ -688,7 +689,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 addMouseListener(new MouseAdapterDemo());
                 initial_2();
                 working2();
-          }else if(event.getActionCommand().equals("Level 3")){
+          }else if(event.getActionCommand().equals("3.病毒世界")){
                 removeAll();
                 start=1;
                 this.requestFocus();
