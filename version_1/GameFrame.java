@@ -68,13 +68,13 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         int total = 10;                  //total of enemy
         rand = new SecureRandom();
         double range = (3.141515926 * 2) / total;       //
-        // System.out.println("range is "+range);
+        // //System.out.println("range is "+range);
         for(int i = 0; i<10; i++){
             rand = new SecureRandom();
             double angle = rand.nextDouble()*(range) + range*i;
             rand = new SecureRandom();
             int length = (int)(rand.nextDouble()*screenSize(500)+screenSize(300));
-            // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
+            // //System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
             int x = (int)(length*Math.sin(angle));
             x = testC.posX + x;
             if(x <= 0)
@@ -87,7 +87,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 y = 0;
             else if(y >= backGroundImageHeight-testC.height)          //應該要是backGroundImageHeight-height，我先把hero的height的最大值預設成200
                 y = backGroundImageHeight-testC.height;
-            // System.out.println("in number."+i+" x is "+x+" and y is "+y);
+            // //System.out.println("in number."+i+" x is "+x+" and y is "+y);
             Enemy virus = new Enemy(0, x,y,testC.posX,testC.posY,2,1,0,screenSize(50),screenSize(50));
             EnemyList.add(virus);
             enemyIndex++;
@@ -102,7 +102,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         end = false;
         level = 1;
         enemyIndex = 0;
-        System.out.println("inital_2");
+        //System.out.println("inital_2");
         testC = new Hero(screenSizeX(5), screenSizeY(5), screenSize(200), screenSize(200));
         setQuestionPlace2();
         backGroundImage =new ImageIcon("taiwan.jpg").getImage();
@@ -114,7 +114,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             double angle = rand.nextDouble()*(range) + range*i;
             rand = new SecureRandom();
             int length = (int)(rand.nextDouble()*screenSize(500)+screenSize(300));
-            // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
+            // //System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
             int x = (int)(length*Math.sin(angle));
             x = testC.posX + x;
             if(x <= 0)
@@ -127,7 +127,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 y = 0;
             else if(y >= backGroundImageHeight-testC.height)          //應該要是backGroundImageHeight-height，我先把hero的height的最大值預設成200
                 y = backGroundImageHeight-testC.height;
-            // System.out.println("in number."+i+" x is "+x+" and y is "+y);
+            // //System.out.println("in number."+i+" x is "+x+" and y is "+y);
             Enemy virus = new Enemy(1, x,y,testC.posX,testC.posY,2,6,0,screenSize(120),screenSize(120));
             EnemyList.add(virus);
             enemyIndex++;
@@ -148,7 +148,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             double angle = rand.nextDouble()*(range) + range*i;
             rand = new SecureRandom();
             int length = (int)(rand.nextDouble()*screenSize(500)+screenSize(300));
-            // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
+            // //System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
             int x = (int)(length*Math.sin(angle));
             x = testC.posX + x;
             if(x <= 0)
@@ -161,7 +161,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 y = 0;
             else if(y >= backGroundImageHeight-testC.height)          //應該要是backGroundImageHeight-height，我先把hero的height的最大值預設成200
                 y = backGroundImageHeight-testC.height;
-            // System.out.println("in number."+i+" x is "+x+" and y is "+y);
+            // //System.out.println("in number."+i+" x is "+x+" and y is "+y);
             Enemy virus = new Enemy(2, x,y,testC.posX,testC.posY,2,12,0,screenSize(350),screenSize(350));
             EnemyList.add(virus);
             enemyIndex++;
@@ -169,9 +169,12 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
 
     public void working(){
-        
+                
         JLabel jlb = new JLabel("",SwingConstants.CENTER);
-        JLabel jlb2 = new JLabel("武漢病毒：是一種由嚴重急性呼吸系統綜合徵冠狀病毒2引發的傳染病。");
+        JLabel jlb6 = new JLabel("<遊戲小提醒>");
+        JLabel jlb7 = new JLabel("遊戲地圖裡藏了六個問題，要回答對三題題目才能過關喔~");
+        JLabel jlb1 = new JLabel("<怪物介紹> 怪物名：武漢病毒");
+        JLabel jlb2 = new JLabel("武漢病毒是一種由嚴重急性呼吸系統綜合徵冠狀病毒2引發的傳染病。");
         JLabel jlb3 = new JLabel("該病首名病人2019年末於中華人民共和國湖北省武漢市確診，");
         JLabel jlb4 = new JLabel("其後此病在全球各國大規模爆發並急速擴散。");
         JLabel jlb5 = new JLabel("是個不好好處理就會一直冒出來的麻煩呢！");
@@ -186,18 +189,18 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         timer.schedule(new TimerTask(){
             @Override
             public void run(){ 
-                if(end==false){     //檢查位置
+                if((end==false) && (level==0)){     //檢查位置
                 Weaponhit();
                 repaint();          //重畫角色的位置
                 questionevent();
                  }
             }
         }, intervel, intervel);        //每個微秒就重複一次
-        if(t==0){JOptionPane.showMessageDialog(null,new Object[]{jlb,jlb2, jlb3, jlb4, jlb5},"發現新怪物!",JOptionPane.DEFAULT_OPTION);t=1;}
+        if(t==0){JOptionPane.showMessageDialog(null,new Object[]{jlb, jlb6, jlb7, jlb1,jlb2, jlb3, jlb4, jlb5},"遊戲前的小提醒：發現新怪物-武漢肺炎病毒！",JOptionPane.DEFAULT_OPTION);t=1;}
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
-                if(end==false){
+                if(((end==false) && (level==0))){
                 for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
                 {                        
                     EnemyList.get(i).posX += EnemyList.get(i).speedX;
@@ -211,7 +214,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
-                if(end==false){
+                if(((end==false) && (level==0))){
                 testC.changeImg();       
                 for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
                 {                        
@@ -225,7 +228,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
-                if(end==false){
+                if(((end==false) && (level==0))){
                 checkState();        //檢查所有生命
                 }
             }
@@ -236,7 +239,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         timer.schedule(new TimerTask(){         //定時增加怪物
             @Override       
             public void run(){  
-                if(end==false){                                  
+                if(((end==false) && (level==0))){                                  
                     int total = 5;
                     rand = new SecureRandom();
                     double range = (3.141515926 * 2) / total;
@@ -244,7 +247,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     double angle = rand.nextDouble()*(range) + range*enemyIndex;
                     rand = new SecureRandom();
                     int length = (int)(rand.nextDouble()*screenSize(500)+screenSize(300));
-                    // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
+                    // //System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
                     int x = (int)(length*Math.sin(angle));
                     x = testC.posX + x;
                     if(x <= 0)
@@ -257,11 +260,11 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                         y = 0;
                     else if(y >= backGroundImageHeight-testC.height)          //應該要是backGroundImageHeight-height，我先把hero的height的最大值預設成200
                     y = backGroundImageHeight-testC.height;
-                    // System.out.println("in number."+i+" x is "+x+" and y is "+y);
+                    // //System.out.println("in number."+i+" x is "+x+" and y is "+y);
                     Enemy virus = new Enemy(0, x,y,testC.posX,testC.posY,2,1,0,screenSize(50),screenSize(50));
                     EnemyList.add(virus);
                     enemyIndex++;
-                   // System.out.println(end);
+                   // //System.out.println(end);
                 }
                 
             }
@@ -269,7 +272,10 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
 
     public void working2(){
-         JLabel jlb = new JLabel("",SwingConstants.CENTER);
+        JLabel jlb = new JLabel("",SwingConstants.CENTER);
+        JLabel jlb6 = new JLabel("<遊戲小提醒>");
+        JLabel jlb7 = new JLabel("遊戲地圖裡藏了六個問題，要回答對三題題目才能過關喔~");        
+        JLabel jlb1 = new JLabel("<怪物介紹> 怪物名：咳嗽的阿伯");
         JLabel jlb2 = new JLabel("阿伯總覺得什麼大風大浪他沒見過，一點小小的病毒才不會嚇到他呢！");
         JLabel jlb3 = new JLabel("最近開始莫名的發燒，還有咳嗽症狀，感覺狀況有點不妙呢...");
         JLabel jlb4 = new JLabel("每隔一段時間阿伯就會扣三滴生命值，召喚更多病毒怪物。");
@@ -284,14 +290,14 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         timer.schedule(new TimerTask(){
             @Override
             public void run(){      //檢查位置
-            if(end==false){
+            if(((end==false) && (level==1))){
                 Weaponhit();
                 repaint();          //重畫角色的位置
                 questionevent();
             }
             }
         }, intervel, intervel);        //每個微秒就重複一次
-        if(t==0){JOptionPane.showMessageDialog(null,new Object[]{jlb,jlb2, jlb3, jlb4},"發現新怪物-咳嗽的老阿伯",JOptionPane.DEFAULT_OPTION);t=1;}
+        if(t==0){JOptionPane.showMessageDialog(null,new Object[]{jlb, jlb6, jlb7, jlb1, jlb2, jlb3, jlb4},"遊戲前的小提醒：發現新怪物-咳嗽的阿伯！",JOptionPane.DEFAULT_OPTION);t=1;}
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
@@ -343,7 +349,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                             double angle = rand.nextDouble()*(range) + range*j;
                             rand = new SecureRandom();
                             int length = (int)(rand.nextDouble()*screenSize(500)+screenSize(300));
-                            // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
+                            // //System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
                             int x = (int)(length*Math.sin(angle));
                             x = testC.posX + x;
                             if(x <= 0)
@@ -356,7 +362,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                                 y = 0;
                             else if(y >= backGroundImageHeight-testC.height)          //應該要是backGroundImageHeight-height，我先把hero的height的最大值預設成200
                                 y = backGroundImageHeight-testC.height;
-                            // System.out.println("in number."+i+" x is "+x+" and y is "+y);
+                            // //System.out.println("in number."+i+" x is "+x+" and y is "+y);
                             Enemy virus = new Enemy(0, x,y,testC.posX,testC.posY,2,1,0,screenSize(50),screenSize(50));
                             EnemyList.add(virus);
                             enemyIndex++;
@@ -369,7 +375,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         timer.schedule(new TimerTask(){         //定時增加怪物
             @Override       
             public void run(){  
-                if(end==false){              
+                if(((end==false) && (level==1))){              
                     int total = 5;
                     rand = new SecureRandom();
                     double range = (3.141515926 * 2) / total;
@@ -377,7 +383,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     double angle = rand.nextDouble()*(range) + range*enemyIndex;
                     rand = new SecureRandom();
                     int length = (int)(rand.nextDouble()*screenSize(500)+screenSize(300));
-                    // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
+                    // //System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
                     int x = (int)(length*Math.sin(angle));
                     x = testC.posX + x;
                     if(x <= 0)
@@ -390,7 +396,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                         y = 0;
                     else if(y >= backGroundImageHeight-testC.height)          //應該要是backGroundImageHeight-height，我先把hero的height的最大值預設成200
                         y = backGroundImageHeight-testC.height;
-                    // System.out.println("in number."+i+" x is "+x+" and y is "+y);
+                    // //System.out.println("in number."+i+" x is "+x+" and y is "+y);
                     Enemy virus = new Enemy(0, x,y,testC.posX,testC.posY,2,1,0,screenSize(50),screenSize(50));
                     EnemyList.add(virus);
                     enemyIndex++;
@@ -401,9 +407,12 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
     public void working3(){
          JLabel jlb = new JLabel("",SwingConstants.CENTER);
+        JLabel jlb6 = new JLabel("<遊戲小提醒>");
+        JLabel jlb7 = new JLabel("遊戲地圖裡藏了六個問題，要回答對三題題目才能過關喔~");
+        JLabel jlb1 = new JLabel("<怪物介紹> 怪物名：武漢病毒");
         JLabel jlb2 = new JLabel("鄰居當中熱心助人的大媽阿姨，不畏被遭受感染的風險，每天依舊去不同人家裡打麻將。");
-        JLabel jlb3 = new JLabel("口頭禪是[你知道嗎，隔壁...家的孩子真的有夠優秀欸，你們家的孩子呢]");
-        JLabel jlb4 = new JLabel("是所有求學孩子的惡夢大媽，大媽每隔一段時間就會扣生命值，召喚出更多病毒");
+        JLabel jlb3 = new JLabel("最近的新興趣是到處聽可能會不夠的物資，然後想辦法囤貨");
+        JLabel jlb4 = new JLabel("家裡的物資已經堆得跟山一樣高了，大媽每隔一段時間就會扣生命值，召喚出更多病毒");
         int width = 200,height = 200;
         ImageIcon image = new ImageIcon("boss3.png");
         image.setImage(image.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
@@ -421,7 +430,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                   
             }
         }, intervel, intervel);        //每個微秒就重複一次
-        if(t==0){JOptionPane.showMessageDialog(null,new Object[]{jlb,jlb2, jlb3, jlb4},"發現新怪-鄰居大媽",JOptionPane.DEFAULT_OPTION);t=1;}
+        if(t==0){JOptionPane.showMessageDialog(null,new Object[]{jlb, jlb6, jlb7, jlb1,jlb2, jlb3, jlb4},"遊戲前的小提醒：發現新怪物-愛囤貨的大媽！",JOptionPane.DEFAULT_OPTION);t=1;}
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
@@ -457,10 +466,10 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
-                System.out.println("in");
+                //System.out.println("in");
                 if(EnemyList.get(0).hp>4)
                 {
-                    System.out.println("in");
+                    //System.out.println("in");
                      //大媽減2血量並讓敵人加速
                     EnemyList.get(0).hp-=2;
                     EnemyList.get(0).setHp(2,level);
@@ -481,7 +490,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     double angle = rand.nextDouble()*(range) + range*enemyIndex;
                     rand = new SecureRandom();
                     int length = (int)(rand.nextDouble()*screenSize(500)+screenSize(300));
-                    // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
+                    // //System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
                     int x = (int)(length*Math.sin(angle));
                     x = testC.posX + x;
                     if(x <= 0)
@@ -494,7 +503,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                         y = 0;
                     else if(y >= backGroundImageHeight-testC.height)          //應該要是backGroundImageHeight-height，我先把hero的height的最大值預設成200
                         y = backGroundImageHeight-testC.height;
-                    // System.out.println("in number."+i+" x is "+x+" and y is "+y);
+                    // //System.out.println("in number."+i+" x is "+x+" and y is "+y);
                     Enemy virus = new Enemy(0, x,y,testC.posX,testC.posY,2,1,0,screenSize(50),screenSize(50));
                     EnemyList.add(virus);
                     enemyIndex++;
@@ -506,8 +515,8 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         timer.schedule(new TimerTask(){         //定時增加怪物
             @Override       
             public void run(){                
-                System.out.println("in2");
-                if(end==false){
+                //System.out.println("in2");
+                if(((end==false) && (level==2))){
                     int total = 5;
                     rand = new SecureRandom();
                     double range = (3.141515926 * 2) / total;
@@ -515,7 +524,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     double angle = rand.nextDouble()*(range) + range*enemyIndex;
                     rand = new SecureRandom();
                     int length = (int)(rand.nextDouble()*screenSize(500)+screenSize(300));
-                    // System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
+                    // //System.out.println("in number."+i+" angle is "+angle+" and cos is "+Math.cos(angle));
                     int x = (int)(length*Math.sin(angle));
                     x = testC.posX + x;
                     if(x <= 0)
@@ -528,7 +537,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                         y = 0;
                     else if(y >= backGroundImageHeight-testC.height)          //應該要是backGroundImageHeight-height，我先把hero的height的最大值預設成200
                         y = backGroundImageHeight-testC.height;
-                    // System.out.println("in number."+i+" x is "+x+" and y is "+y);
+                    // //System.out.println("in number."+i+" x is "+x+" and y is "+y);
                     Enemy virus = new Enemy(0, x,y,testC.posX,testC.posY,2,1,0,screenSize(50),screenSize(50));
                     EnemyList.add(virus);
                     enemyIndex++;
@@ -561,13 +570,13 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
        mainJpanel.setLayout(null);introductionPanel.setLayout(null);
        introductionlabel=new JLabel("introduction......");introductionlabel.setBounds(screenSizeX(500),screenSizeX(50),100,40); 
         label=new JLabel("COVID-19");label.setBounds(screenSizeX(500),screenSizeX(50),100,40); 
-        levelOneButton=new JButton("Level 1");levelOneButton.setBounds(screenSizeX(500),screenSizeY(150),screenSizeX(100),screenSizeY(40)); 
-        levelTwoButton=new JButton("Level 2");levelTwoButton.setBounds(screenSizeX(500),screenSizeY(250),screenSizeX(100),screenSizeY(40));
-        levelThreeButton=new JButton("Level 3");levelThreeButton.setBounds(screenSizeX(500),screenSizeY(350),screenSizeX(100),screenSizeY(40)); 
+        levelOneButton=new JButton("1.捷運大逃生");levelOneButton.setBounds(screenSizeX(500),screenSizeY(150),screenSizeX(100),screenSizeY(40)); 
+        levelTwoButton=new JButton("2.快樂台灣");levelTwoButton.setBounds(screenSizeX(500),screenSizeY(250),screenSizeX(100),screenSizeY(40));
+        levelThreeButton=new JButton("3.病毒世界");levelThreeButton.setBounds(screenSizeX(500),screenSizeY(350),screenSizeX(100),screenSizeY(40)); 
         introductionButton=new JButton("Intrduction");introductionButton.setBounds(screenSizeX(500),screenSizeY(450),screenSizeX(100),screenSizeY(40)); 
         returnbutton=new JButton("Return");returnbutton.setBounds(screenSizeX(500),screenSizeY(450),screenSizeX(100),screenSizeY(40)); 
 ////////////////////////////介紹圖
-         bGImage =new ImageIcon("bullet.png");
+        bGImage =new ImageIcon("bullet.png");
         introBut=new JButton(bGImage);introBut.setBounds(screenSizeX(300),screenSizeY(100),screenSizeX(400),screenSizeY(300)); 
 //////////////////////////
 
@@ -607,12 +616,12 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
     
     public void paint(Graphics g){
-        // System.out.println("test");
+        // //System.out.println("test");
         if(start==0){g.drawImage(new ImageIcon("covid-19.jpg").getImage(),0,0, backGroundImageWidth, backGroundImageHeight, null); 
         levelOneButton.requestFocus();levelTwoButton.requestFocus();levelThreeButton.requestFocus();label.requestFocus();introductionButton.requestFocus();mainJpanel.requestFocus();
             //introductionPanel.requestFocus();introductionlabel.requestFocus();
             return;}else if(start==2){introductionButton.requestFocus();introBut.requestFocus();introductionPanel.requestFocus();}
-            else if(start==3){System.out.println("paint");//g.drawImage(new ImageIcon("covid-19.jpg").getImage(),0,0, backGroundImageWidth, backGroundImageHeight, null); 
+            else if(start==3){//System.out.println("paint");//g.drawImage(new ImageIcon("covid-19.jpg").getImage(),0,0, backGroundImageWidth, backGroundImageHeight, null); 
         levelOneButton.requestFocus();levelTwoButton.requestFocus();levelThreeButton.requestFocus();label.requestFocus();introductionButton.requestFocus();mainJpanel.requestFocus();}
         BufferedImage bi =(BufferedImage)this.createImage(this.getSize().width,this.getSize().height);
         Graphics big =bi.getGraphics();
@@ -638,13 +647,13 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 		for(int i = 0; i<WeaponList.size(); i++){
             if(WeaponList.get(i).overScreen()){         //Weapon超出螢幕就移出陣列且不印出來
             	WeaponList.remove(i);
-            	 System.out.println("remove"+ i);
+            	//  //System.out.println("remove"+ i);
             }
             else{                                      //Weapon如果沒超出螢幕就更改位置後畫出來
-                // System.out.println("paint weapon");
+                // //System.out.println("paint weapon");
                 WeaponList.get(i).posX += WeaponList.get(i).speedX; 
                 WeaponList.get(i).posY += WeaponList.get(i).speedY;
-                // System.out.println("posX is "+ WeaponList.get(i).posX+" and posY is "+ WeaponList.get(i).posY); 
+                // //System.out.println("posX is "+ WeaponList.get(i).posX+" and posY is "+ WeaponList.get(i).posY); 
 		        big.drawImage(WeaponList.get(i).img.get(0), WeaponList.get(i).posX, WeaponList.get(i).posY, WeaponList.get(i).width, WeaponList.get(i).height,null);
             }
 
@@ -662,7 +671,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
       public void actionPerformed(ActionEvent event)
       {
          
-          System.out.println(event.getActionCommand());
+          //System.out.println(event.getActionCommand());
           if(event.getActionCommand().equals("Level 1")){
                 removeAll();
                 start=1;
@@ -759,7 +768,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
         else if( key == KeyEvent.VK_W ){        //上下的圖片先暫時跟原本(僅限左右)的相反  
             //move(1);
-            System.out.println("in W");
+            //System.out.println("in W");
             if(testC.posY>=0)
                 testC.posY -= testC.speedY;
             if(testC.lastFlag==0)
@@ -873,7 +882,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
 
     public void move(int event){        //如果放在hero裡面會無法找到(hero比較晚被編譯到)
-        // System.out.println("posX is "+testC.posX+" and posY is "+testC.posY);
+        // //System.out.println("posX is "+testC.posX+" and posY is "+testC.posY);
         switch(event){
         case 1:             //上
             if(testC.posY>=0)
@@ -902,7 +911,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     public class MouseAdapterDemo extends MouseAdapter {
 			
         public void mousePressed(MouseEvent event) {
-            // System.out.println("X is "+event.getX()+" and Y is "+event.getY());
+            // //System.out.println("X is "+event.getX()+" and Y is "+event.getY());
 
             // 10 代表斜向速度
             Weapon tmpWeapon = new Weapon(testC.posX+testC.width/2, testC.posY+testC.height/2, event.getX(), event.getY(), 50, 50, 5);
@@ -1027,7 +1036,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
             case 4:
                 questionPart1 = new JLabel("師大公館校區有名住宿生於3/31確診新型冠狀病毒，");
-                questionPart2 = new JLabel("為確保不要有在宿舍與校區交叉感染的風險，校方要求與該名學生密切互動的13名師生進行居家隔離。請問下列哪個選項提及的防疫措施有要求 “完全禁止外出”");
+                questionPart2 = new JLabel("為確保不要有在宿舍與校區交叉感染的風險，校方要求與該名學生密切互動的13名師生進行居家隔離。");
                 questionPart3 = new JLabel("請問下列哪個選項提及的防疫措施有要求 “完全禁止外出”");
                 ans1 = new JRadioButton("A.居家檢疫");
                 ans2 = new JRadioButton("B.居家檢疫、居家隔離");
@@ -1407,7 +1416,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
     public void checkCorrect(int correctAns)
     {
-        System.out.println(playerChoice);
+        //System.out.println(playerChoice);
         if(playerChoice == correctAns)
         {
             JOptionPane.showMessageDialog(null,"甚麼?竟然對了!真令人無法置信!!","答題結果",JOptionPane.INFORMATION_MESSAGE);
@@ -1416,7 +1425,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         else
         {
             JOptionPane.showMessageDialog(null,"哈哈~恭喜答錯~","答題結果",JOptionPane.INFORMATION_MESSAGE);
-            uncorrect++;System.out.println("uncorrect");
+            uncorrect++;//System.out.println("uncorrect");
         }
     }
 
@@ -1478,7 +1487,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     if(weaponRect.intersects(rect)){
                         WeaponList.remove(j);
                         EnemyList.get(i).hp -= 1;
-                        //System.out.println("hit");
+                        ////System.out.println("hit");
                         EnemyList.get(i).setHp(1,level);
                     }
                     if(EnemyList.get(i).hp<=0){
@@ -1510,7 +1519,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     }
                 
             }
-            //System.out.println(uncorrect);
+            ////System.out.println(uncorrect);
             if(uncorrect>=3){
                 JOptionPane.showMessageDialog(this,"答錯太多啦！重新再來吧！");
                 uncorrect=0;
