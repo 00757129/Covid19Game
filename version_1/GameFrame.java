@@ -570,10 +570,10 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
        mainJpanel.setLayout(null);introductionPanel.setLayout(null);
        introductionlabel=new JLabel("introduction......");introductionlabel.setBounds(screenSizeX(500),screenSizeX(50),100,40); 
         label=new JLabel("COVID-19");label.setBounds(screenSizeX(500),screenSizeX(50),100,40); 
-        levelOneButton=new JButton("1.捷運大逃生");levelOneButton.setBounds(screenSizeX(500),screenSizeY(150),screenSizeX(100),screenSizeY(40)); 
-        levelTwoButton=new JButton("2.快樂台灣");levelTwoButton.setBounds(screenSizeX(500),screenSizeY(250),screenSizeX(100),screenSizeY(40));
-        levelThreeButton=new JButton("3.病毒世界");levelThreeButton.setBounds(screenSizeX(500),screenSizeY(350),screenSizeX(100),screenSizeY(40)); 
-        introductionButton=new JButton("Intrduction");introductionButton.setBounds(screenSizeX(500),screenSizeY(450),screenSizeX(100),screenSizeY(40)); 
+        levelOneButton=new JButton("1. Escape from MRT");levelOneButton.setBounds(screenSizeX(500),screenSizeY(150),screenSizeX(150),screenSizeY(40)); 
+        levelTwoButton=new JButton("2. Happy Taiwan");levelTwoButton.setBounds(screenSizeX(500),screenSizeY(250),screenSizeX(150),screenSizeY(40));
+        levelThreeButton=new JButton("3. The World of Covid-19");levelThreeButton.setBounds(screenSizeX(500),screenSizeY(350),screenSizeX(150),screenSizeY(40)); 
+        introductionButton=new JButton("Game Introduction");introductionButton.setBounds(screenSizeX(500),screenSizeY(450),screenSizeX(150),screenSizeY(40)); 
         returnbutton=new JButton("Return");returnbutton.setBounds(screenSizeX(500),screenSizeY(550),screenSizeX(100),screenSizeY(40)); 
 ////////////////////////////介紹圖
 
@@ -673,7 +673,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
       {
          
           //System.out.println(event.getActionCommand());
-          if(event.getActionCommand().equals("1.捷運大逃生")){
+          if(event.getActionCommand().equals("1. Escape from MRT")){
                 removeAll();
                 start=1;
                 this.requestFocus();
@@ -681,7 +681,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 addMouseListener(new MouseAdapterDemo());
                 initial();
                 working();
-          }else if(event.getActionCommand().equals("2.快樂台灣")){
+          }else if(event.getActionCommand().equals("2. Happy Taiwan")){
                 removeAll();
                 start=1;
                 this.requestFocus();
@@ -689,7 +689,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 addMouseListener(new MouseAdapterDemo());
                 initial_2();
                 working2();
-          }else if(event.getActionCommand().equals("3.病毒世界")){
+          }else if(event.getActionCommand().equals("3. The World of Covid-19")){
                 removeAll();
                 start=1;
                 this.requestFocus();
@@ -698,7 +698,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 initial_3();
                 working3();
             
-          }else if(event.getActionCommand().equals("Intrduction")){
+          }else if(event.getActionCommand().equals("Game Introduction")){
                 mainJpanel.setVisible(false);
                 start=2;
                 add(introductionPanel);
