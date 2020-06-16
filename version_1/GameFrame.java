@@ -1456,25 +1456,25 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
 
     public void Weaponhit(){
-        for (int j = 0; j < WeaponList.size(); j++) {
-                
-            Rectangle weaponRect = new Rectangle(WeaponList.get(j).posX+WeaponList.get(j).width/2,WeaponList.get(j).posY+WeaponList.get(j).height/2,50,50);
-            Rectangle rect =null;
-            for (int i = 0; i < EnemyList.size(); i++) {
-                Enemy enemy = EnemyList.get(i);                
-                rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2,30,30);
-                //碰撞檢測
-                if(weaponRect.intersects(rect)){
-                    WeaponList.remove(j);
-                    EnemyList.get(i).hp -= 1;
-                    //System.out.println("hit");
-                    EnemyList.get(i).setHp(1,level);
-                }
-                if(EnemyList.get(i).hp<=0){
-                    EnemyList.remove(i);
-                }
+        if(WeaponList.size() > 0){
+            for (int j = 0; j < WeaponList.size(); j++) {                
+                Rectangle weaponRect = new Rectangle(WeaponList.get(j).posX+WeaponList.get(j).width/2,WeaponList.get(j).posY+WeaponList.get(j).height/2,50,50);
+                Rectangle rect =null;
+                for (int i = 0; i < EnemyList.size(); i++) {
+                    Enemy enemy = EnemyList.get(i);                
+                    rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2,30,30);
+                    //碰撞檢測
+                    if(weaponRect.intersects(rect)){
+                        WeaponList.remove(j);
+                        EnemyList.get(i).hp -= 1;
+                        //System.out.println("hit");
+                        EnemyList.get(i).setHp(1,level);
+                    }
+                    if(EnemyList.get(i).hp<=0){
+                        EnemyList.remove(i);
+                    }
+                }            
             }
-            
         }
         if((correct>=3))     //殺光敵人後顯示視窗並關閉整個程式
             {
