@@ -261,6 +261,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     Enemy virus = new Enemy(0, x,y,testC.posX,testC.posY,2,1,0,screenSize(50),screenSize(50));
                     EnemyList.add(virus);
                     enemyIndex++;
+                   // System.out.println(end);
                 }
                 
             }
@@ -278,7 +279,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         jlb.setIcon(image);
         jlb.setSize(width, height);
         
-
+        
         timer = new Timer();
         timer.schedule(new TimerTask(){
             @Override
@@ -1486,7 +1487,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 }            
             }
         }
-        if((correct>=1))     //殺光敵人後顯示視窗並關閉整個程式
+        if((correct>=3))     //殺光敵人後顯示視窗並關閉整個程式
             {
                 //JOptionPane.showMessageDialog(null,"Win!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
                 end = true;
