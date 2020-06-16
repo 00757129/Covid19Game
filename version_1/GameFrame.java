@@ -61,7 +61,6 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         backGroundImage=new ImageIcon("routemap2020.png").getImage();
         end = false;
         correct = 0;
-        uncorrect = 0;
         enemyIndex = 0;
         level = 0;
         testC = new Hero(screenSizeX(5), screenSizeY(5), screenSize(200), screenSize(200));
@@ -100,7 +99,6 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
     public void initial_2(){
         correct = 0;
-        uncorrect = 0;
         end = false;
         level = 1;
         enemyIndex = 0;
@@ -138,7 +136,6 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
      public void initial_3(){
         correct = 0;
-        uncorrect = 0;
         end = false;
         level = 2;           //暫定     
         testC = new Hero(screenSizeX(5), screenSizeY(5), screenSize(200), screenSize(200));
@@ -322,7 +319,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 int original = EnemyList.size();
                 for(int i = 0;i<original;i++)
                 {
-                    if(EnemyList.get(i).hp>=3)
+                    if(EnemyList.get(i).hp>3)
                     {
                         EnemyList.get(i).hp-=3;
                         EnemyList.get(i).setHp(3,level);
@@ -450,7 +447,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             @Override
             public void run(){
                 System.out.println("in");
-                if(EnemyList.get(0).hp>=4)
+                if(EnemyList.get(0).hp>4)
                 {
                     System.out.println("in");
                      //大媽減2血量並讓敵人加速
@@ -604,17 +601,23 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         levelOneButton.requestFocus();levelTwoButton.requestFocus();levelThreeButton.requestFocus();label.requestFocus();introductionButton.requestFocus();mainJpanel.requestFocus();
             //introductionPanel.requestFocus();introductionlabel.requestFocus();
             return;}else if(start==2){introductionButton.requestFocus();introBut.requestFocus();introductionPanel.requestFocus();}
+            else if(start==3){System.out.println("paint");//g.drawImage(new ImageIcon("covid-19.jpg").getImage(),0,0, backGroundImageWidth, backGroundImageHeight, null); 
+        levelOneButton.requestFocus();levelTwoButton.requestFocus();levelThreeButton.requestFocus();label.requestFocus();introductionButton.requestFocus();mainJpanel.requestFocus();}
         BufferedImage bi =(BufferedImage)this.createImage(this.getSize().width,this.getSize().height);
         Graphics big =bi.getGraphics();
         big.drawImage(backGroundImage,0,0, backGroundImageWidth, backGroundImageHeight, null);    //重複畫背景
-        
+        /////(posX+width/2,posY+height/2-screenSizeY(15),width/2,height/2);
+        //big.drawRect(testC.posX+testC.width/2-screenSizeY(35), testC.posY+testC.height/2-screenSizeY(50), testC.width/2-screenSizeY(20), testC.height/2+screenSizeY(10));
+        ////
 		big.drawImage(testC.img.get(0), testC.posX, testC.posY, testC.width, testC.height,null);    //畫hero本身
         big.drawImage(testC.blood.get(0),testC.posX, testC.posY+20,testC.width,50,null);            //畫hero的血條
 
         for(int i = 0;i<EnemyList.size();i++)
         {
-            //正常移動(還沒有寫被子彈打中的消失部分)
+            //正常移動(還沒有寫被子彈打中的消失部分)  enemy.posX+enemy.width/2, enemy.posY+enemy.height/2+screenSizeY(100), enemy.width-screenSizeX(100), enemy.height-screenSizeX(200)
+            //big.drawRect(EnemyList.get(i).posX+EnemyList.get(i).width/2-screenSizeY(25),EnemyList.get(i).posY+EnemyList.get(i).height/2-screenSizeY(25),EnemyList.get(i).width-EnemyList.get(i).width/3+screenSizeY(10),EnemyList.get(i).height-EnemyList.get(i).height/3+screenSizeY(10));
             big.drawImage(EnemyList.get(i).img.get(0), EnemyList.get(i).posX, EnemyList.get(i).posY, EnemyList.get(i).width, EnemyList.get(i).height, null);
+            
             if(EnemyList.get(i).type == 0)
                 big.drawImage(EnemyList.get(i).blood.get(0),EnemyList.get(i).posX,EnemyList.get(i).posY-30,EnemyList.get(i).width,50,null);
             else
@@ -690,6 +693,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
           }else if(event.getActionCommand().equals("Return")){
               introductionPanel.setVisible(false);
+             
              start=0;
                 getContentPane().add(mainJpanel, BorderLayout.CENTER);
                 repaint();
@@ -1396,13 +1400,12 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         if(playerChoice == correctAns)
         {
             JOptionPane.showMessageDialog(null,"甚麼?竟然對了!真令人無法置信!!","答題結果",JOptionPane.INFORMATION_MESSAGE);
-            System.out.println("答對題數為"+correct);
             correct++;
         }
         else
         {
             JOptionPane.showMessageDialog(null,"哈哈~恭喜答錯~","答題結果",JOptionPane.INFORMATION_MESSAGE);
-            uncorrect++;
+            uncorrect++;System.out.println("uncorrect");
         }
     }
 
@@ -1471,7 +1474,9 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     EnemyList.remove(i);
                 }
             }
-            if((correct>=2))     //殺光敵人後顯示視窗並關閉整個程式
+            
+        }
+        if((correct>=3))     //殺光敵人後顯示視窗並關閉整個程式
             {
                 //JOptionPane.showMessageDialog(null,"Win!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
                 end = true;
@@ -1481,10 +1486,33 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
 
                 if(level==0) initial_2();
                 else if (level==1)initial_3();
-                else {JOptionPane.showMessageDialog(this,"恭喜通過所有關卡！");}
-                //System.exit(1);
+                else {JOptionPane.showMessageDialog(this,"恭喜你成為防疫大使！");}
+                System.exit(1);
             }
-        }
+            //System.out.println(uncorrect);
+            if(uncorrect>=3){
+                JOptionPane.showMessageDialog(this,"答錯太多啦！重新再來吧！");
+                uncorrect=0;
+                
+                
+                for (int i = 0; i < EnemyList.size(); i++) {
+                     EnemyList.remove(i);
+                }
+                for (int p = 0; p < WeaponList.size(); p++) {
+                     WeaponList.remove(p);
+                }
+                if(level==0){
+                     initial();
+               working();
+                }else if(level==1){
+                     initial_2();
+               working2();
+                }else{
+                 initial_3();
+                working3();
+                }
+              
+            }
             
     }
 }
