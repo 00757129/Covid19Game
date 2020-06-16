@@ -606,14 +606,18 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         BufferedImage bi =(BufferedImage)this.createImage(this.getSize().width,this.getSize().height);
         Graphics big =bi.getGraphics();
         big.drawImage(backGroundImage,0,0, backGroundImageWidth, backGroundImageHeight, null);    //重複畫背景
-        
+        /////(posX+width/2,posY+height/2-screenSizeY(15),width/2,height/2);
+        //big.drawRect(testC.posX+testC.width/2-screenSizeY(35), testC.posY+testC.height/2-screenSizeY(50), testC.width/2-screenSizeY(20), testC.height/2+screenSizeY(10));
+        ////
 		big.drawImage(testC.img.get(0), testC.posX, testC.posY, testC.width, testC.height,null);    //畫hero本身
         big.drawImage(testC.blood.get(0),testC.posX, testC.posY+20,testC.width,50,null);            //畫hero的血條
 
         for(int i = 0;i<EnemyList.size();i++)
         {
-            //正常移動(還沒有寫被子彈打中的消失部分)
+            //正常移動(還沒有寫被子彈打中的消失部分)  enemy.posX+enemy.width/2, enemy.posY+enemy.height/2+screenSizeY(100), enemy.width-screenSizeX(100), enemy.height-screenSizeX(200)
+            //big.drawRect(EnemyList.get(i).posX+EnemyList.get(i).width/2-screenSizeY(25),EnemyList.get(i).posY+EnemyList.get(i).height/2-screenSizeY(25),EnemyList.get(i).width-EnemyList.get(i).width/3+screenSizeY(10),EnemyList.get(i).height-EnemyList.get(i).height/3+screenSizeY(10));
             big.drawImage(EnemyList.get(i).img.get(0), EnemyList.get(i).posX, EnemyList.get(i).posY, EnemyList.get(i).width, EnemyList.get(i).height, null);
+            
             if(EnemyList.get(i).type == 0)
                 big.drawImage(EnemyList.get(i).blood.get(0),EnemyList.get(i).posX,EnemyList.get(i).posY-30,EnemyList.get(i).width,50,null);
             else

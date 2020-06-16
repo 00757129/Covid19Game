@@ -67,10 +67,11 @@ public class Hero extends Character{
     }
 
     public boolean hit(String dir,Enemy enemy){
-            Rectangle myrect = new Rectangle(posX+width/2,posY+height/2-screenSizeY(15),width/2,height/2);
+            Rectangle myrect = new Rectangle(posX+width/2-screenSizeY(35), posY+height/2-screenSizeY(50), width/2-screenSizeY(20),height/2+screenSizeY(10));
             Rectangle rect =null;
-                    rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2,enemy.width-enemy.width/3,enemy.height-enemy.height/3);
-               if(enemy.type==2)rect = new Rectangle(enemy.posX+enemy.width/2, enemy.posY+enemy.height/2-screenSizeY(150), enemy.width-screenSizeX(80), enemy.height);
+                    rect = new Rectangle(enemy.posX+enemy.width/2-screenSizeY(25),enemy.posY+enemy.height/2-screenSizeY(25),enemy.width-enemy.width/3+screenSizeY(10),enemy.height-enemy.height/3+screenSizeY(10));
+                    if(enemy.type==1)rect = new Rectangle(enemy.posX+enemy.width/2-screenSizeY(20),enemy.posY+enemy.height/2-screenSizeY(40),enemy.width-enemy.width/3-screenSizeY(40),enemy.height-enemy.height/3);
+               if(enemy.type==2)rect = new Rectangle(enemy.posX-enemy.width/2+screenSizeY(250), enemy.posY-enemy.height/2+screenSizeY(250), enemy.width-screenSizeY(150), enemy.height-screenSizeY(100));
                 //System.out.println(enemy.width +" "+ enemy.height+ " "+enemy.posX+" "+enemy.posY +"     "+posX+" "+posY+" "+width);
                 //碰撞檢測
                 if(myrect.intersects(rect)){
