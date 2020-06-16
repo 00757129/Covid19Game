@@ -8,7 +8,7 @@ public class GameTest{
     public static void main(String[] args){
         GameFrame test = new GameFrame();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        test.setTitle("version 1");
+        test.setTitle("一起攻擊病毒吧！！");
         // test.setSize(1200, 750);
         test.setSize(screenSize.width, screenSize.height);
         test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
