@@ -185,22 +185,25 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         timer = new Timer();
         timer.schedule(new TimerTask(){
             @Override
-            public void run(){      //檢查位置
+            public void run(){ 
+                if(end==false){     //檢查位置
                 Weaponhit();
                 repaint();          //重畫角色的位置
                 questionevent();
-                
+                 }
             }
         }, intervel, intervel);        //每個微秒就重複一次
         if(t==0){JOptionPane.showMessageDialog(null,new Object[]{jlb,jlb2, jlb3, jlb4, jlb5},"發現新怪物!",JOptionPane.DEFAULT_OPTION);t=1;}
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
+                if(end==false){
                 for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
                 {                        
                     EnemyList.get(i).posX += EnemyList.get(i).speedX;
                     EnemyList.get(i).posY += EnemyList.get(i).speedY;
                     EnemyList.get(i).move(EnemyList.get(i).posX,EnemyList.get(i).posY,testC.posX+(testC.width/2),testC.posY+(testC.height/2),2);
+                }
                 }
             }
         }, 100, 100);                   //每0.1秒就重複一次
@@ -208,11 +211,13 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
+                if(end==false){
                 testC.changeImg();       
                 for(int i = 0;i < EnemyList.size();i++)    //讓enemy往hero移動
                 {                        
                     EnemyList.get(i).changeImg(1);
                 }
+                 }
             }
         }, 200, 200);                   //每0.1秒就重複一次
 
@@ -220,8 +225,11 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
+                if(end==false){
                 checkState();        //檢查所有生命
+                }
             }
+
         }, 500, 500);                   //每0.5秒就重複一次
         
 
@@ -254,6 +262,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     EnemyList.add(virus);
                     enemyIndex++;
                 }
+                
             }
         }, 3000, 3000);                   //每0.5秒就重複一次
     }
@@ -274,10 +283,11 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         timer.schedule(new TimerTask(){
             @Override
             public void run(){      //檢查位置
+            if(end==false){
                 Weaponhit();
                 repaint();          //重畫角色的位置
                 questionevent();
-                
+            }
             }
         }, intervel, intervel);        //每個微秒就重複一次
         if(t==0){JOptionPane.showMessageDialog(null,new Object[]{jlb,jlb2, jlb3, jlb4},"發現新怪物-咳嗽的老阿伯",JOptionPane.DEFAULT_OPTION);t=1;}
@@ -1476,18 +1486,28 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 }            
             }
         }
-        if((correct>=3))     //殺光敵人後顯示視窗並關閉整個程式
+        if((correct>=1))     //殺光敵人後顯示視窗並關閉整個程式
             {
                 //JOptionPane.showMessageDialog(null,"Win!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
                 end = true;
                 
-                JOptionPane.showMessageDialog(this,"你真棒！");
-                end = true;
+                JOptionPane.showMessageDialog(this,"你真棒！前往下一關吧！");
 
-                if(level==0) initial_2();
-                else if (level==1)initial_3();
-                else {JOptionPane.showMessageDialog(this,"恭喜你成為防疫大使！");}
-                System.exit(1);
+
+                 if(level==0){
+                      timer.cancel();
+                     initial_2();
+                    working2();
+                }else if(level==1){
+                     timer.cancel();
+                     initial_3();
+                    working3();
+                }
+                else {
+                    JOptionPane.showMessageDialog(this,"恭喜你成為防疫大使！");
+                    System.exit(1);
+                    }
+                
             }
             //System.out.println(uncorrect);
             if(uncorrect>=3){
