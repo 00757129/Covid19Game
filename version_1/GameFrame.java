@@ -168,6 +168,12 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         } t=0;
     }
 
+    public void initial_4()
+    {
+        backGroundImage =new ImageIcon("FINISH.png").getImage();
+        
+    }
+
     public void working(){
                 
         JLabel jlb = new JLabel("",SwingConstants.CENTER);
@@ -1515,8 +1521,9 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     working3();
                 }
                 else {
-                    JOptionPane.showMessageDialog(this,"恭喜你成為防疫大使！");
-                    System.exit(1);
+                    timer.cancel();
+                    initial_4();
+                    //System.exit(1);
                     }
                 
             }
