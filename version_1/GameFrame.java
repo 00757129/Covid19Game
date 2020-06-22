@@ -168,12 +168,6 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         } t=0;
     }
 
-    public void initial_4()
-    {
-        backGroundImage =new ImageIcon("FINISH.png").getImage();
-        
-    }
-
     public void working(){
                 
         JLabel jlb = new JLabel("",SwingConstants.CENTER);
@@ -189,7 +183,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         image.setImage(image.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
         jlb.setIcon(image);
         jlb.setSize(width, height);
-        
+        //JOptionPane.showMessageDialog(null,new Object[]{jlb, jlb6, jlb7, jlb1,jlb2, jlb3, jlb4, jlb5},"遊戲前的小提醒：發現新怪物-武漢肺炎病毒！",JOptionPane.DEFAULT_OPTION);
 
         timer = new Timer();
         timer.schedule(new TimerTask(){
@@ -1508,22 +1502,33 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 //JOptionPane.showMessageDialog(null,"Win!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
                 end = true;
                 
-                JOptionPane.showMessageDialog(this,"你真棒！前往下一關吧！");
+                
 
 
                  if(level==0){
+                     JOptionPane.showMessageDialog(this,"你真棒！前往下一關吧！");
                       timer.cancel();
                      initial_2();
                     working2();
                 }else if(level==1){
+                    JOptionPane.showMessageDialog(this,"你真棒！前往下一關吧！");
                      timer.cancel();
                      initial_3();
                     working3();
                 }
                 else {
-                    timer.cancel();
-                    initial_4();
-                    //System.exit(1);
+                     JLabel jlb = new JLabel("",SwingConstants.CENTER);
+        JLabel jlb6 = new JLabel("恭喜你成為防疫大師！");
+        JLabel jlb7 = new JLabel("因為你的努力與防疫知識的傳播，武漢肺炎成功的被抑制了！");
+        JLabel jlb1 = new JLabel("各項措施解禁，人們回到正常生活，世界回歸平靜！！");
+        
+        int width = 860,height = 573;
+        ImageIcon image = new ImageIcon("63491_0.jpg");
+        image.setImage(image.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
+        jlb.setIcon(image);
+        jlb.setSize(width, height);
+        JOptionPane.showMessageDialog(null,new Object[]{jlb, jlb6, jlb7, jlb1},"恭喜通關！",JOptionPane.DEFAULT_OPTION);
+                    System.exit(1);
                     }
                 
             }
