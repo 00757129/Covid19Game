@@ -183,7 +183,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         image.setImage(image.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
         jlb.setIcon(image);
         jlb.setSize(width, height);
-        
+        //JOptionPane.showMessageDialog(null,new Object[]{jlb, jlb6, jlb7, jlb1,jlb2, jlb3, jlb4, jlb5},"遊戲前的小提醒：發現新怪物-武漢肺炎病毒！",JOptionPane.DEFAULT_OPTION);
 
         timer = new Timer();
         timer.schedule(new TimerTask(){
@@ -570,14 +570,15 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
        mainJpanel.setLayout(null);introductionPanel.setLayout(null);
        introductionlabel=new JLabel("introduction......");introductionlabel.setBounds(screenSizeX(500),screenSizeX(50),100,40); 
         label=new JLabel("COVID-19");label.setBounds(screenSizeX(500),screenSizeX(50),100,40); 
-        levelOneButton=new JButton("1.捷運大逃生");levelOneButton.setBounds(screenSizeX(500),screenSizeY(150),screenSizeX(100),screenSizeY(40)); 
-        levelTwoButton=new JButton("2.快樂台灣");levelTwoButton.setBounds(screenSizeX(500),screenSizeY(250),screenSizeX(100),screenSizeY(40));
-        levelThreeButton=new JButton("3.病毒世界");levelThreeButton.setBounds(screenSizeX(500),screenSizeY(350),screenSizeX(100),screenSizeY(40)); 
-        introductionButton=new JButton("Intrduction");introductionButton.setBounds(screenSizeX(500),screenSizeY(450),screenSizeX(100),screenSizeY(40)); 
-        returnbutton=new JButton("Return");returnbutton.setBounds(screenSizeX(500),screenSizeY(450),screenSizeX(100),screenSizeY(40)); 
+        levelOneButton=new JButton("1. Escape from MRT");levelOneButton.setBounds(screenSizeX(500),screenSizeY(150),screenSizeX(150),screenSizeY(40)); 
+        levelTwoButton=new JButton("2. Happy Taiwan");levelTwoButton.setBounds(screenSizeX(500),screenSizeY(250),screenSizeX(150),screenSizeY(40));
+        levelThreeButton=new JButton("3. The World of Covid-19");levelThreeButton.setBounds(screenSizeX(500),screenSizeY(350),screenSizeX(150),screenSizeY(40)); 
+        introductionButton=new JButton("Game Introduction");introductionButton.setBounds(screenSizeX(500),screenSizeY(450),screenSizeX(150),screenSizeY(40)); 
+        returnbutton=new JButton("Return");returnbutton.setBounds(screenSizeX(500),screenSizeY(550),screenSizeX(100),screenSizeY(40)); 
 ////////////////////////////介紹圖
-        bGImage =new ImageIcon("bullet.png");
-        introBut=new JButton(bGImage);introBut.setBounds(screenSizeX(300),screenSizeY(100),screenSizeX(400),screenSizeY(300)); 
+
+        bGImage =new ImageIcon("introduction_2.png");
+        introBut=new JButton(bGImage);introBut.setBounds(screenSizeX(230),screenSizeY(55),screenSizeX(650),screenSizeY(470)); 
 //////////////////////////
 
         levelOneButton.addActionListener(this);levelTwoButton.addActionListener(this);levelThreeButton.addActionListener(this);introductionButton.addActionListener(this);
@@ -672,7 +673,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
       {
          
           //System.out.println(event.getActionCommand());
-          if(event.getActionCommand().equals("Level 1")){
+          if(event.getActionCommand().equals("1. Escape from MRT")){
                 removeAll();
                 start=1;
                 this.requestFocus();
@@ -680,7 +681,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 addMouseListener(new MouseAdapterDemo());
                 initial();
                 working();
-          }else if(event.getActionCommand().equals("Level 2")){
+          }else if(event.getActionCommand().equals("2. Happy Taiwan")){
                 removeAll();
                 start=1;
                 this.requestFocus();
@@ -688,7 +689,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 addMouseListener(new MouseAdapterDemo());
                 initial_2();
                 working2();
-          }else if(event.getActionCommand().equals("Level 3")){
+          }else if(event.getActionCommand().equals("3. The World of Covid-19")){
                 removeAll();
                 start=1;
                 this.requestFocus();
@@ -697,7 +698,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 initial_3();
                 working3();
             
-          }else if(event.getActionCommand().equals("Intrduction")){
+          }else if(event.getActionCommand().equals("Game Introduction")){
                 mainJpanel.setVisible(false);
                 start=2;
                 add(introductionPanel);
@@ -1501,20 +1502,32 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 //JOptionPane.showMessageDialog(null,"Win!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
                 end = true;
                 
-                JOptionPane.showMessageDialog(this,"你真棒！前往下一關吧！");
+                
 
 
                  if(level==0){
+                     JOptionPane.showMessageDialog(this,"你真棒！前往下一關吧！");
                       timer.cancel();
                      initial_2();
                     working2();
                 }else if(level==1){
+                    JOptionPane.showMessageDialog(this,"你真棒！前往下一關吧！");
                      timer.cancel();
                      initial_3();
                     working3();
                 }
                 else {
-                    JOptionPane.showMessageDialog(this,"恭喜你成為防疫大使！");
+                     JLabel jlb = new JLabel("",SwingConstants.CENTER);
+        JLabel jlb6 = new JLabel("恭喜你成為防疫大師！");
+        JLabel jlb7 = new JLabel("因為你的努力與防疫知識的傳播，武漢肺炎成功的被抑制了！");
+        JLabel jlb1 = new JLabel("各項措施解禁，人們回到正常生活，世界回歸平靜！！");
+        
+        int width = 860,height = 573;
+        ImageIcon image = new ImageIcon("63491_0.jpg");
+        image.setImage(image.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
+        jlb.setIcon(image);
+        jlb.setSize(width, height);
+        JOptionPane.showMessageDialog(null,new Object[]{jlb, jlb6, jlb7, jlb1},"恭喜通關！",JOptionPane.DEFAULT_OPTION);
                     System.exit(1);
                     }
                 
