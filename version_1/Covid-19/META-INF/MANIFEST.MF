@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Created-By: 13.0.2 (Oracle Corporation)
+Main-Class: covid19.game.GameTest
+Class-Path: covid19/game/jl1.0.1.jar
