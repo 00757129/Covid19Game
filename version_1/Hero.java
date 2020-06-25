@@ -4,6 +4,19 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import java.util.*;
+import java.lang.Math; 
+import java.util.Timer; 
+import java.util.TimerTask; 
+import java.awt.image.BufferedImage;
+import java.security.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import javazoom.jl.decoder.JavaLayerException;
+// import javazoom.jl.player.Player;
+import javazoom.jl.player.advanced.AdvancedPlayer;
 
 public class Hero extends Character{
 
@@ -53,15 +66,24 @@ public class Hero extends Character{
             //System.out.println(enemy.width);
             if(this.hit("Left",enemy) || this.hit("Right",enemy) || this.hit("Up",enemy) || this.hit("Down",enemy))
             {
+                
                 System.out.println(enemy.posX+" "+enemy.posY+" "+enemy.width+" "+enemy.height+ " "+posX+" "+posY);
-                System.out.println("hit!!");
+                // System.out.println("hit!!");
                 bloodFlag++;
             }
         }
         
         else
         {
-            JOptionPane.showMessageDialog(null,"Lose!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,"不難過~ 再來挑戰一次吧","Game Result:",JOptionPane.INFORMATION_MESSAGE);
+            BackgroundMP3Player playerFail;			
+            try {
+                playerFail = new BackgroundMP3Player("defeat.mp3");
+                playerFail.circularPlay();
+            } catch (FileNotFoundException | JavaLayerException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             System.exit(1);
         }
     }

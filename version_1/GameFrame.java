@@ -9,6 +9,14 @@ import java.util.Timer;
 import java.util.TimerTask; 
 import java.awt.image.BufferedImage;
 import java.security.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import javazoom.jl.decoder.JavaLayerException;
+// import javazoom.jl.player.Player;
+import javazoom.jl.player.advanced.AdvancedPlayer;
 
 public class GameFrame extends JFrame implements KeyListener,ActionListener{
     int t=0;
@@ -25,6 +33,9 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     public int playerChoice;
     public Icon bGImage =new ImageIcon("covid-19.jpg");
     public Image backGroundImage =new ImageIcon("covid-19.jpg").getImage();
+    private BackgroundMP3Player player;
+    private AdvancedPlayer playerHit;
+	private File file;
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     int backGroundImageHeight = (int)screenSize.getHeight();
     int backGroundImageWidth = (int)screenSize.getWidth();
@@ -41,8 +52,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     public JLabel label,introductionlabel,bgLabel;  public JPanel mainJpanel,labelPanel,levelOnePanel,levelTwoPanel,levelThreePanel,introductionPanel,imagePanel; 
     public JButton levelOneButton,levelTwoButton,levelThreeButton,introductionButton,returnbutton,introBut; 
     
-
-
+    
     public GameFrame(){
         super("GameFrame");
         setLayout(null); 
@@ -57,7 +67,15 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         //working();          //設定timertask，讓程式定期移動腳色和檢查生命
     }
 
-    public void initial(){
+    public void initial(){	
+		try {
+			player = new BackgroundMP3Player("darkest_child.mp3");
+			player.circularPlay();
+		} catch (FileNotFoundException | JavaLayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        ArrayList<Weapon> WeaponList = new ArrayList<Weapon>();  //weapon用容器裝
         backGroundImage=new ImageIcon("routemap2020.png").getImage();
         end = false;
         correct = 0;
@@ -98,6 +116,14 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
     }
 
     public void initial_2(){
+		try {
+			player = new BackgroundMP3Player("darkest_child.mp3");
+			player.circularPlay();
+		} catch (FileNotFoundException | JavaLayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        ArrayList<Weapon> WeaponList = new ArrayList<Weapon>();  //weapon用容器裝
         correct = 0;
         end = false;
         level = 1;
@@ -134,7 +160,15 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         } t=0;
     }
 
-     public void initial_3(){
+     public void initial_3(){	
+		try {
+			player = new BackgroundMP3Player("darkest_child.mp3");
+			player.circularPlay();
+		} catch (FileNotFoundException | JavaLayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        ArrayList<Weapon> WeaponList = new ArrayList<Weapon>();  //weapon用容器裝
         correct = 0;
         end = false;
         level = 2;           //暫定     
@@ -168,12 +202,6 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         } t=0;
     }
 
-    public void initial_4()
-    {
-        backGroundImage =new ImageIcon("FINISH.png").getImage();
-        
-    }
-
     public void working(){
                 
         JLabel jlb = new JLabel("",SwingConstants.CENTER);
@@ -189,7 +217,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         image.setImage(image.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
         jlb.setIcon(image);
         jlb.setSize(width, height);
-        
+        //JOptionPane.showMessageDialog(null,new Object[]{jlb, jlb6, jlb7, jlb1,jlb2, jlb3, jlb4, jlb5},"遊戲前的小提醒：發現新怪物-武漢肺炎病毒！",JOptionPane.DEFAULT_OPTION);
 
         timer = new Timer();
         timer.schedule(new TimerTask(){
@@ -581,11 +609,11 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         levelThreeButton=new JButton("3. The World of Covid-19");levelThreeButton.setBounds(screenSizeX(500),screenSizeY(350),screenSizeX(150),screenSizeY(40)); 
         introductionButton=new JButton("Game Introduction");introductionButton.setBounds(screenSizeX(500),screenSizeY(450),screenSizeX(150),screenSizeY(40)); 
         returnbutton=new JButton("Return");returnbutton.setBounds(screenSizeX(500),screenSizeY(550),screenSizeX(100),screenSizeY(40)); 
-////////////////////////////介紹圖
+
 
         bGImage =new ImageIcon("introduction_2.png");
         introBut=new JButton(bGImage);introBut.setBounds(screenSizeX(230),screenSizeY(55),screenSizeX(650),screenSizeY(470)); 
-//////////////////////////
+
 
         levelOneButton.addActionListener(this);levelTwoButton.addActionListener(this);levelThreeButton.addActionListener(this);introductionButton.addActionListener(this);
         introductionButton.addActionListener(this);returnbutton.addActionListener(this);
@@ -923,6 +951,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             // 10 代表斜向速度
             Weapon tmpWeapon = new Weapon(testC.posX+testC.width/2, testC.posY+testC.height/2, event.getX(), event.getY(), 50, 50, 5);
             // Weapon tmpWeapon = new Weapon(testC.posX+testC.width/2, testC.posY+testC.height/2, event.getX(), event.getY(), screenSizeX(50), screenSizeY(50), screenSize(5));
+            
             WeaponList.add(tmpWeapon);
         }
     }
@@ -1392,7 +1421,7 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                 //RadioButtonHandlerSource handlerRadioButtonSource = new RadioButtonHandlerSource();
                 if(input == 0)
                 {
-                    checkCorrect(2);
+                    checkCorrect(1);
                 }
             break;
 
@@ -1426,11 +1455,27 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
         //System.out.println(playerChoice);
         if(playerChoice == correctAns)
         {
+            BackgroundMP3Player playerT;			
+            try {
+                playerT = new BackgroundMP3Player("true.mp3");
+                playerT.play();
+            } catch (FileNotFoundException | JavaLayerException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             JOptionPane.showMessageDialog(null,"甚麼?竟然對了!真令人無法置信!!","答題結果",JOptionPane.INFORMATION_MESSAGE);
             correct++;
         }
         else
         {
+            BackgroundMP3Player playerF;			
+            try {
+                playerF = new BackgroundMP3Player("false.mp3");
+                playerF.play();
+            } catch (FileNotFoundException | JavaLayerException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             JOptionPane.showMessageDialog(null,"哈哈~恭喜答錯~","答題結果",JOptionPane.INFORMATION_MESSAGE);
             uncorrect++;//System.out.println("uncorrect");
         }
@@ -1492,9 +1537,19 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
                     rect = new Rectangle(enemy.posX+enemy.width/2,enemy.posY+enemy.height/2,30,30);
                     //碰撞檢測
                     if(weaponRect.intersects(rect)){
-                        WeaponList.remove(j);
+                        BackgroundMP3Player playerHit;	
+                        if(WeaponList.size()>0){                            
+                            WeaponList.remove(j);
+                        }
                         EnemyList.get(i).hp -= 1;
-                        ////System.out.println("hit");
+                        ////System.out.println("hit");BackgroundMP3Player player;		
+                        try {
+                            playerHit = new BackgroundMP3Player("hit_sound.mp3");
+                            playerHit.play();
+                        } catch (FileNotFoundException | JavaLayerException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
                         EnemyList.get(i).setHp(1,level);
                     }
                     if(EnemyList.get(i).hp<=0){
@@ -1507,41 +1562,94 @@ public class GameFrame extends JFrame implements KeyListener,ActionListener{
             {
                 //JOptionPane.showMessageDialog(null,"Win!!","Game Result:",JOptionPane.INFORMATION_MESSAGE);
                 end = true;
-                
-                JOptionPane.showMessageDialog(this,"你真棒！前往下一關吧！");
+                player.close();             
 
 
                  if(level==0){
-                      timer.cancel();
-                     initial_2();
+                    BackgroundMP3Player playerNext;			
+                    try {
+                        playerNext = new BackgroundMP3Player("next.mp3");
+                        playerNext.play();
+                    } catch (FileNotFoundException | JavaLayerException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    JOptionPane.showMessageDialog(this,"你真棒！前往下一關吧！");
+                    timer.cancel();
+                    initial_2();
                     working2();
                 }else if(level==1){
+                    BackgroundMP3Player playerNext;			
+                    try {
+                        playerNext = new BackgroundMP3Player("next.mp3");
+                        playerNext.play();
+                    } catch (FileNotFoundException | JavaLayerException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    JOptionPane.showMessageDialog(this,"你真棒！前往下一關吧！");
                      timer.cancel();
                      initial_3();
                     working3();
                 }
                 else {
-                    timer.cancel();
-                    initial_4();
-                    //System.exit(1);
+                    BackgroundMP3Player playerVic;			
+                    try {
+                        playerVic = new BackgroundMP3Player("victory.mp3");
+                        playerVic.play();
+                    } catch (FileNotFoundException | JavaLayerException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
                     }
+                    JLabel jlb = new JLabel("",SwingConstants.CENTER);        
+                    JLabel jlb6 = new JLabel("恭喜你成為防疫大師！");
+                    JLabel jlb7 = new JLabel("因為你的努力與防疫知識的傳播，武漢肺炎成功的被抑制了！");
+                    JLabel jlb1 = new JLabel("各項措施解禁，人們回到正常生活，世界回歸平靜！！");
+                    
+                    int width = 860,height = 573;
+                    ImageIcon image = new ImageIcon("63491_0.jpg");
+                    image.setImage(image.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT ));
+                    jlb.setIcon(image);
+                    jlb.setSize(width, height);
+                    JOptionPane.showMessageDialog(null,new Object[]{jlb, jlb6, jlb7, jlb1},"恭喜通關！",JOptionPane.DEFAULT_OPTION);
+                                System.exit(1);
+                    
+                }
                 
             }
             ////System.out.println(uncorrect);
             if(uncorrect>=3){
+                
+                player.close(); 
+                BackgroundMP3Player playerFail;			
+                try {
+                    playerFail = new BackgroundMP3Player("defeat.mp3");
+                    playerFail.play();
+                } catch (FileNotFoundException | JavaLayerException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
                 JOptionPane.showMessageDialog(this,"答錯太多啦！重新再來吧！");
                 uncorrect=0;
-                
-                
+                correct = 0;
+
                 for (int i = 0; i < EnemyList.size(); i++) {
                      EnemyList.remove(i);
                 }
                 for (int p = 0; p < WeaponList.size(); p++) {
                      WeaponList.remove(p);
                 }
+                WeaponList.clear();
+                testC.clear();
+                timer.cancel();
                 if(level==0){
-                     initial();
-               working();
+                    removeAll();
+                    start = 1;
+                    this.requestFocus();
+                    addKeyListener(this);
+                    addMouseListener(new MouseAdapterDemo());
+                    initial();
+                    working();
                 }else if(level==1){
                      initial_2();
                working2();
