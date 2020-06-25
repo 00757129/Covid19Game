@@ -91,6 +91,12 @@ public abstract class Character{
         return tmp;
     }
 
+    public void clear(){
+        speedX = 0;
+        speedY = 0;
+        speed = 0;      //移動速度
+    }
+
     public abstract void changeImg();
     public abstract void changeImg(int level);
 }
